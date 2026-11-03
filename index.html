@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vejle Idrætshøjskole - Fagudvikling & Skema</title>
+    <link rel="stylesheet" href="./style.css">
+    <!-- html2canvas til billedeksport -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <header class="topbar">
+        <div class="logo-group">
+            <span class="logo-vih">VIH</span>
+            <span class="logo-sub">Fagudvikling</span>
+        </div>
+
+        <!-- Fane-navigation mellem de 3 overblik -->
+        <nav class="nav-tabs">
+            <button type="button" class="tab-btn active" data-tab="tab-picker">🗓️ Mit Fagvalg</button>
+            <button type="button" class="tab-btn" data-tab="tab-matrix">📋 Fagoversigt (4 søjler)</button>
+            <button type="button" class="tab-btn" data-tab="tab-rooms">🏢 Fordelt på Lokaler</button>
+        </nav>
+
+        <div class="controls">
+            <!-- Vises kun i 'Mit Fagvalg' -->
+            <div id="picker-controls" class="context-controls">
+                <select id="prototype-select" class="select-input">
+                    <option value="">-- Vælg foruddefineret pakke --</option>
+                </select>
+                <button id="btn-save-pack" class="btn btn-outline" title="Gem nuværende skema som din egen pakke">💾 Gem som pakke</button>
+                <button id="btn-delete-pack" class="btn btn-danger" style="display: none;">Slet pakke</button>
+                <button id="btn-clear" class="btn btn-outline">Ryd skema</button>
+            </div>
+
+            <!-- Vises kun i 'Fagoversigt' (Viborg matrix) -->
+            <div id="matrix-controls" class="context-controls" style="display: none;">
+                <label for="matrix-season-select" class="control-label">Vis:</label>
+                <select id="matrix-season-select" class="select-input">
+                    <option value="all" selected>🗓️ Hele året (5 perioder)</option>
+                    <option value="foraar">🌱 Forårshold (3 perioder)</option>
+                    <option value="efteraar">🍂 Efterårshold (2 perioder)</option>
+                </select>
+            </div>
+
+            <!-- Vises kun i 'Fordelt på Lokaler' -->
+            <div id="rooms-controls" class="context-controls" style="display: none;">
+                <label for="rooms-block-select" class="control-label">Blok:</label>
+                <select id="rooms-block-select" class="select-input">
+                    <option value="all" selected>Alle Blokke (1, 2, Komp & Insp)</option>
+                    <option value="idraet1">Blok 1 (Idræt 1)</option>
+                    <option value="idraet2">Blok 2 (Idræt 2)</option>
+                    <option value="kompetence">Kompetencefag</option>
+                    <option value="inspiration">Inspirationsfag</option>
+                </select>
+            </div>
+
+            <button id="btn-share" class="btn btn-primary">📸 Gem som billede</button>
+        </div>
+    </header>
+
+    <main class="app-container">
+        <!-- VISNING 1: MIT FAGVALG (SKEMA BYGGER) -->
+        <section id="tab-picker" class="tab-pane active">
+            <div id="schedule-wrapper" class="view-card">
+                <div class="schedule-title-bar">
+                    <div>
+                        <h2>Mit Skema på Vejle Idrætshøjskole</h2>
+                        <span class="schedule-note">4 fagblokke · Klik på en brik for at vælge fag</span>
+                    </div>
+                    <div id="profile-indicator" class="profile-indicator" style="display: none;">
+                        <span class="indicator-icon">★</span>
+                        <span class="indicator-label">Aktiv profil:</span>
+                        <strong id="profile-indicator-name">-</strong>
+                    </div>
+                </div>
+                <div id="schedule-grid" class="schedule-grid"></div>
+            </div>
+        </section>
+
+        <!-- VISNING 2: FAGOVERSIGT (VIBORG-INSPIRERET MATRIX I 4 SØJLER) -->
+        <section id="tab-matrix" class="tab-pane">
+            <div id="matrix-wrapper" class="matrix-poster">
+                <div class="matrix-header">
+                    <div class="matrix-header-left">
+                        <h1 class="matrix-title">FAGOVERSIGT <span id="matrix-title-accent">FORÅRSHOLD</span></h1>
+                        <p class="matrix-tagline">SE HVORDAN DU KAN KOMBINERE DINE FAG PÅ VEJLE IDRÆTSHØJSKOLE</p>
+                        <p class="matrix-sub">Vælg ét fag i hver blok i hver periode · Der tages forbehold for ændringer</p>
+                    </div>
+                    <div class="matrix-header-right">
+                        <p>Du kan sammensætte din helt egen profil på tværs af idræt, kompetence og inspiration eller fordybe dig i specifikke linjer og instruktørforløb.</p>
+                    </div>
+                </div>
+                <div id="matrix-content" class="matrix-grid"></div>
+            </div>
+        </section>
+
+        <!-- VISNING 3: FORDELT PÅ LOKALER (REGNEARK MATRIX) -->
+        <section id="tab-rooms" class="tab-pane">
+            <div id="rooms-wrapper" class="view-card">
+                <div class="schedule-title-bar">
+                    <div>
+                        <h2>Udbud fordelt på lokaler</h2>
+                        <span class="schedule-note">Oversigt over hal- og facilitetsbelægning for Blok 1 og Blok 2</span>
+                    </div>
+                </div>
+                <div id="rooms-content" class="rooms-container"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal til valg af fag -->
+    <dialog id="subject-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h3 id="modal-title">Vælg fag</h3>
+                    <p id="modal-subtitle" class="modal-sub">Muligheder for denne periode</p>
+                </div>
+                <button id="btn-close-modal" class="close-btn" aria-label="Luk">&times;</button>
+            </div>
+            
+            <div id="modal-filter-bar" class="modal-filter-bar"></div>
+
+            <div class="modal-body" id="modal-subject-list"></div>
+
+            <div class="modal-footer">
+                <button id="btn-remove-subject" class="btn btn-danger">Fjern fag fra felt</button>
+                <button id="btn-cancel-modal" class="btn btn-outline">Annuller</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script type="module" src="./script.js"></script>
+</body>
+</html>

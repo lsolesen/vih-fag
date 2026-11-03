@@ -1,0 +1,656 @@
+import { VIH_SETTINGS } from './settings.js';
+
+function startApp() {
+    const SETTINGS = VIH_SETTINGS;
+    
+    // LocalStorage nøgler
+    const STORAGE_KEY = 'vih_fagvalg_state';
+    const CUSTOM_PACKS_KEY = 'vih_custom_packages';
+    const MATRIX_SEASON_KEY = 'vih_matrix_season';
+    const ROOMS_BLOCK_KEY = 'vih_rooms_block';
+    const ACTIVE_TAB_KEY = 'vih_active_tab';
+
+    // State: Valgte fag
+    let selections = {};
+    try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) selections = JSON.parse(stored);
+    } catch (e) { console.warn(e); }
+
+    // State: Gemte pakker
+    let customPackages = [];
+    try {
+        const storedPacks = localStorage.getItem(CUSTOM_PACKS_KEY);
+        if (storedPacks) customPackages = JSON.parse(storedPacks);
+    } catch (e) { console.warn(e); }
+
+    let currentProfile = null;
+    let currentSlotContext = null;
+    let currentCategoryFilter = 'ALLE';
+
+    // DOM referencer
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    const pickerControls = document.getElementById('picker-controls');
+    const matrixControls = document.getElementById('matrix-controls');
+    const roomsControls = document.getElementById('rooms-controls');
+
+    const gridEl = document.getElementById('schedule-grid');
+    const matrixContent = document.getElementById('matrix-content');
+    const matrixTitleAccent = document.getElementById('matrix-title-accent');
+    const matrixSeasonSelect = document.getElementById('matrix-season-select');
+    const roomsContent = document.getElementById('rooms-content');
+    const roomsBlockSelect = document.getElementById('rooms-block-select');
+
+    const modalEl = document.getElementById('subject-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalSubtitle = document.getElementById('modal-subtitle');
+    const modalFilterBar = document.getElementById('modal-filter-bar');
+    const modalSubjectList = document.getElementById('modal-subject-list');
+    const btnCloseModal = document.getElementById('btn-close-modal');
+    const btnCancelModal = document.getElementById('btn-cancel-modal');
+    const btnRemoveSubject = document.getElementById('btn-remove-subject');
+
+    const protoSelect = document.getElementById('prototype-select');
+    const btnSavePack = document.getElementById('btn-save-pack');
+    const btnDeletePack = document.getElementById('btn-delete-pack');
+    const btnClear = document.getElementById('btn-clear');
+    const btnShare = document.getElementById('btn-share');
+    const profileIndicator = document.getElementById('profile-indicator');
+    const profileIndicatorName = document.getElementById('profile-indicator-name');
+
+    // Sæt gemte standardvalg fra localStorage (standard: 'all')
+    const savedMatrixSeason = localStorage.getItem(MATRIX_SEASON_KEY) || 'all';
+    matrixSeasonSelect.value = savedMatrixSeason;
+
+    const savedRoomsBlock = localStorage.getItem(ROOMS_BLOCK_KEY) || 'all';
+    roomsBlockSelect.value = savedRoomsBlock;
+
+    function findSubject(slotId, subjectId) {
+        const slotList = SETTINGS.offerings[slotId] || [];
+        const found = slotList.find(s => s.id === subjectId);
+        if (found) return found;
+
+        for (const key in SETTINGS.offerings) {
+            const match = SETTINGS.offerings[key].find(s => s.id === subjectId);
+            if (match) return match;
+        }
+        return null;
+    }
+
+    // --- TAB SWITCHING LOGIK ---
+    let activeTab = localStorage.getItem(ACTIVE_TAB_KEY) || 'tab-picker';
+
+    function switchTab(targetTab) {
+        activeTab = targetTab;
+        localStorage.setItem(ACTIVE_TAB_KEY, targetTab);
+
+        tabBtns.forEach(b => {
+            b.classList.toggle('active', b.dataset.tab === targetTab);
+        });
+        tabPanes.forEach(p => {
+            p.classList.toggle('active', p.id === targetTab);
+        });
+
+        pickerControls.style.display = targetTab === 'tab-picker' ? 'flex' : 'none';
+        matrixControls.style.display = targetTab === 'tab-matrix' ? 'flex' : 'none';
+        roomsControls.style.display = targetTab === 'tab-rooms' ? 'flex' : 'none';
+
+        if (targetTab === 'tab-matrix') renderMatrixView();
+        if (targetTab === 'tab-rooms') renderRoomsView();
+        if (targetTab === 'tab-picker') renderPickerGrid();
+    }
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    // --- VISNING 1: MIT FAGVALG ---
+    function setProfileState(profile, isModified = false) {
+        currentProfile = profile;
+        if (!profile) {
+            profileIndicator.style.display = 'none';
+            protoSelect.classList.remove('has-active-profile');
+            protoSelect.value = '';
+            btnDeletePack.style.display = 'none';
+            return;
+        }
+
+        profileIndicator.style.display = 'inline-flex';
+        if (isModified) {
+            profileIndicator.className = 'profile-indicator is-modified';
+            profileIndicator.querySelector('.indicator-icon').textContent = '✏️';
+            profileIndicator.querySelector('.indicator-label').textContent = 'Tilpasset forløb:';
+            profileIndicatorName.textContent = `${profile.name} (ændret)`;
+            protoSelect.classList.remove('has-active-profile');
+            protoSelect.value = '';
+            btnDeletePack.style.display = 'none';
+        } else {
+            profileIndicator.className = 'profile-indicator';
+            profileIndicator.querySelector('.indicator-icon').textContent = '★';
+            profileIndicator.querySelector('.indicator-label').textContent = 'Aktiv profil:';
+            profileIndicatorName.textContent = profile.name;
+            protoSelect.classList.add('has-active-profile');
+            protoSelect.value = profile.id;
+            btnDeletePack.style.display = profile.id.startsWith('custom_') ? 'inline-block' : 'none';
+        }
+    }
+
+    function renderPickerGrid() {
+        gridEl.innerHTML = '';
+
+        const cornerSeason = document.createElement('div');
+        gridEl.appendChild(cornerSeason);
+
+        const efteraarHeader = document.createElement('div');
+        efteraarHeader.className = 'season-header season-efteraar';
+        efteraarHeader.style.gridColumn = 'span 4';
+        efteraarHeader.textContent = '🍂 Efterårssemester';
+        gridEl.appendChild(efteraarHeader);
+
+        const foraarHeader = document.createElement('div');
+        foraarHeader.className = 'season-header season-foraar season-divider';
+        foraarHeader.style.gridColumn = 'span 6';
+        foraarHeader.textContent = '🌱 Forårssemester';
+        gridEl.appendChild(foraarHeader);
+
+        const cornerPeriod = document.createElement('div');
+        gridEl.appendChild(cornerPeriod);
+
+        const periods = [
+            { name: 'Efterår 1 (Aug-Okt)', span: 2, isDivider: false },
+            { name: 'Efterår 2 (Okt-Dec)', span: 2, isDivider: false },
+            { name: 'Forår 1 (Jan-Feb)', span: 2, isDivider: true },
+            { name: 'Forår 2 (Mar-Maj)', span: 2, isDivider: false },
+            { name: 'Forår 3 (Maj-Jun)', span: 2, isDivider: false }
+        ];
+
+        periods.forEach(p => {
+            const pEl = document.createElement('div');
+            pEl.className = 'period-header' + (p.isDivider ? ' season-divider' : '');
+            pEl.style.gridColumn = `span ${p.span}`;
+            pEl.textContent = p.name;
+            gridEl.appendChild(pEl);
+        });
+
+        SETTINGS.scheduleRows.forEach(row => {
+            const rowHeader = document.createElement('div');
+            rowHeader.className = 'row-header';
+            rowHeader.innerHTML = `<div>${row.title}</div><div class="row-sub">${row.sub}</div>`;
+            gridEl.appendChild(rowHeader);
+
+            row.slots.forEach(slot => {
+                const selectedSubjectId = selections[slot.id];
+                const subject = selectedSubjectId ? findSubject(slot.id, selectedSubjectId) : null;
+
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.style.gridColumn = `span ${slot.span}`;
+                if (slot.isFirstSpring) cell.classList.add('season-divider');
+
+                if (subject) {
+                    const cat = SETTINGS.categories[subject.category] || { color: '#475569', textColor: '#ffffff' };
+                    cell.classList.add('cell-filled');
+                    cell.style.backgroundColor = cat.color;
+                    cell.style.color = cat.textColor;
+
+                    cell.innerHTML = `
+                        <div class="cell-badge">${subject.category}</div>
+                        <div class="cell-name">${subject.name}</div>
+                        <div class="cell-location">📍 ${subject.location}</div>
+                    `;
+                } else {
+                    cell.classList.add('cell-empty');
+                    cell.innerHTML = `<div class="empty-plus">+</div><div class="empty-text">Vælg fag</div>`;
+                }
+
+                cell.addEventListener('click', () => openSubjectModal(row, slot, selectedSubjectId));
+                gridEl.appendChild(cell);
+            });
+        });
+    }
+
+    function openSubjectModal(row, slot, currentSubjectId) {
+        currentSlotContext = { row, slot, currentSubjectId };
+        currentCategoryFilter = 'ALLE';
+
+        modalTitle.textContent = `${row.title} · ${slot.title}`;
+        modalSubtitle.textContent = `Muligheder for denne periode`;
+        btnRemoveSubject.style.display = currentSubjectId ? 'block' : 'none';
+
+        renderFilterChips(slot.id);
+        renderSubjectOptions(slot.id, currentSubjectId);
+        modalEl.showModal();
+    }
+
+    function renderFilterChips(slotId) {
+        modalFilterBar.innerHTML = '';
+        const slotOfferings = SETTINGS.offerings[slotId] || [];
+        const categoriesInSlot = ['ALLE', ...new Set(slotOfferings.map(s => s.category))];
+
+        categoriesInSlot.forEach(catName => {
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'filter-chip' + (currentCategoryFilter === catName ? ' active' : '');
+            chip.textContent = catName;
+            chip.addEventListener('click', () => {
+                currentCategoryFilter = catName;
+                renderFilterChips(slotId);
+                renderSubjectOptions(slotId, currentSlotContext?.currentSubjectId);
+            });
+            modalFilterBar.appendChild(chip);
+        });
+    }
+
+    function renderSubjectOptions(slotId, currentSubjectId) {
+        modalSubjectList.innerHTML = '';
+        let options = SETTINGS.offerings[slotId] || [];
+
+        if (currentCategoryFilter !== 'ALLE') {
+            options = options.filter(s => s.category === currentCategoryFilter);
+        }
+
+        if (options.length === 0) {
+            modalSubjectList.innerHTML = '<p style="color:#64748b; font-size:0.9rem;">Ingen fag i denne kategori.</p>';
+            return;
+        }
+
+        options.forEach(sub => {
+            const cat = SETTINGS.categories[sub.category] || { color: '#475569', textColor: '#ffffff' };
+            const card = document.createElement('div');
+            card.className = 'subject-card';
+            if (sub.id === currentSubjectId) card.classList.add('is-selected');
+
+            card.style.backgroundColor = cat.color;
+            card.style.color = cat.textColor;
+
+            card.innerHTML = `
+                <div class="cell-badge">${sub.category}</div>
+                <div class="cell-name">${sub.name}</div>
+                <div class="cell-location">📍 ${sub.location}</div>
+            `;
+
+            card.addEventListener('click', () => {
+                const prev = selections[currentSlotContext.slot.id];
+                if (prev !== sub.id) {
+                    selections[currentSlotContext.slot.id] = sub.id;
+                    if (currentProfile) setProfileState(currentProfile, true);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+                    renderPickerGrid();
+                }
+                modalEl.close();
+            });
+
+            modalSubjectList.appendChild(card);
+        });
+    }
+
+    btnCloseModal.addEventListener('click', () => modalEl.close());
+    btnCancelModal.addEventListener('click', () => modalEl.close());
+    modalEl.addEventListener('click', (e) => { if (e.target === modalEl) modalEl.close(); });
+
+    btnRemoveSubject.addEventListener('click', () => {
+        if (currentSlotContext && selections[currentSlotContext.slot.id]) {
+            delete selections[currentSlotContext.slot.id];
+            if (currentProfile) setProfileState(currentProfile, true);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+            renderPickerGrid();
+            modalEl.close();
+        }
+    });
+
+    function updatePackageDropdown(selectedId = '') {
+        protoSelect.innerHTML = '<option value="">-- Vælg foruddefineret pakke --</option>';
+
+        if (SETTINGS.prototypes && SETTINGS.prototypes.length > 0) {
+            const builtinGroup = document.createElement('optgroup');
+            builtinGroup.label = 'Faste prototyper';
+            SETTINGS.prototypes.forEach((p, idx) => {
+                const opt = document.createElement('option');
+                opt.value = `builtin_${idx}`;
+                opt.textContent = p.name;
+                builtinGroup.appendChild(opt);
+            });
+            protoSelect.appendChild(builtinGroup);
+        }
+
+        if (customPackages.length > 0) {
+            const customGroup = document.createElement('optgroup');
+            customGroup.label = 'Mine egne pakker';
+            customPackages.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = `custom_${p.id}`;
+                opt.textContent = p.name;
+                customGroup.appendChild(opt);
+            });
+            protoSelect.appendChild(customGroup);
+        }
+
+        if (selectedId) protoSelect.value = selectedId;
+        btnDeletePack.style.display = protoSelect.value.startsWith('custom_') ? 'inline-block' : 'none';
+    }
+
+    protoSelect.addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (!val) { setProfileState(null); return; }
+
+        if (val.startsWith('builtin_')) {
+            const idx = parseInt(val.replace('builtin_', ''), 10);
+            const proto = SETTINGS.prototypes[idx];
+            if (proto) {
+                selections = { ...proto.selections };
+                setProfileState({ id: val, name: proto.name }, false);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+                renderPickerGrid();
+            }
+        } else if (val.startsWith('custom_')) {
+            const packId = val.replace('custom_', '');
+            const pack = customPackages.find(p => p.id === packId);
+            if (pack) {
+                selections = { ...pack.selections };
+                setProfileState({ id: val, name: pack.name }, false);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+                renderPickerGrid();
+            }
+        }
+    });
+
+    btnSavePack.addEventListener('click', () => {
+        if (Object.keys(selections).length === 0) {
+            alert('Skemaet er tomt. Vælg nogle fag før du gemmer pakken.');
+            return;
+        }
+        const packName = prompt('Hvad skal din fagpakke hedde?', 'Mit forslag');
+        if (!packName || !packName.trim()) return;
+
+        const newPack = { id: 'pack_' + Date.now(), name: packName.trim(), selections: { ...selections } };
+        customPackages.push(newPack);
+        localStorage.setItem(CUSTOM_PACKS_KEY, JSON.stringify(customPackages));
+        updatePackageDropdown(`custom_${newPack.id}`);
+        setProfileState({ id: `custom_${newPack.id}`, name: newPack.name }, false);
+    });
+
+    btnDeletePack.addEventListener('click', () => {
+        const val = protoSelect.value;
+        if (!val.startsWith('custom_')) return;
+        const packId = val.replace('custom_', '');
+        const pack = customPackages.find(p => p.id === packId);
+        if (!pack) return;
+
+        if (confirm(`Vil du slette pakken "${pack.name}"?`)) {
+            customPackages = customPackages.filter(p => p.id !== packId);
+            localStorage.setItem(CUSTOM_PACKS_KEY, JSON.stringify(customPackages));
+            updatePackageDropdown('');
+            setProfileState(null);
+        }
+    });
+
+    btnClear.addEventListener('click', () => {
+        if (confirm('Vil du nulstille hele skemaet?')) {
+            selections = {};
+            setProfileState(null);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+            renderPickerGrid();
+        }
+    });
+
+    // --- VISNING 2: FAGOVERSIGT (4 SØJLER) ---
+    function renderMatrixView() {
+        const seasonMode = matrixSeasonSelect.value;
+        matrixContent.innerHTML = '';
+
+        if (seasonMode === 'foraar') {
+            matrixTitleAccent.textContent = 'FORÅRSHOLD';
+        } else if (seasonMode === 'efteraar') {
+            matrixTitleAccent.textContent = 'EFTERÅRSHOLD';
+        } else {
+            matrixTitleAccent.textContent = 'HELE SKOLEÅRET';
+        }
+
+        const matrixPeriods = [];
+        if (seasonMode === 'efteraar' || seasonMode === 'all') {
+            matrixPeriods.push({
+                label: '1. Periode',
+                sub: 'Aug - Okt',
+                slots: { idraet1: 'idraet1_e1', idraet2: 'idraet2_e1', komp: 'kompetence_e1', insp: 'inspiration_e1' }
+            });
+            matrixPeriods.push({
+                label: '2. Periode',
+                sub: 'Okt - Dec',
+                slots: { idraet1: 'idraet1_e2', idraet2: 'idraet2_e2', komp: 'kompetence_e2', insp: 'inspiration_e2' }
+            });
+        }
+        if (seasonMode === 'foraar' || seasonMode === 'all') {
+            matrixPeriods.push({
+                label: (seasonMode === 'foraar' ? '1. Periode' : '3. Periode'),
+                sub: 'Jan - Feb',
+                slots: { idraet1: 'idraet1_f1', idraet2: 'idraet2_f1', komp: 'kompetence_f1', insp: 'inspiration_f1' },
+                noteKomp: '(1. halvdel)'
+            });
+            matrixPeriods.push({
+                label: (seasonMode === 'foraar' ? '2. Periode' : '4. Periode'),
+                sub: 'Mar - Maj',
+                slots: { idraet1: 'idraet1_f2', idraet2: 'idraet2_f2', komp: 'kompetence_f2', insp: 'inspiration_f2' },
+                noteKomp: '(2. halvdel)'
+            });
+            matrixPeriods.push({
+                label: (seasonMode === 'foraar' ? '3. Periode' : '5. Periode'),
+                sub: 'Maj - Jun',
+                slots: { idraet1: 'idraet1_f3', idraet2: 'idraet2_f3', komp: 'kompetence_f2', insp: 'inspiration_f2' },
+                noteKomp: '(Fortsat)'
+            });
+        }
+
+        matrixPeriods.forEach(p => {
+            const rowEl = document.createElement('div');
+            rowEl.className = 'matrix-row';
+
+            const labelEl = document.createElement('div');
+            labelEl.className = 'matrix-semester-label';
+            labelEl.innerHTML = `<span>${p.label} <small style="font-size:0.75rem; opacity:0.85; font-weight:normal;">(${p.sub})</small></span>`;
+            rowEl.appendChild(labelEl);
+
+            const columns = [
+                { title: 'IDRÆT 1', slotKey: p.slots.idraet1 },
+                { title: 'IDRÆT 2', slotKey: p.slots.idraet2 },
+                { title: 'KOMPETENCEFAG', slotKey: p.slots.komp, note: p.noteKomp },
+                { title: 'INSPIRATIONSFAG', slotKey: p.slots.insp, note: p.noteKomp }
+            ];
+
+            columns.forEach(col => {
+                const card = document.createElement('div');
+                card.className = 'matrix-col-card';
+
+                const list = SETTINGS.offerings[col.slotKey] || [];
+                card.innerHTML = `
+                    <div class="matrix-col-header">
+                        ${col.title} ${col.note ? `<span style="font-size:0.75rem; text-transform:none; opacity:0.8;">${col.note}</span>` : ''}
+                    </div>
+                    <ul class="matrix-subject-list">
+                        ${list.length > 0 ? list.map(s => `
+                            <li class="matrix-subject-item">
+                                ${s.name} <span class="item-loc">(${s.location})</span>
+                            </li>
+                        `).join('') : '<li class="matrix-subject-item" style="opacity:0.5;">-</li>'}
+                    </ul>
+                `;
+                rowEl.appendChild(card);
+            });
+
+            matrixContent.appendChild(rowEl);
+        });
+    }
+
+    // Gem valg i localStorage ved ændring
+    matrixSeasonSelect.addEventListener('change', () => {
+        localStorage.setItem(MATRIX_SEASON_KEY, matrixSeasonSelect.value);
+        renderMatrixView();
+    });
+
+    // --- VISNING 3: FORDELT PÅ LOKALER ---
+    function renderRoomsView() {
+        const blockFilter = roomsBlockSelect.value;
+        roomsContent.innerHTML = '';
+
+        const periods5 = [
+            { key: 'e1', title: 'Aug - Okt' },
+            { key: 'e2', title: 'Okt - Dec' },
+            { key: 'f1', title: 'Jan - Feb' },
+            { key: 'f2', title: 'Mar - Maj' },
+            { key: 'f3', title: 'Maj - Juni' }
+        ];
+
+        const periods4 = [
+            { key: 'e1', title: 'Aug - Okt (E1)' },
+            { key: 'e2', title: 'Okt - Dec (E2)' },
+            { key: 'f1', title: 'Jan - Mar (F1)' },
+            { key: 'f2', title: 'Mar - Jun (F2)' }
+        ];
+
+        const allBlocks = [
+            { blockId: 'idraet1', title: 'BLOK 1 (IDRÆT 1) - FORDELT PÅ LOKALER', periods: periods5 },
+            { blockId: 'idraet2', title: 'BLOK 2 (IDRÆT 2) - FORDELT PÅ LOKALER', periods: periods5 },
+            { blockId: 'kompetence', title: 'KOMPETENCEFAG - FORDELT PÅ LOKALER', periods: periods4 },
+            { blockId: 'inspiration', title: 'INSPIRATIONSFAG - FORDELT PÅ LOKALER', periods: periods4 }
+        ];
+
+        const blocksToRender = blockFilter === 'all' 
+            ? allBlocks 
+            : allBlocks.filter(b => b.blockId === blockFilter);
+
+        blocksToRender.forEach(block => {
+            const usedLocations = new Set();
+            block.periods.forEach(p => {
+                const slotKey = `${block.blockId}_${p.key}`;
+                const offerings = SETTINGS.offerings[slotKey] || [];
+                offerings.forEach(s => {
+                    if (s.location) usedLocations.add(s.location.trim());
+                });
+            });
+
+            const titleEl = document.createElement('div');
+            titleEl.className = 'rooms-section-title';
+            titleEl.textContent = block.title;
+            roomsContent.appendChild(titleEl);
+
+            const table = document.createElement('table');
+            table.className = 'rooms-table';
+
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th class="th-room">Lokale / Facilitet</th>
+                        ${block.periods.map(p => `<th>${p.title}</th>`).join('')}
+                    </tr>
+                </thead>
+            `;
+
+            const tbody = document.createElement('tbody');
+            const handledRooms = new Set();
+
+            SETTINGS.roomGroups.forEach(group => {
+                const matchingRooms = group.rooms.filter(r => usedLocations.has(r));
+                const roomsToShow = (block.blockId.startsWith('idraet') && group.borderColor !== '#0284c7' && group.borderColor !== '#d97706')
+                    ? group.rooms 
+                    : matchingRooms;
+
+                roomsToShow.forEach(roomName => {
+                    handledRooms.add(roomName.toLowerCase());
+                    appendRoomRow(tbody, block, roomName, group.borderColor);
+                });
+            });
+
+            usedLocations.forEach(loc => {
+                if (!handledRooms.has(loc.toLowerCase())) {
+                    appendRoomRow(tbody, block, loc, '#64748b');
+                }
+            });
+
+            table.appendChild(tbody);
+            roomsContent.appendChild(table);
+        });
+    }
+
+    function appendRoomRow(tbody, block, roomName, borderColor) {
+        const tr = document.createElement('tr');
+
+        const roomTd = document.createElement('td');
+        roomTd.className = 'room-name-cell';
+        roomTd.style.borderLeftColor = borderColor;
+        roomTd.textContent = roomName;
+        tr.appendChild(roomTd);
+
+        block.periods.forEach(p => {
+            const slotKey = `${block.blockId}_${p.key}`;
+            const slotOfferings = SETTINGS.offerings[slotKey] || [];
+            const foundSubject = slotOfferings.find(s => s.location && s.location.toLowerCase() === roomName.toLowerCase());
+
+            const td = document.createElement('td');
+            if (foundSubject) {
+                const cat = SETTINGS.categories[foundSubject.category] || { color: '#475569', textColor: '#ffffff' };
+                td.innerHTML = `
+                    <div class="room-subj-pill" style="background-color: ${cat.color}; color: ${cat.textColor};">
+                        ${foundSubject.name}
+                    </div>
+                `;
+            } else {
+                td.className = 'room-empty-cell';
+                td.textContent = '—';
+            }
+            tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+    }
+
+    // Gem valg i localStorage ved ændring
+    roomsBlockSelect.addEventListener('change', () => {
+        localStorage.setItem(ROOMS_BLOCK_KEY, roomsBlockSelect.value);
+        renderRoomsView();
+    });
+
+    // --- BILLEDEKSPORT ---
+    btnShare.addEventListener('click', () => {
+        let targetEl = null;
+        let filename = 'VIH-Eksport.png';
+
+        if (activeTab === 'tab-picker') {
+            targetEl = document.getElementById('schedule-wrapper');
+            filename = 'Mit-VIH-Skema.png';
+        } else if (activeTab === 'tab-matrix') {
+            targetEl = document.getElementById('matrix-wrapper');
+            filename = 'VIH-Fagoversigt-Plakat.png';
+        } else if (activeTab === 'tab-rooms') {
+            targetEl = document.getElementById('rooms-wrapper');
+            filename = 'VIH-Lokaleoversigt.png';
+        }
+
+        if (!targetEl || typeof window.html2canvas !== 'function') {
+            alert('Kunne ikke tage billede.');
+            return;
+        }
+
+        window.html2canvas(targetEl, {
+            scale: 2,
+            backgroundColor: null
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }).catch(err => {
+            console.error('Fejl ved billeddannelse:', err);
+            alert('Der opstod en fejl under eksporten.');
+        });
+    });
+
+    updatePackageDropdown();
+    switchTab(activeTab);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startApp);
+} else {
+    startApp();
+}
