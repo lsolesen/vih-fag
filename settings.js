@@ -1,16 +1,15 @@
 export const VIH_SETTINGS = {
-    // 1. Kategorier og deres farver
+    // 1. Kategorier med stabil key og redigerbart visningsnavn (name)
     categories: {
-        "Bold & Boldspil": { color: "#1d4ed8", textColor: "#ffffff" },
-        "Fitness & Styrke": { color: "#ea580c", textColor: "#ffffff" },
-        "Outdoor & Adventure": { color: "#15803d", textColor: "#ffffff" },
-        "Psykologi & Velvære": { color: "#7e22ce", textColor: "#ffffff" },
-        "Uddannelse & Ledelse": { color: "#ca8a04", textColor: "#000000" },
-        "Almen & Samfund": { color: "#0f766e", textColor: "#ffffff" }
+        "bold": { name: "Bold & Boldspil", color: "#1d4ed8", textColor: "#ffffff" },
+        "fitness": { name: "Fitness & Styrke", color: "#ea580c", textColor: "#ffffff" },
+        "outdoor": { name: "Outdoor & Adventure", color: "#15803d", textColor: "#ffffff" },
+        "psykologi": { name: "Psykologi & Velvære", color: "#7e22ce", textColor: "#ffffff" },
+        "ledelse": { name: "Uddannelse & Ledelse", color: "#ca8a04", textColor: "#000000" },
+        "almen": { name: "Almen & Samfund", color: "#0f766e", textColor: "#ffffff" }
     },
 
-    // 2. Lokaler med farvekodning til lokaleoversigten (jfr. regnearket)
-// 2. Lokaler med farvekodning til lokaleoversigten
+    // 2. Lokaler med farvekodning til lokaleoversigten
     roomGroups: [
         {
             groupName: "Haller & Boldbaner",
@@ -94,190 +93,188 @@ export const VIH_SETTINGS = {
         }
     ],
 
-    // 4. Det nøjagtige udbud af fag pr. blok og periode (baseret på regnearket)
+    // 4. Det nøjagtige udbud af fag pr. blok og periode (nu med category keys)
     offerings: {
         // IDRÆT 1
         "idraet1_e1": [
-            { id: "i1_e1_haandbold", name: "Håndbold 🤾", category: "Bold & Boldspil", location: "Hal" },
-            { id: "i1_e1_bold360", name: "Bold 360 ⚽🏀", category: "Bold & Boldspil", location: "Multihal" },
-            { id: "i1_e1_fodbold", name: "Fodbold ⚽", category: "Bold & Boldspil", location: "Græsbane" },
-            { id: "i1_e1_padel", name: "Padel (+1000 DKK) 🎾", category: "Bold & Boldspil", location: "Padelcenter" },
-            { id: "i1_e1_cali", name: "Styrke & Calisthenics", category: "Fitness & Styrke", location: "Styrke" },
-            { id: "i1_e1_fit360", name: "Fitness 360° 😅", category: "Fitness & Styrke", location: "Dansesal" },
-            { id: "i1_e1_yoga", name: "Yoga - Hatha, Aerial & Akro 🧘", category: "Psykologi & Velvære", location: "Holdtræning" },
-            { id: "i1_e1_cops", name: "COPS - Polititræning 👮", category: "Fitness & Styrke", location: "Løbebane" },
-            { id: "i1_e1_adv", name: "Adventurerace 🗺️", category: "Outdoor & Adventure", location: "MTB" },
-            { id: "i1_e1_surf", name: "YoSurf'n'Climb 🏄", category: "Outdoor & Adventure", location: "Klatrevæg" },
-            { id: "i1_e1_bootcamp", name: "Bootcamp 🥵", category: "Fitness & Styrke", location: "Udendørs" }
+            { id: "i1_e1_haandbold", name: "Håndbold 🤾", category: "bold", location: "Hal" },
+            { id: "i1_e1_bold360", name: "Bold 360 ⚽🏀", category: "bold", location: "Multihal" },
+            { id: "i1_e1_fodbold", name: "Fodbold ⚽", category: "bold", location: "Græsbane" },
+            { id: "i1_e1_padel", name: "Padel (+1000 DKK) 🎾", category: "bold", location: "Padelcenter" },
+            { id: "i1_e1_cali", name: "Styrke & Calisthenics", category: "fitness", location: "Styrke" },
+            { id: "i1_e1_fit360", name: "Fitness 360° 😅", category: "fitness", location: "Dansesal" },
+            { id: "i1_e1_yoga", name: "Yoga - Hatha, Aerial & Akro 🧘", category: "psykologi", location: "Holdtræning" },
+            { id: "i1_e1_cops", name: "COPS - Polititræning 👮", category: "fitness", location: "Løbebane" },
+            { id: "i1_e1_adv", name: "Adventurerace 🗺️", category: "outdoor", location: "MTB" },
+            { id: "i1_e1_surf", name: "YoSurf'n'Climb 🏄", category: "outdoor", location: "Klatrevæg" },
+            { id: "i1_e1_bootcamp", name: "Bootcamp 🥵", category: "fitness", location: "Udendørs" }
         ],
         "idraet1_e2": [
-            { id: "i1_e2_haandbold", name: "Håndbold 🤾", category: "Bold & Boldspil", location: "Hal" },
-            { id: "i1_e2_basket", name: "Basketball 🏀", category: "Bold & Boldspil", location: "Multihal" },
-            { id: "i1_e2_fodbold_pige", name: "Fodbold & Pigefodbold ⚽", category: "Bold & Boldspil", location: "Wembley" },
-            { id: "i1_e2_padel", name: "Padel (+1000 DKK) 🎾", category: "Bold & Boldspil", location: "Padelcenter" },
-            { id: "i1_e2_styrke", name: "Styrketræning 💪", category: "Fitness & Styrke", location: "Styrke" },
-            { id: "i1_e2_cardio", name: "Cardio Attack ❤️", category: "Fitness & Styrke", location: "Dansesal" },
-            { id: "i1_e2_functional", name: "Functional Training 😅", category: "Fitness & Styrke", location: "Holdtræning" },
-            { id: "i1_e2_bike", name: "Indoor Bike Xperience 🚴", category: "Fitness & Styrke", location: "Spinning" },
-            { id: "i1_e2_loeb", name: "Løb & Løbetræning 👟", category: "Fitness & Styrke", location: "Løbebane" }
+            { id: "i1_e2_haandbold", name: "Håndbold 🤾", category: "bold", location: "Hal" },
+            { id: "i1_e2_basket", name: "Basketball 🏀", category: "bold", location: "Multihal" },
+            { id: "i1_e2_fodbold_pige", name: "Fodbold & Pigefodbold ⚽", category: "bold", location: "Wembley" },
+            { id: "i1_e2_padel", name: "Padel (+1000 DKK) 🎾", category: "bold", location: "Padelcenter" },
+            { id: "i1_e2_styrke", name: "Styrketræning 💪", category: "fitness", location: "Styrke" },
+            { id: "i1_e2_cardio", name: "Cardio Attack ❤️", category: "fitness", location: "Dansesal" },
+            { id: "i1_e2_functional", name: "Functional Training 😅", category: "fitness", location: "Holdtræning" },
+            { id: "i1_e2_bike", name: "Indoor Bike Xperience 🚴", category: "fitness", location: "Spinning" },
+            { id: "i1_e2_loeb", name: "Løb & Løbetræning 👟", category: "fitness", location: "Løbebane" }
         ],
         "idraet1_f1": [
-            { id: "i1_f1_haandbold", name: "Håndbold 🤾", category: "Bold & Boldspil", location: "Hal" },
-            { id: "i1_f1_multisport", name: "Multisport ♟️", category: "Bold & Boldspil", location: "Multihal" },
-            { id: "i1_f1_fodbold", name: "Fodbold ⚽", category: "Bold & Boldspil", location: "Wembley" },
-            { id: "i1_f1_padel", name: "Padel (+1000 DKK) 🎾", category: "Bold & Boldspil", location: "Padelcenter" },
-            { id: "i1_f1_styrke", name: "Styrketræning 💪", category: "Fitness & Styrke", location: "Styrke" },
-            { id: "i1_f1_fit360", name: "Fitness 360° 😅", category: "Fitness & Styrke", location: "Dansesal" },
-            { id: "i1_f1_yoga", name: "Yoga - Hatha, Aerial & Akro 🧘", category: "Psykologi & Velvære", location: "Holdtræning" },
-            { id: "i1_f1_bike", name: "Indoor Bike Xperience 🚴", category: "Fitness & Styrke", location: "Spinning" },
-            { id: "i1_f1_loeb", name: "Løb & Løbetræning 👟", category: "Fitness & Styrke", location: "Løbebane" }
+            { id: "i1_f1_haandbold", name: "Håndbold 🤾", category: "bold", location: "Hal" },
+            { id: "i1_f1_multisport", name: "Multisport ♟️", category: "bold", location: "Multihal" },
+            { id: "i1_f1_fodbold", name: "Fodbold ⚽", category: "bold", location: "Wembley" },
+            { id: "i1_f1_padel", name: "Padel (+1000 DKK) 🎾", category: "bold", location: "Padelcenter" },
+            { id: "i1_f1_styrke", name: "Styrketræning 💪", category: "fitness", location: "Styrke" },
+            { id: "i1_f1_fit360", name: "Fitness 360° 😅", category: "fitness", location: "Dansesal" },
+            { id: "i1_f1_yoga", name: "Yoga - Hatha, Aerial & Akro 🧘", category: "psykologi", location: "Holdtræning" },
+            { id: "i1_f1_bike", name: "Indoor Bike Xperience 🚴", category: "fitness", location: "Spinning" },
+            { id: "i1_f1_loeb", name: "Løb & Løbetræning 👟", category: "fitness", location: "Løbebane" }
         ],
         "idraet1_f2": [
-            { id: "i1_f2_haandbold", name: "Håndbold 🤾", category: "Bold & Boldspil", location: "Hal" },
-            { id: "i1_f2_basket", name: "Basketball 🏀", category: "Bold & Boldspil", location: "Multihal" },
-            { id: "i1_f2_fodbold_pige", name: "Fodbold & Pigefodbold ⚽", category: "Bold & Boldspil", location: "Græsbane" },
-            { id: "i1_f2_power", name: "Styrke & Power Performance", category: "Fitness & Styrke", location: "Styrke" },
-            { id: "i1_f2_cardio", name: "Cardio Attack ❤️", category: "Fitness & Styrke", location: "Dansesal" },
-            { id: "i1_f2_balance", name: "Balanced Body & Movement", category: "Psykologi & Velvære", location: "Holdtræning" },
-            { id: "i1_f2_cops", name: "COPS - Polititræning 👮", category: "Fitness & Styrke", location: "Løbebane" },
-            { id: "i1_f2_adv", name: "Adventurerace 🗺️", category: "Outdoor & Adventure", location: "MTB" },
-            { id: "i1_f2_loeb", name: "Løb & Løbetræning 👟", category: "Fitness & Styrke", location: "Udendørs" }
+            { id: "i1_f2_haandbold", name: "Håndbold 🤾", category: "bold", location: "Hal" },
+            { id: "i1_f2_basket", name: "Basketball 🏀", category: "bold", location: "Multihal" },
+            { id: "i1_f2_fodbold_pige", name: "Fodbold & Pigefodbold ⚽", category: "bold", location: "Græsbane" },
+            { id: "i1_f2_power", name: "Styrke & Power Performance", category: "fitness", location: "Styrke" },
+            { id: "i1_f2_cardio", name: "Cardio Attack ❤️", category: "fitness", location: "Dansesal" },
+            { id: "i1_f2_balance", name: "Balanced Body & Movement", category: "psykologi", location: "Holdtræning" },
+            { id: "i1_f2_cops", name: "COPS - Polititræning 👮", category: "fitness", location: "Løbebane" },
+            { id: "i1_f2_adv", name: "Adventurerace 🗺️", category: "outdoor", location: "MTB" },
+            { id: "i1_f2_loeb", name: "Løb & Løbetræning 👟", category: "fitness", location: "Udendørs" }
         ],
         "idraet1_f3": [
-            { id: "i1_f3_bold360", name: "Bold 360 ⚽🏀", category: "Bold & Boldspil", location: "Hal" },
-            { id: "i1_f3_basket", name: "Basketball 🏀", category: "Bold & Boldspil", location: "Multihal" },
-            { id: "i1_f3_fodbold", name: "Fodbold ⚽", category: "Bold & Boldspil", location: "Græsbane" },
-            { id: "i1_f3_padel", name: "Padel (+1000 DKK) 🎾", category: "Bold & Boldspil", location: "Padelcenter" },
-            { id: "i1_f3_cali", name: "Styrke & Calisthenics", category: "Fitness & Styrke", location: "Styrke" },
-            { id: "i1_f3_functional", name: "Functional Training 😅", category: "Fitness & Styrke", location: "Holdtræning" },
-            { id: "i1_f3_surf", name: "YoSurf'n'Climb 🏄", category: "Outdoor & Adventure", location: "Klatrevæg" },
-            { id: "i1_f3_beach", name: "Beach Sport 🏖️", category: "Outdoor & Adventure", location: "Strand" },
-            { id: "i1_f3_bootcamp", name: "Bootcamp 🥵", category: "Fitness & Styrke", location: "Udendørs" }
+            { id: "i1_f3_bold360", name: "Bold 360 ⚽🏀", category: "bold", location: "Hal" },
+            { id: "i1_f3_basket", name: "Basketball 🏀", category: "bold", location: "Multihal" },
+            { id: "i1_f3_fodbold", name: "Fodbold ⚽", category: "bold", location: "Græsbane" },
+            { id: "i1_f3_padel", name: "Padel (+1000 DKK) 🎾", category: "bold", location: "Padelcenter" },
+            { id: "i1_f3_cali", name: "Styrke & Calisthenics", category: "fitness", location: "Styrke" },
+            { id: "i1_f3_functional", name: "Functional Training 😅", category: "fitness", location: "Holdtræning" },
+            { id: "i1_f3_surf", name: "YoSurf'n'Climb 🏄", category: "outdoor", location: "Klatrevæg" },
+            { id: "i1_f3_beach", name: "Beach Sport 🏖️", category: "outdoor", location: "Strand" },
+            { id: "i1_f3_bootcamp", name: "Bootcamp 🥵", category: "fitness", location: "Udendørs" }
         ],
 
         // IDRÆT 2
         "idraet2_e1": [
-            { id: "i2_e1_volley", name: "Volleyball & Beachvolley 🏐", category: "Bold & Boldspil", location: "Hal" },
-            { id: "i2_e1_ketsjer", name: "Ketsjer 360 🎾🏸", category: "Bold & Boldspil", location: "Multihal" },
-            { id: "i2_e1_fodbold_player", name: "Fodbold & Playertek ⚽", category: "Bold & Boldspil", location: "Græsbane" },
-            { id: "i2_e1_cross", name: "Crossfitness 🏋️", category: "Fitness & Styrke", location: "Styrke" },
-            { id: "i2_e1_hold", name: "Fitness Holdtræning 🕺🏼", category: "Fitness & Styrke", location: "Holdtræning" },
-            { id: "i2_e1_ocr", name: "OCR & Fun Run 🏃‍♂️", category: "Fitness & Styrke", location: "Træningsstativ" },
-            { id: "i2_e1_adv360", name: "Adventure 360° 🧗", category: "Outdoor & Adventure", location: "MTB" },
-            { id: "i2_e1_multisport", name: "Multisport ♟️", category: "Bold & Boldspil", location: "Udendørs" },
-            { id: "i2_e1_kajak", name: "Havkajak 🚣‍♀️", category: "Outdoor & Adventure", location: "Kajakker" }
+            { id: "i2_e1_volley", name: "Volleyball & Beachvolley 🏐", category: "bold", location: "Hal" },
+            { id: "i2_e1_ketsjer", name: "Ketsjer 360 🎾🏸", category: "bold", location: "Multihal" },
+            { id: "i2_e1_fodbold_player", name: "Fodbold & Playertek ⚽", category: "bold", location: "Græsbane" },
+            { id: "i2_e1_cross", name: "Crossfitness 🏋️", category: "fitness", location: "Styrke" },
+            { id: "i2_e1_hold", name: "Fitness Holdtræning 🕺🏼", category: "fitness", location: "Holdtræning" },
+            { id: "i2_e1_ocr", name: "OCR & Fun Run 🏃‍♂️", category: "fitness", location: "Træningsstativ" },
+            { id: "i2_e1_adv360", name: "Adventure 360° 🧗", category: "outdoor", location: "MTB" },
+            { id: "i2_e1_multisport", name: "Multisport ♟️", category: "bold", location: "Udendørs" },
+            { id: "i2_e1_kajak", name: "Havkajak 🚣‍♀️", category: "outdoor", location: "Kajakker" }
         ],
         "idraet2_e2": [
-            { id: "i2_e2_futsal", name: "Futsal ⚽", category: "Bold & Boldspil", location: "Hal" },
-            { id: "i2_e2_badminton", name: "Badminton & Racket Sports 🏸", category: "Bold & Boldspil", location: "Multihal" },
-            { id: "i2_e2_styrke", name: "Styrketræning 💪", category: "Fitness & Styrke", location: "Styrke" },
-            { id: "i2_e2_fighter", name: "Fighter 🥷🏻", category: "Fitness & Styrke", location: "Dansesal" },
-            { id: "i2_e2_dance", name: "Dance 🕺🏼", category: "Fitness & Styrke", location: "Holdtræning" },
-            { id: "i2_e2_mtb", name: "Mountainbike & Trail Surfing 🚵", category: "Outdoor & Adventure", location: "MTB" },
-            { id: "i2_e2_game", name: "Game changer 🎲", category: "Outdoor & Adventure", location: "Friluftsbassin" },
-            { id: "i2_e2_toughest", name: "Toughest 🧼", category: "Fitness & Styrke", location: "Udendørs" }
+            { id: "i2_e2_futsal", name: "Futsal ⚽", category: "bold", location: "Hal" },
+            { id: "i2_e2_badminton", name: "Badminton & Racket Sports 🏸", category: "bold", location: "Multihal" },
+            { id: "i2_e2_styrke", name: "Styrketræning 💪", category: "fitness", location: "Styrke" },
+            { id: "i2_e2_fighter", name: "Fighter 🥷🏻", category: "fitness", location: "Dansesal" },
+            { id: "i2_e2_dance", name: "Dance 🕺🏼", category: "fitness", location: "Holdtræning" },
+            { id: "i2_e2_mtb", name: "Mountainbike & Trail Surfing 🚵", category: "outdoor", location: "MTB" },
+            { id: "i2_e2_game", name: "Game changer 🎲", category: "outdoor", location: "Friluftsbassin" },
+            { id: "i2_e2_toughest", name: "Toughest 🧼", category: "fitness", location: "Udendørs" }
         ],
         "idraet2_f1": [
-            { id: "i2_f1_futsal", name: "Futsal ⚽", category: "Bold & Boldspil", location: "Hal" },
-            { id: "i2_f1_badminton", name: "Badminton & Racket Sports 🏸", category: "Bold & Boldspil", location: "Multihal" },
-            { id: "i2_f1_cross", name: "Crossfitness 🏋️", category: "Fitness & Styrke", location: "Styrke" },
-            { id: "i2_f1_powerfit", name: "Power Fitness 🏋️", category: "Fitness & Styrke", location: "Dansesal" },
-            { id: "i2_f1_hold", name: "Fitness Holdtræning 🕺🏼", category: "Fitness & Styrke", location: "Holdtræning" },
-            { id: "i2_f1_endurance", name: "Power Endurance Sport 🚴", category: "Fitness & Styrke", location: "Spinning" },
-            { id: "i2_f1_adv360", name: "Adventure 360° 🧗", category: "Outdoor & Adventure", location: "MTB" },
-            { id: "i2_f1_toughest", name: "Toughest 🧼", category: "Fitness & Styrke", location: "Udendørs" }
+            { id: "i2_f1_futsal", name: "Futsal ⚽", category: "bold", location: "Hal" },
+            { id: "i2_f1_badminton", name: "Badminton & Racket Sports 🏸", category: "bold", location: "Multihal" },
+            { id: "i2_f1_cross", name: "Crossfitness 🏋️", category: "fitness", location: "Styrke" },
+            { id: "i2_f1_powerfit", name: "Power Fitness 🏋️", category: "fitness", location: "Dansesal" },
+            { id: "i2_f1_hold", name: "Fitness Holdtræning 🕺🏼", category: "fitness", location: "Holdtræning" },
+            { id: "i2_f1_endurance", name: "Power Endurance Sport 🚴", category: "fitness", location: "Spinning" },
+            { id: "i2_f1_adv360", name: "Adventure 360° 🧗", category: "outdoor", location: "MTB" },
+            { id: "i2_f1_toughest", name: "Toughest 🧼", category: "fitness", location: "Udendørs" }
         ],
         "idraet2_f2": [
-            { id: "i2_f2_volley", name: "Volleyball & Beachvolley 🏐", category: "Bold & Boldspil", location: "Hal" },
-            { id: "i2_f2_badminton", name: "Badminton & Racket Sports 🏸", category: "Bold & Boldspil", location: "Multihal" },
-            { id: "i2_f2_fodbold_player", name: "Fodbold & Playertek ⚽", category: "Bold & Boldspil", location: "Græsbane" },
-            { id: "i2_f2_styrke", name: "Styrketræning 💪", category: "Fitness & Styrke", location: "Styrke" },
-            { id: "i2_f2_game", name: "Game changer 🎲", category: "Outdoor & Adventure", location: "Dansesal" },
-            { id: "i2_f2_dance", name: "Dance 🕺🏼", category: "Fitness & Styrke", location: "Holdtræning" },
-            { id: "i2_f2_ocr", name: "OCR & Fun Run 🏃‍♂️", category: "Fitness & Styrke", location: "Træningsstativ" },
-            { id: "i2_f2_mtb", name: "Mountainbike & Trail Surfing 🚵", category: "Outdoor & Adventure", location: "MTB" },
-            { id: "i2_f2_bike_fusion", name: "Bike Team Fusion 🚴", category: "Fitness & Styrke", location: "Udendørs" }
+            { id: "i2_f2_volley", name: "Volleyball & Beachvolley 🏐", category: "bold", location: "Hal" },
+            { id: "i2_f2_badminton", name: "Badminton & Racket Sports 🏸", category: "bold", location: "Multihal" },
+            { id: "i2_f2_fodbold_player", name: "Fodbold & Playertek ⚽", category: "bold", location: "Græsbane" },
+            { id: "i2_f2_styrke", name: "Styrketræning 💪", category: "fitness", location: "Styrke" },
+            { id: "i2_f2_game", name: "Game changer 🎲", category: "outdoor", location: "Dansesal" },
+            { id: "i2_f2_dance", name: "Dance 🕺🏼", category: "fitness", location: "Holdtræning" },
+            { id: "i2_f2_ocr", name: "OCR & Fun Run 🏃‍♂️", category: "fitness", location: "Træningsstativ" },
+            { id: "i2_f2_mtb", name: "Mountainbike & Trail Surfing 🚵", category: "outdoor", location: "MTB" },
+            { id: "i2_f2_bike_fusion", name: "Bike Team Fusion 🚴", category: "fitness", location: "Udendørs" }
         ],
         "idraet2_f3": [
-            { id: "i2_f3_volley", name: "Volleyball & Beachvolley 🏐", category: "Bold & Boldspil", location: "Hal" },
-            { id: "i2_f3_ketsjer", name: "Ketsjer 360 🎾🏸", category: "Bold & Boldspil", location: "Multihal" },
-            { id: "i2_f3_cross", name: "Crossfitness 🏋️", category: "Fitness & Styrke", location: "Styrke" },
-            { id: "i2_f3_fighter", name: "Fighter 🥷🏻", category: "Fitness & Styrke", location: "Dansesal" },
-            { id: "i2_f3_hold", name: "Fitness Holdtræning 🕺🏼", category: "Fitness & Styrke", location: "Holdtræning" },
-            { id: "i2_f3_mtb", name: "Mountainbike & Trail Surfing 🚵", category: "Outdoor & Adventure", location: "MTB" },
-            { id: "i2_f3_multisport", name: "Multisport ♟️", category: "Bold & Boldspil", location: "Udendørs" },
-            { id: "i2_f3_kajak", name: "Havkajak 🚣‍♀️", category: "Outdoor & Adventure", location: "Kajakker" }
+            { id: "i2_f3_volley", name: "Volleyball & Beachvolley 🏐", category: "bold", location: "Hal" },
+            { id: "i2_f3_ketsjer", name: "Ketsjer 360 🎾🏸", category: "bold", location: "Multihal" },
+            { id: "i2_f3_cross", name: "Crossfitness 🏋️", category: "fitness", location: "Styrke" },
+            { id: "i2_f3_fighter", name: "Fighter 🥷🏻", category: "fitness", location: "Dansesal" },
+            { id: "i2_f3_hold", name: "Fitness Holdtræning 🕺🏼", category: "fitness", location: "Holdtræning" },
+            { id: "i2_f3_mtb", name: "Mountainbike & Trail Surfing 🚵", category: "outdoor", location: "MTB" },
+            { id: "i2_f3_multisport", name: "Multisport ♟️", category: "bold", location: "Udendørs" },
+            { id: "i2_f3_kajak", name: "Havkajak 🚣‍♀️", category: "outdoor", location: "Kajakker" }
         ],
 
         // KOMPETENCEFAG
         "kompetence_e1": [
-            { id: "k_e1_politi", name: "Politi 👮", category: "Uddannelse & Ledelse", location: "Teorilokale 1" },
-            { id: "k_e1_fysio", name: "FysioFit & Test 🧑‍🔬", category: "Fitness & Styrke", location: "PhysioFit Lab" },
-            { id: "k_e1_ernaering", name: "Ernæring & Forbrænding 🥕", category: "Fitness & Styrke", location: "Teorilokale 2" },
-            { id: "k_e1_psyko", name: "Sportspsykologi & Teamplayer 🤯", category: "Psykologi & Velvære", location: "Teorilokale 3" },
-            { id: "k_e1_friluft", name: "Friluftsliv 🌳", category: "Outdoor & Adventure", location: "Friluftsgården" },
-            { id: "k_e1_klatreinst", name: "Outdoor & Klatreinstruktør 🌳", category: "Outdoor & Adventure", location: "Klatrevæg" },
-            { id: "k_e1_musik", name: "Musik 🎶", category: "Almen & Samfund", location: "Musiklokale" },
-            { id: "k_e1_medier", name: "Medier & Kommunikation 🗒️", category: "Almen & Samfund", location: "Medierum" },
-            { id: "k_e1_inter", name: "International Class 🏳️‍🌈", category: "Almen & Samfund", location: "Klasselokale" }
+            { id: "k_e1_politi", name: "Politi 👮", category: "ledelse", location: "Teorilokale 1" },
+            { id: "k_e1_fysio", name: "FysioFit & Test 🧑‍🔬", category: "fitness", location: "PhysioFit Lab" },
+            { id: "k_e1_ernaering", name: "Ernæring & Forbrænding 🥕", category: "fitness", location: "Teorilokale 2" },
+            { id: "k_e1_psyko", name: "Sportspsykologi & Teamplayer 🤯", category: "psykologi", location: "Teorilokale 3" },
+            { id: "k_e1_friluft", name: "Friluftsliv 🌳", category: "outdoor", location: "Friluftsgården" },
+            { id: "k_e1_klatreinst", name: "Outdoor & Klatreinstruktør 🌳", category: "outdoor", location: "Klatrevæg" },
+            { id: "k_e1_musik", name: "Musik 🎶", category: "almen", location: "Musiklokale" },
+            { id: "k_e1_inter", name: "International Class 🏳️‍🌈", category: "almen", location: "Klasselokale" }
         ],
         "kompetence_e2": [
-            { id: "k_e2_fitinst", name: "Fitnessinstruktør 🏋️", category: "Uddannelse & Ledelse", location: "PhysioFit Lab" },
-            { id: "k_e2_test", name: "Test & Træning 🧑‍🔬", category: "Fitness & Styrke", location: "Testcenter" },
-            { id: "k_e2_bodymind", name: "Body & Mind 😶‍🌫️", category: "Psykologi & Velvære", location: "Dansesal" },
-            { id: "k_e2_fodboldtr", name: "Fodboldtræner & Performance ⚽", category: "Bold & Boldspil", location: "Teorilokale 1" },
-            { id: "k_e2_psyko", name: "Psykologi 🧠", category: "Psykologi & Velvære", location: "Teorilokale 2" },
-            { id: "k_e2_baal", name: "Bryg & Bål 🔥", category: "Outdoor & Adventure", location: "Bålpladsen" },
-            { id: "k_e2_musik", name: "Musik 🎶", category: "Almen & Samfund", location: "Musiklokale" },
-            { id: "k_e2_journalistik", name: "Sportsjournalistik 🗒️", category: "Almen & Samfund", location: "Medierum" },
-            { id: "k_e2_leadership", name: "Leadership 🤝", category: "Uddannelse & Ledelse", location: "Teorilokale 3" }
+            { id: "k_e2_fitinst", name: "Fitnessinstruktør 🏋️", category: "ledelse", location: "PhysioFit Lab" },
+            { id: "k_e2_test", name: "Test & Træning 🧑‍🔬", category: "fitness", location: "Testcenter" },
+            { id: "k_e2_bodymind", name: "Body & Mind 😶‍🌫️", category: "psykologi", location: "Dansesal" },
+            { id: "k_e2_fodboldtr", name: "Fodboldtræner & Performance ⚽", category: "bold", location: "Teorilokale 1" },
+            { id: "k_e2_psyko", name: "Psykologi 🧠", category: "psykologi", location: "Teorilokale 2" },
+            { id: "k_e2_baal", name: "Bryg & Bål 🔥", category: "outdoor", location: "Bålpladsen" },
+            { id: "k_e2_musik", name: "Musik 🎶", category: "almen", location: "Musiklokale" },
+            { id: "k_e2_journalistik", name: "Sportsjournalistik 🗒️", category: "almen", location: "Medierum" },
+            { id: "k_e2_leadership", name: "Leadership 🤝", category: "ledelse", location: "Teorilokale 3" }
         ],
         "kompetence_f1": [
-            { id: "k_f1_test", name: "Test & Træning 🧑‍🔬", category: "Fitness & Styrke", location: "Testcenter" },
-            { id: "k_f1_ernaering", name: "Ernæring & Forbrænding 🥕", category: "Fitness & Styrke", location: "Teorilokale 1" },
-            { id: "k_f1_politi", name: "Politi 👮", category: "Uddannelse & Ledelse", location: "Teorilokale 2" },
-            { id: "k_f1_psyko", name: "Psykologi 🧠", category: "Psykologi & Velvære", location: "Teorilokale 3" },
-            { id: "k_f1_baal", name: "Bryg & Bål 🔥", category: "Outdoor & Adventure", location: "Bålpladsen" },
-            { id: "k_f1_musik", name: "Musik 🎶", category: "Almen & Samfund", location: "Musiklokale" },
-            { id: "k_f1_journalistik", name: "Sportsjournalistik 🗒️", category: "Almen & Samfund", location: "Medierum" },
-            { id: "k_f1_event", name: "Event Maker 🎪", category: "Uddannelse & Ledelse", location: "Fællesrum" },
-            { id: "k_f1_inter", name: "International Class 🏳️‍🌈", category: "Almen & Samfund", location: "Klasselokale" }
+            { id: "k_f1_test", name: "Test & Træning 🧑‍🔬", category: "fitness", location: "Testcenter" },
+            { id: "k_f1_ernaering", name: "Ernæring & Forbrænding 🥕", category: "fitness", location: "Teorilokale 1" },
+            { id: "k_f1_politi", name: "Politi 👮", category: "ledelse", location: "Teorilokale 2" },
+            { id: "k_f1_psyko", name: "Psykologi 🧠", category: "psykologi", location: "Teorilokale 3" },
+            { id: "k_f1_baal", name: "Bryg & Bål 🔥", category: "outdoor", location: "Bålpladsen" },
+            { id: "k_f1_musik", name: "Musik 🎶", category: "almen", location: "Musiklokale" },
+            { id: "k_f1_journalistik", name: "Sportsjournalistik 🗒️", category: "almen", location: "Medierum" },
+            { id: "k_f1_event", name: "Event Maker 🎪", category: "ledelse", location: "Fællesrum" },
+            { id: "k_f1_inter", name: "International Class 🏳️‍🌈", category: "almen", location: "Klasselokale" }
         ],
         "kompetence_f2": [
-            { id: "k_f2_fitinst", name: "Fitnessinstruktør 🏋️", category: "Uddannelse & Ledelse", location: "PhysioFit Lab" },
-            { id: "k_f2_fodboldtr", name: "Fodboldtræner & Performance ⚽", category: "Bold & Boldspil", location: "Teorilokale 1" },
-            { id: "k_f2_bodymind", name: "Body & Mind 😶‍🌫️", category: "Psykologi & Velvære", location: "Dansesal" },
-            { id: "k_f2_sportspsyko", name: "Sportspsykologi & Teamplayer 🤯", category: "Psykologi & Velvære", location: "Teorilokale 2" },
-            { id: "k_f2_power", name: "Personlig Power 🦸", category: "Uddannelse & Ledelse", location: "Teorilokale 3" },
-            { id: "k_f2_friluft", name: "Friluftsliv 🌳", category: "Outdoor & Adventure", location: "Friluftsgården" },
-            { id: "k_f2_musik", name: "Musik 🎶", category: "Almen & Samfund", location: "Musiklokale" },
-            { id: "k_f2_medier", name: "Medier & Kommunikation 🗒️", category: "Almen & Samfund", location: "Medierum" }
+            { id: "k_f2_fitinst", name: "Fitnessinstruktør 🏋️", category: "ledelse", location: "PhysioFit Lab" },
+            { id: "k_f2_fodboldtr", name: "Fodboldtræner & Performance ⚽", category: "bold", location: "Teorilokale 1" },
+            { id: "k_f2_bodymind", name: "Body & Mind 😶‍🌫️", category: "psykologi", location: "Dansesal" },
+            { id: "k_f2_sportspsyko", name: "Sportspsykologi & Teamplayer 🤯", category: "psykologi", location: "Teorilokale 2" },
+            { id: "k_f2_power", name: "Personlig Power 🦸", category: "ledelse", location: "Teorilokale 3" },
+            { id: "k_f2_friluft", name: "Friluftsliv 🌳", category: "outdoor", location: "Friluftsgården" },
+            { id: "k_f2_musik", name: "Musik 🎶", category: "almen", location: "Musiklokale" },
+            { id: "k_f2_medier", name: "Medier & Kommunikation 🗒️", category: "almen", location: "Medierum" }
         ],
 
         // INSPIRATIONSFAG
         "inspiration_e1": [
-            { id: "insp_e1_massage", name: "Sportsmassage 💆", category: "Krop & Sundhed", location: "Behandlerrum" },
-            { id: "insp_e1_krea", name: "Design 🎨", category: "Kreativitet", location: "Krealokale" },
-            { id: "insp_e1_horisont", name: "Horisont 🎨", category: "Almen & Samfund", location: "Krealokale" }
+            { id: "insp_e1_massage", name: "Sportsmassage 💆", category: "psykologi", location: "Behandlerrum" },
+            { id: "insp_e1_krea", name: "Design 🎨", category: "almen", location: "Krealokale" }
         ],
         "inspiration_e2": [
-            { id: "insp_e2_sauna", name: "Vinterbadning & Saunagus 🧖", category: "Krop & Sundhed", location: "Sauna / Kysten" },
-            { id: "insp_e2_green", name: "Grøn Mad 🌱", category: "Almen & Samfund", location: "Køkkenet" },
-            { id: "insp_e2_staafrem", name: "Stå Frem 🗣️", category: "Uddannelse & Ledelse", location: "Dramalokale" },
-            { id: "insp_e2_guitar", name: "Begynderguitar 🎸", category: "Dans, Sang & Musik", location: "Musiksal" },
-            { id: "insp_e2_politi", name: "Politi 🎸", category: "Almen & Samfund", location: "Musiksal" }
+            { id: "insp_e2_sauna", name: "Vinterbadning & Saunagus 🧖", category: "psykologi", location: "Sauna / Kysten" },
+            { id: "insp_e2_green", name: "Grøn Mad 🌱", category: "almen", location: "Køkkenet" },
+            { id: "insp_e2_staafrem", name: "Stå Frem 🗣️", category: "ledelse", location: "Dramalokale" },
+            { id: "insp_e2_guitar", name: "Begynderguitar 🎸", category: "almen", location: "Musiksal" }
         ],
         "inspiration_f1": [
-            { id: "insp_f1_sauna", name: "Vinterbadning & Saunagus 🧖", category: "Psykologi & Velvære", location: "Sauna / Kysten" },
-            { id: "insp_f1_massage", name: "Sportsmassage 💆", category: "Psykologi & Velvære", location: "Behandlerrum" },
-            { id: "insp_f1_salsa", name: "Dans & Salsa 💃", category: "Dans, Sang & Musik", location: "Dansesalen" },
-            { id: "insp_f1_horisont", name: "Horisont 🎨", category: "Almen & Samfund", location: "Krealokale" }
+            { id: "insp_f1_sauna", name: "Vinterbadning & Saunagus 🧖", category: "psykologi", location: "Sauna / Kysten" },
+            { id: "insp_f1_massage", name: "Sportsmassage 💆", category: "psykologi", location: "Behandlerrum" },
+            { id: "insp_f1_salsa", name: "Dans & Salsa 💃", category: "fitness", location: "Dansesalen" }
         ],
         "inspiration_f2": [
-            { id: "insp_f2_bush", name: "Knivværksted 🏕️", category: "Outdoor & Adventure", location: "Bålhytten" },
-            { id: "insp_f2_keramik", name: "Keramik 🎨", category: "Kreativitet", location: "Krealokale" },
-            { id: "insp_f2_sang", name: "Kor 🎤", category: "Dans, Sang & Musik", location: "Musiksal" },
-            { id: "insp_f2_politi", name: "Politi 🎸", category: "Almen & Samfund", location: "Musiksal" }
+            { id: "insp_f2_bush", name: "Knivværksted 🏕️", category: "outdoor", location: "Bålhytten" },
+            { id: "insp_f2_keramik", name: "Keramik 🎨", category: "almen", location: "Krealokale" },
+            { id: "insp_f2_sang", name: "Kor 🎤", category: "almen", location: "Musiksal" }
         ]
-    }
+    },
+
+    // 5. Prototyper som fallback
+    prototypes: []
 };

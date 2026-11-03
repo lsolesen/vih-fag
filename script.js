@@ -7,7 +7,7 @@ const scannedPrototypes = Object.values(prototypeFiles).map(mod => mod.default |
 function startApp() {
     const SETTINGS = VIH_SETTINGS;
 
-    // Flet de scannede filer fra /prototypes sammen med eventuelle standarder fra settings.js
+    // Flet scannede filer fra /prototypes sammen med eventuelle standarder
     const existingPrototypes = SETTINGS.prototypes || [];
     const allPrototypes = [...scannedPrototypes];
 
@@ -26,14 +26,13 @@ function startApp() {
     const ROOMS_BLOCK_KEY = 'vih_rooms_block';
     const ACTIVE_TAB_KEY = 'vih_active_tab';
 
-    // State: Valgte fag
+    // State: Valgte fag (understøtter nu både enkelt-ID eller array af IDs [id1, id2])
     let selections = {};
     try {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) selections = JSON.parse(stored);
     } catch (e) { console.warn(e); }
 
-    // State: Gemte brugerpakker
     let customPackages = [];
     try {
         const storedPacks = localStorage.getItem(CUSTOM_PACKS_KEY);
@@ -76,7 +75,26 @@ function startApp() {
     const profileIndicator = document.getElementById('profile-indicator');
     const profileIndicatorName = document.getElementById('profile-indicator-name');
 
-    // Sæt gemte standardvalg fra localStorage
+    // Hjælpefunktion: Slår kategori op via key
+    function getCategory(catKey) {
+        if (SETTINGS.categories && SETTINGS.categories[catKey]) {
+            return SETTINGS.categories[catKey];
+        }
+        if (SETTINGS.categories) {
+            for (const k in SETTINGS.categories) {
+                if (SETTINGS.categories[k].name === catKey) return SETTINGS.categories[k];
+            }
+        }
+        return { name: catKey || '', color: '#475569', textColor: '#ffffff' };
+    }
+
+    // Normaliserer valg til et array af IDs [id1, id2, ...]
+    function getSelectedIds(slotId) {
+        const val = selections[slotId];
+        if (!val) return [];
+        return Array.isArray(val) ? val : [val];
+    }
+
     const savedMatrixSeason = localStorage.getItem(MATRIX_SEASON_KEY) || 'all';
     matrixSeasonSelect.value = savedMatrixSeason;
 
@@ -95,19 +113,15 @@ function startApp() {
         return null;
     }
 
-    // --- TAB SWITCHING LOGIK ---
+    // --- TAB SWITCHING ---
     let activeTab = localStorage.getItem(ACTIVE_TAB_KEY) || 'tab-picker';
 
     function switchTab(targetTab) {
         activeTab = targetTab;
         localStorage.setItem(ACTIVE_TAB_KEY, targetTab);
 
-        tabBtns.forEach(b => {
-            b.classList.toggle('active', b.dataset.tab === targetTab);
-        });
-        tabPanes.forEach(p => {
-            p.classList.toggle('active', p.id === targetTab);
-        });
+        tabBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === targetTab));
+        tabPanes.forEach(p => p.classList.toggle('active', p.id === targetTab));
 
         matrixControls.style.display = targetTab === 'tab-matrix' ? 'flex' : 'none';
         roomsControls.style.display = targetTab === 'tab-rooms' ? 'flex' : 'none';
@@ -117,9 +131,7 @@ function startApp() {
         if (targetTab === 'tab-picker') renderPickerGrid();
     }
 
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-    });
+    tabBtns.forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
 
     // --- VISNING 1: MIT FAGVALG ---
     function setProfileState(profile, isModified = false) {
@@ -196,69 +208,90 @@ function startApp() {
             gridEl.appendChild(rowHeader);
 
             row.slots.forEach(slot => {
-                const selectedSubjectId = selections[slot.id];
-                const subject = selectedSubjectId ? findSubject(slot.id, selectedSubjectId) : null;
+                const selectedIds = getSelectedIds(slot.id);
+                const subjects = selectedIds.map(id => findSubject(slot.id, id)).filter(Boolean);
 
                 const cell = document.createElement('div');
                 cell.className = 'cell';
                 cell.style.gridColumn = `span ${slot.span}`;
                 if (slot.isFirstSpring) cell.classList.add('season-divider');
 
-                if (subject) {
-                    const cat = SETTINGS.categories[subject.category] || { color: '#475569', textColor: '#ffffff' };
-                    cell.classList.add('cell-filled');
+                if (subjects.length === 0) {
+                    // Tom celle
+                    cell.classList.add('cell-empty');
+                    cell.innerHTML = `<div class="empty-plus">+</div><div class="empty-text">Vælg fag</div>`;
+                } else if (subjects.length === 1) {
+                    // 1 fag: Fuld brik uden lokaleangivelse
+                    const s = subjects[0];
+                    const cat = getCategory(s.category);
+                    cell.classList.add('cell-filled', 'cell-single');
                     cell.style.backgroundColor = cat.color;
                     cell.style.color = cat.textColor;
 
                     cell.innerHTML = `
-                        <div class="cell-badge">${subject.category}</div>
-                        <div class="cell-name">${subject.name}</div>
-                        <div class="cell-location">📍 ${subject.location}</div>
+                        <div class="cell-badge">${cat.name || s.category}</div>
+                        <div class="cell-name">${s.name}</div>
                     `;
                 } else {
-                    cell.classList.add('cell-empty');
-                    cell.innerHTML = `<div class="empty-plus">+</div><div class="empty-text">Vælg fag</div>`;
+                    // 2 eller 3 fag: Pænt opdelt split-visning uden lokaler
+                    cell.classList.add('cell-multi');
+                    cell.dataset.count = subjects.length;
+
+                    subjects.forEach(s => {
+                        const cat = getCategory(s.category);
+                        const subItem = document.createElement('div');
+                        subItem.className = 'cell-sub-item';
+                        subItem.style.backgroundColor = cat.color;
+                        subItem.style.color = cat.textColor;
+
+                        subItem.innerHTML = `
+                            <div class="cell-badge">${cat.name || s.category}</div>
+                            <div class="cell-name">${s.name}</div>
+                        `;
+                        cell.appendChild(subItem);
+                    });
                 }
 
-                cell.addEventListener('click', () => openSubjectModal(row, slot, selectedSubjectId));
+                cell.addEventListener('click', () => openSubjectModal(row, slot, selectedIds));
                 gridEl.appendChild(cell);
             });
         });
     }
 
-    function openSubjectModal(row, slot, currentSubjectId) {
-        currentSlotContext = { row, slot, currentSubjectId };
+    // --- MODAL: FLERVALG ---
+    function openSubjectModal(row, slot, currentSelectedIds) {
+        currentSlotContext = { row, slot, selectedIds: [...currentSelectedIds] };
         currentCategoryFilter = 'ALLE';
 
         modalTitle.textContent = `${row.title} · ${slot.title}`;
-        modalSubtitle.textContent = `Muligheder for denne periode`;
-        btnRemoveSubject.style.display = currentSubjectId ? 'block' : 'none';
+        modalSubtitle.textContent = `Vælg 1-3 fag for at vise mulighederne på dette spor`;
+        btnRemoveSubject.style.display = currentSelectedIds.length > 0 ? 'block' : 'none';
 
         renderFilterChips(slot.id);
-        renderSubjectOptions(slot.id, currentSubjectId);
+        renderSubjectOptions(slot.id);
         modalEl.showModal();
     }
 
     function renderFilterChips(slotId) {
         modalFilterBar.innerHTML = '';
         const slotOfferings = SETTINGS.offerings[slotId] || [];
-        const categoriesInSlot = ['ALLE', ...new Set(slotOfferings.map(s => s.category))];
+        const catKeys = ['ALLE', ...new Set(slotOfferings.map(s => s.category))];
 
-        categoriesInSlot.forEach(catName => {
+        catKeys.forEach(catKey => {
             const chip = document.createElement('button');
             chip.type = 'button';
-            chip.className = 'filter-chip' + (currentCategoryFilter === catName ? ' active' : '');
-            chip.textContent = catName;
+            chip.className = 'filter-chip' + (currentCategoryFilter === catKey ? ' active' : '');
+            chip.textContent = catKey === 'ALLE' ? 'ALLE' : getCategory(catKey).name;
             chip.addEventListener('click', () => {
-                currentCategoryFilter = catName;
+                currentCategoryFilter = catKey;
                 renderFilterChips(slotId);
-                renderSubjectOptions(slotId, currentSlotContext?.currentSubjectId);
+                renderSubjectOptions(slotId);
             });
             modalFilterBar.appendChild(chip);
         });
     }
 
-    function renderSubjectOptions(slotId, currentSubjectId) {
+    function renderSubjectOptions(slotId) {
         modalSubjectList.innerHTML = '';
         let options = SETTINGS.offerings[slotId] || [];
 
@@ -267,34 +300,58 @@ function startApp() {
         }
 
         if (options.length === 0) {
-            modalSubjectList.innerHTML = '<p style="color:#64748b; font-size:0.9rem;">Ingen fag i denne kategori.</p>';
+            modalSubjectList.innerHTML = '<p style="color:#64748b; font-size:0.9rem;">Ingen fag fundet i denne kategori.</p>';
             return;
         }
 
+        const activeIds = currentSlotContext.selectedIds;
+
         options.forEach(sub => {
-            const cat = SETTINGS.categories[sub.category] || { color: '#475569', textColor: '#ffffff' };
+            const cat = getCategory(sub.category);
+            const isSelected = activeIds.includes(sub.id);
+
             const card = document.createElement('div');
             card.className = 'subject-card';
-            if (sub.id === currentSubjectId) card.classList.add('is-selected');
+            if (isSelected) card.classList.add('is-selected');
 
             card.style.backgroundColor = cat.color;
             card.style.color = cat.textColor;
 
             card.innerHTML = `
-                <div class="cell-badge">${sub.category}</div>
+                <div class="cell-badge">${cat.name || sub.category}</div>
                 <div class="cell-name">${sub.name}</div>
                 <div class="cell-location">📍 ${sub.location}</div>
+                ${isSelected ? '<span class="subject-card-check">✓</span>' : ''}
             `;
 
+            // Toggle valg af fag (op til 3 fag)
             card.addEventListener('click', () => {
-                const prev = selections[currentSlotContext.slot.id];
-                if (prev !== sub.id) {
-                    selections[currentSlotContext.slot.id] = sub.id;
-                    if (currentProfile) setProfileState(currentProfile, true);
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
-                    renderPickerGrid();
+                const idx = activeIds.indexOf(sub.id);
+                if (idx !== -1) {
+                    activeIds.splice(idx, 1);
+                } else {
+                    if (activeIds.length >= 3) {
+                        alert('Du kan højst vælge 3 fag i samme blok for at bevare et overskueligt skema.');
+                        return;
+                    }
+                    activeIds.push(sub.id);
                 }
-                modalEl.close();
+
+                // Opdater state
+                if (activeIds.length === 0) {
+                    delete selections[currentSlotContext.slot.id];
+                } else if (activeIds.length === 1) {
+                    selections[currentSlotContext.slot.id] = activeIds[0];
+                } else {
+                    selections[currentSlotContext.slot.id] = [...activeIds];
+                }
+
+                if (currentProfile) setProfileState(currentProfile, true);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+                
+                btnRemoveSubject.style.display = activeIds.length > 0 ? 'block' : 'none';
+                renderSubjectOptions(slotId);
+                renderPickerGrid();
             });
 
             modalSubjectList.appendChild(card);
@@ -306,8 +363,9 @@ function startApp() {
     modalEl.addEventListener('click', (e) => { if (e.target === modalEl) modalEl.close(); });
 
     btnRemoveSubject.addEventListener('click', () => {
-        if (currentSlotContext && selections[currentSlotContext.slot.id]) {
+        if (currentSlotContext) {
             delete selections[currentSlotContext.slot.id];
+            currentSlotContext.selectedIds = [];
             if (currentProfile) setProfileState(currentProfile, true);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
             renderPickerGrid();
@@ -315,6 +373,7 @@ function startApp() {
         }
     });
 
+    // --- PROTOTYPER & PAKKER ---
     function updatePackageDropdown(selectedId = '') {
         protoSelect.innerHTML = '<option value="">-- Vælg foruddefineret pakke --</option>';
 
@@ -354,7 +413,7 @@ function startApp() {
             const idx = parseInt(val.replace('builtin_', ''), 10);
             const proto = SETTINGS.prototypes[idx];
             if (proto) {
-                selections = { ...proto.selections };
+                selections = JSON.parse(JSON.stringify(proto.selections));
                 setProfileState({ id: val, name: proto.name }, false);
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
                 renderPickerGrid();
@@ -363,7 +422,7 @@ function startApp() {
             const packId = val.replace('custom_', '');
             const pack = customPackages.find(p => p.id === packId);
             if (pack) {
-                selections = { ...pack.selections };
+                selections = JSON.parse(JSON.stringify(pack.selections));
                 setProfileState({ id: val, name: pack.name }, false);
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
                 renderPickerGrid();
@@ -371,7 +430,6 @@ function startApp() {
         }
     });
 
-    // Gem i browserens localStorage
     btnSavePack.addEventListener('click', () => {
         if (Object.keys(selections).length === 0) {
             alert('Skemaet er tomt. Vælg nogle fag før du gemmer pakken.');
@@ -380,18 +438,16 @@ function startApp() {
         const packName = prompt('Hvad skal din fagpakke hedde?', 'Mit forslag');
         if (!packName || !packName.trim()) return;
 
-        const newPack = { id: 'pack_' + Date.now(), name: packName.trim(), selections: { ...selections } };
+        const newPack = { id: 'pack_' + Date.now(), name: packName.trim(), selections: JSON.parse(JSON.stringify(selections)) };
         customPackages.push(newPack);
         localStorage.setItem(CUSTOM_PACKS_KEY, JSON.stringify(customPackages));
         updatePackageDropdown(`custom_${newPack.id}`);
         setProfileState({ id: `custom_${newPack.id}`, name: newPack.name }, false);
     });
 
-    // Download som JSON-fil direkte til prototypes mappen
     if (btnExportJson) {
         btnExportJson.addEventListener('click', () => {
-            const filledCount = Object.keys(selections).length;
-            if (filledCount === 0) {
+            if (Object.keys(selections).length === 0) {
                 alert('Skemaet er tomt. Vælg nogle fag før du downloader en JSON-pakke.');
                 return;
             }
@@ -406,7 +462,7 @@ function startApp() {
             const exportObj = {
                 id: safeId,
                 name: trimmedName,
-                selections: { ...selections }
+                selections: JSON.parse(JSON.stringify(selections))
             };
 
             const jsonStr = JSON.stringify(exportObj, null, 2);
@@ -448,7 +504,7 @@ function startApp() {
         }
     });
 
-    // --- VISNING 2: FAGOVERSIGT (4 SØJLER) ---
+    // --- VISNING 2: FAGOVERSIGT ---
     function renderMatrixView() {
         const seasonMode = matrixSeasonSelect.value;
         matrixContent.innerHTML = '';
@@ -640,7 +696,7 @@ function startApp() {
 
             const td = document.createElement('td');
             if (foundSubject) {
-                const cat = SETTINGS.categories[foundSubject.category] || { color: '#475569', textColor: '#ffffff' };
+                const cat = getCategory(foundSubject.category);
                 td.innerHTML = `
                     <div class="room-subj-pill" style="background-color: ${cat.color}; color: ${cat.textColor};">
                         ${foundSubject.name}

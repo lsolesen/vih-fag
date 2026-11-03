@@ -635,3 +635,123 @@ body {
     color: #ef4444;
     border-color: #ef4444;
 }
+
+/* =========================================================================
+   SKEMABRIKKER (1, 2 eller 3 FAG PR. BLOK)
+   ========================================================================= */
+.cell {
+    min-height: 96px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.cell:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    z-index: 5;
+}
+
+/* 1 fag valgt: Fuld brik */
+.cell-single {
+    padding: 0.65rem 0.55rem;
+    justify-content: space-between;
+}
+.cell-single .cell-name {
+    font-size: 0.94rem;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+/* 2 eller 3 fag valgt: Split-visning */
+.cell-multi {
+    padding: 2px;
+    gap: 2px;
+    background: #f8fafc;
+}
+
+.cell-sub-item {
+    flex: 1;
+    border-radius: 4px;
+    padding: 3px 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* Delbrikkens tekster */
+.cell-sub-item .cell-name {
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+}
+
+/* 2 fag */
+.cell-multi[data-count="2"] .cell-sub-item .cell-name {
+    font-size: 0.82rem;
+}
+.cell-multi[data-count="2"] .cell-sub-item .cell-badge {
+    font-size: 0.6rem;
+}
+
+/* 3 fag */
+.cell-multi[data-count="3"] .cell-sub-item .cell-name {
+    font-size: 0.74rem;
+}
+.cell-multi[data-count="3"] .cell-sub-item .cell-badge {
+    display: none; /* Skjules ved 3 fag for at sikre masser af luft til fagnavnet */
+}
+
+/* Badge styling */
+.cell-badge {
+    font-size: 0.64rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    opacity: 0.88;
+}
+
+/* =========================================================================
+   MODAL: FLERVALG & CHECKMARK
+   ========================================================================= */
+.subject-card {
+    position: relative;
+    padding: 0.85rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    border: 2px solid transparent;
+}
+
+.subject-card:hover {
+    transform: scale(1.02);
+}
+
+.subject-card.is-selected {
+    border-color: #0f172a;
+    box-shadow: 0 0 0 2px #3b82f6;
+}
+
+.subject-card-check {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #0f172a;
+    color: #ffffff;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 900;
+}
