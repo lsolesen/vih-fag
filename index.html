@@ -23,16 +23,6 @@
         </nav>
 
         <div class="controls">
-            <!-- Vises kun i 'Mit Fagvalg' -->
-            <div id="picker-controls" class="context-controls">
-                <select id="prototype-select" class="select-input">
-                    <option value="">-- Vælg foruddefineret pakke --</option>
-                </select>
-                <button id="btn-save-pack" class="btn btn-outline" title="Gem nuværende skema som din egen pakke">💾 Gem som pakke</button>
-                <button id="btn-delete-pack" class="btn btn-danger" style="display: none;">Slet pakke</button>
-                <button id="btn-clear" class="btn btn-outline">Ryd skema</button>
-            </div>
-
             <!-- Vises kun i 'Fagoversigt' (Viborg matrix) -->
             <div id="matrix-controls" class="context-controls" style="display: none;">
                 <label for="matrix-season-select" class="control-label">Vis:</label>
@@ -74,6 +64,24 @@
                         <strong id="profile-indicator-name">-</strong>
                     </div>
                 </div>
+
+                <!-- Værktøjslinje lige over skemaet -->
+                <div class="schedule-toolbar">
+                    <div class="toolbar-left">
+                        <label for="prototype-select" class="toolbar-label">Fagpakke / Prototype:</label>
+                        <select id="prototype-select" class="select-input">
+                            <option value="">-- Vælg foruddefineret pakke --</option>
+                        </select>
+                        <button id="btn-save-pack" class="btn btn-outline" title="Gem nuværende skema som din egen pakke i browseren">💾 Gem som pakke</button>
+                        <button id="btn-delete-pack" class="btn btn-danger" style="display: none;">Slet pakke</button>
+                    </div>
+
+                    <div class="toolbar-right">
+                        <button id="btn-export-json" class="btn btn-outline" title="Download den aktuelle pakke som en .json fil til prototypes mappen">📥 Download JSON</button>
+                        <button id="btn-clear" class="btn btn-subtle" title="Nulstil alle valgte fag">🗑️ Ryd skema</button>
+                    </div>
+                </div>
+
                 <div id="schedule-grid" class="schedule-grid"></div>
             </div>
         </section>

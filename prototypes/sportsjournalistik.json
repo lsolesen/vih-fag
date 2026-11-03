@@ -1,0 +1,29 @@
+{
+  "id": "proto_sportsjournalistik_fremtid",
+  "name": "Sportsjournalistik & Medier (Fremtid)",
+  "notes": "Baseret på fremtidens model fra slidet: Sportsjournalistik kombineret med Medier & Kommunikation samt fysisk grundtræning med løb, styrke, COPS og kampsport/fighter.",
+  "selections": {
+    "idraet1_e1": "i1_e1_cops",
+    "idraet2_e1": "i2_e1_cross",
+    "kompetence_e1": "k_e1_medier",
+    "inspiration_e1": "insp_e1_horisont",
+
+    "idraet1_e2": "i1_e2_loeb",
+    "idraet2_e2": "i2_e2_styrke",
+    "kompetence_e2": "k_e2_journalistik",
+    "inspiration_e2": "insp_e2_staafrem",
+
+    "idraet1_f1": "i1_f1_loeb",
+    "idraet2_f1": "i2_f1_futsal",
+    "kompetence_f1": "k_f1_journalistik",
+    "inspiration_f1": "insp_f1_horisont",
+
+    "idraet1_f2": "i1_f2_haandbold",
+    "idraet2_f2": "i2_f2_styrke",
+
+    "idraet1_f3": "i1_f3_fodbold",
+    "idraet2_f3": "i2_f3_fighter",
+    "kompetence_f2": "k_f2_medier",
+    "inspiration_f2": "insp_f2_keramik"
+  }
+}

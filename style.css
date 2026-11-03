@@ -559,3 +559,79 @@ body {
 .modal-footer {
     padding: 1rem 1.5rem; border-top: 1px solid var(--border-color); background: #f8fafc; display: flex; justify-content: space-between;
 }
+
+/* Værktøjslinje lige over skemaet */
+.schedule-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.toolbar-left, .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.toolbar-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.btn-subtle {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px dashed var(--border-color);
+}
+.btn-subtle:hover {
+    background: #fee2e2;
+    color: #ef4444;
+    border-color: #ef4444;
+}
+
+/* Værktøjslinje lige over skemaet */
+.schedule-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.toolbar-left, .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.toolbar-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.btn-subtle {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px dashed var(--border-color);
+}
+.btn-subtle:hover {
+    background: #fee2e2;
+    color: #ef4444;
+    border-color: #ef4444;
+}

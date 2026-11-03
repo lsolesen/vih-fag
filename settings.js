@@ -218,6 +218,7 @@ export const VIH_SETTINGS = {
             { id: "k_e1_friluft", name: "Friluftsliv 🌳", category: "Outdoor & Adventure", location: "Friluftsgården" },
             { id: "k_e1_klatreinst", name: "Outdoor & Klatreinstruktør 🌳", category: "Outdoor & Adventure", location: "Klatrevæg" },
             { id: "k_e1_musik", name: "Musik 🎶", category: "Almen & Samfund", location: "Musiklokale" },
+            { id: "k_e1_medier", name: "Medier & Kommunikation 🗒️", category: "Almen & Samfund", location: "Medierum" },
             { id: "k_e1_inter", name: "International Class 🏳️‍🌈", category: "Almen & Samfund", location: "Klasselokale" }
         ],
         "kompetence_e2": [
@@ -255,56 +256,28 @@ export const VIH_SETTINGS = {
 
         // INSPIRATIONSFAG
         "inspiration_e1": [
-            { id: "insp_e1_massage", name: "Sportsmassage 💆", category: "Psykologi & Velvære", location: "Behandlerrum" },
-            { id: "insp_e1_krea", name: "Design 🎨", category: "Almen & Samfund", location: "Krealokale" }
+            { id: "insp_e1_massage", name: "Sportsmassage 💆", category: "Krop & Sundhed", location: "Behandlerrum" },
+            { id: "insp_e1_krea", name: "Design 🎨", category: "Kreativitet", location: "Krealokale" },
+            { id: "insp_e1_horisont", name: "Horisont 🎨", category: "Almen & Samfund", location: "Krealokale" }
         ],
         "inspiration_e2": [
-            { id: "insp_e2_sauna", name: "Vinterbadning & Saunagus 🧖", category: "Psykologi & Velvære", location: "Sauna / Kysten" },
+            { id: "insp_e2_sauna", name: "Vinterbadning & Saunagus 🧖", category: "Krop & Sundhed", location: "Sauna / Kysten" },
             { id: "insp_e2_green", name: "Grøn Mad 🌱", category: "Almen & Samfund", location: "Køkkenet" },
             { id: "insp_e2_staafrem", name: "Stå Frem 🗣️", category: "Uddannelse & Ledelse", location: "Dramalokale" },
-            { id: "insp_e2_guitar", name: "Begynderguitar 🎸", category: "Almen & Samfund", location: "Musiksal" }
+            { id: "insp_e2_guitar", name: "Begynderguitar 🎸", category: "Dans, Sang & Musik", location: "Musiksal" },
+            { id: "insp_e2_politi", name: "Politi 🎸", category: "Almen & Samfund", location: "Musiksal" }
         ],
         "inspiration_f1": [
             { id: "insp_f1_sauna", name: "Vinterbadning & Saunagus 🧖", category: "Psykologi & Velvære", location: "Sauna / Kysten" },
             { id: "insp_f1_massage", name: "Sportsmassage 💆", category: "Psykologi & Velvære", location: "Behandlerrum" },
-            { id: "insp_f1_salsa", name: "Dans & Salsa 💃", category: "Fitness & Styrke", location: "Dansesalen" }
+            { id: "insp_f1_salsa", name: "Dans & Salsa 💃", category: "Dans, Sang & Musik", location: "Dansesalen" },
+            { id: "insp_f1_horisont", name: "Horisont 🎨", category: "Almen & Samfund", location: "Krealokale" }
         ],
         "inspiration_f2": [
             { id: "insp_f2_bush", name: "Knivværksted 🏕️", category: "Outdoor & Adventure", location: "Bålhytten" },
-            { id: "insp_f2_keramik", name: "Keramik 🎨", category: "Almen & Samfund", location: "Krealokale" },
-            { id: "insp_f2_sang", name: "Kor 🎤", category: "Almen & Samfund", location: "Musiksal" }
+            { id: "insp_f2_keramik", name: "Keramik 🎨", category: "Kreativitet", location: "Krealokale" },
+            { id: "insp_f2_sang", name: "Kor 🎤", category: "Dans, Sang & Musik", location: "Musiksal" },
+            { id: "insp_f2_politi", name: "Politi 🎸", category: "Almen & Samfund", location: "Musiksal" }
         ]
-    },
-
-    // 5. Prototyper
-    prototypes: [
-        {
-            name: "Styrke- & Fitnessprofilen",
-            selections: {
-                "idraet1_e1": "i1_e1_cali", "idraet2_e1": "i2_e1_cross",
-                "kompetence_e1": "k_e1_fysio", "inspiration_e1": "insp_e1_massage",
-                "idraet1_e2": "i1_e2_styrke", "idraet2_e2": "i2_e2_fighter",
-                "kompetence_e2": "k_e2_fitinst", "inspiration_e2": "insp_e2_sauna",
-                "idraet1_f1": "i1_f1_styrke", "idraet2_f1": "i2_f1_cross",
-                "idraet1_f2": "i1_f2_power", "idraet2_f2": "i2_f2_styrke",
-                "idraet1_f3": "i1_f3_cali", "idraet2_f3": "i2_f3_cross",
-                "kompetence_f1": "k_f1_test", "inspiration_f1": "insp_f1_massage",
-                "kompetence_f2": "k_f2_fitinst", "inspiration_f2": "insp_f2_keramik"
-            }
-        },
-        {
-            name: "Outdoor- & Adventureprofilen",
-            selections: {
-                "idraet1_e1": "i1_e1_adv", "idraet2_e1": "i2_e1_kajak",
-                "kompetence_e1": "k_e1_friluft", "inspiration_e1": "insp_e1_bush",
-                "idraet1_e2": "i1_e2_haandbold", "idraet2_e2": "i2_e2_mtb",
-                "kompetence_e2": "k_e2_baal", "inspiration_e2": "insp_e2_sauna",
-                "idraet1_f1": "i1_f1_multisport", "idraet2_f1": "i2_f1_adv360",
-                "idraet1_f2": "i1_f2_adv", "idraet2_f2": "i2_f2_mtb",
-                "idraet1_f3": "i1_f3_surf", "idraet2_f3": "i2_f3_kajak",
-                "kompetence_f1": "k_f1_mtbinst", "inspiration_f1": "insp_f1_sauna",
-                "kompetence_f2": "k_f2_friluft", "inspiration_f2": "insp_f2_surf"
-            }
-        }
-    ]
+    }
 };

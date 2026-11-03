@@ -1,7 +1,23 @@
 import { VIH_SETTINGS } from './settings.js';
 
+// 1. Vite scanner automatisk alle .json filer i /prototypes mappen
+const prototypeFiles = import.meta.glob('./prototypes/*.json', { eager: true });
+const scannedPrototypes = Object.values(prototypeFiles).map(mod => mod.default || mod);
+
 function startApp() {
     const SETTINGS = VIH_SETTINGS;
+
+    // Flet de scannede filer fra /prototypes sammen med eventuelle standarder fra settings.js
+    const existingPrototypes = SETTINGS.prototypes || [];
+    const allPrototypes = [...scannedPrototypes];
+
+    existingPrototypes.forEach(p => {
+        if (!allPrototypes.some(x => x.name === p.name || (x.id && x.id === p.id))) {
+            allPrototypes.push(p);
+        }
+    });
+
+    SETTINGS.prototypes = allPrototypes;
     
     // LocalStorage nøgler
     const STORAGE_KEY = 'vih_fagvalg_state';
@@ -17,7 +33,7 @@ function startApp() {
         if (stored) selections = JSON.parse(stored);
     } catch (e) { console.warn(e); }
 
-    // State: Gemte pakker
+    // State: Gemte brugerpakker
     let customPackages = [];
     try {
         const storedPacks = localStorage.getItem(CUSTOM_PACKS_KEY);
@@ -32,7 +48,6 @@ function startApp() {
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabPanes = document.querySelectorAll('.tab-pane');
 
-    const pickerControls = document.getElementById('picker-controls');
     const matrixControls = document.getElementById('matrix-controls');
     const roomsControls = document.getElementById('rooms-controls');
 
@@ -55,12 +70,13 @@ function startApp() {
     const protoSelect = document.getElementById('prototype-select');
     const btnSavePack = document.getElementById('btn-save-pack');
     const btnDeletePack = document.getElementById('btn-delete-pack');
+    const btnExportJson = document.getElementById('btn-export-json');
     const btnClear = document.getElementById('btn-clear');
     const btnShare = document.getElementById('btn-share');
     const profileIndicator = document.getElementById('profile-indicator');
     const profileIndicatorName = document.getElementById('profile-indicator-name');
 
-    // Sæt gemte standardvalg fra localStorage (standard: 'all')
+    // Sæt gemte standardvalg fra localStorage
     const savedMatrixSeason = localStorage.getItem(MATRIX_SEASON_KEY) || 'all';
     matrixSeasonSelect.value = savedMatrixSeason;
 
@@ -93,7 +109,6 @@ function startApp() {
             p.classList.toggle('active', p.id === targetTab);
         });
 
-        pickerControls.style.display = targetTab === 'tab-picker' ? 'flex' : 'none';
         matrixControls.style.display = targetTab === 'tab-matrix' ? 'flex' : 'none';
         roomsControls.style.display = targetTab === 'tab-rooms' ? 'flex' : 'none';
 
@@ -305,7 +320,7 @@ function startApp() {
 
         if (SETTINGS.prototypes && SETTINGS.prototypes.length > 0) {
             const builtinGroup = document.createElement('optgroup');
-            builtinGroup.label = 'Faste prototyper';
+            builtinGroup.label = 'Faste prototyper (fra /prototypes)';
             SETTINGS.prototypes.forEach((p, idx) => {
                 const opt = document.createElement('option');
                 opt.value = `builtin_${idx}`;
@@ -317,7 +332,7 @@ function startApp() {
 
         if (customPackages.length > 0) {
             const customGroup = document.createElement('optgroup');
-            customGroup.label = 'Mine egne pakker';
+            customGroup.label = 'Mine egne gemte pakker';
             customPackages.forEach(p => {
                 const opt = document.createElement('option');
                 opt.value = `custom_${p.id}`;
@@ -356,6 +371,7 @@ function startApp() {
         }
     });
 
+    // Gem i browserens localStorage
     btnSavePack.addEventListener('click', () => {
         if (Object.keys(selections).length === 0) {
             alert('Skemaet er tomt. Vælg nogle fag før du gemmer pakken.');
@@ -370,6 +386,43 @@ function startApp() {
         updatePackageDropdown(`custom_${newPack.id}`);
         setProfileState({ id: `custom_${newPack.id}`, name: newPack.name }, false);
     });
+
+    // Download som JSON-fil direkte til prototypes mappen
+    if (btnExportJson) {
+        btnExportJson.addEventListener('click', () => {
+            const filledCount = Object.keys(selections).length;
+            if (filledCount === 0) {
+                alert('Skemaet er tomt. Vælg nogle fag før du downloader en JSON-pakke.');
+                return;
+            }
+
+            const defaultName = currentProfile ? currentProfile.name : 'Ny Fagpakke';
+            const packName = prompt('Navn på fagpakken til JSON-filen:', defaultName);
+            if (!packName || !packName.trim()) return;
+
+            const trimmedName = packName.trim();
+            const safeId = 'proto_' + trimmedName.toLowerCase().replace(/[^a-z0-9]/gi, '_');
+
+            const exportObj = {
+                id: safeId,
+                name: trimmedName,
+                selections: { ...selections }
+            };
+
+            const jsonStr = JSON.stringify(exportObj, null, 2);
+            const blob = new Blob([jsonStr], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+
+            const safeFileName = trimmedName.toLowerCase().replace(/[^a-z0-9æøå]/gi, '_') || 'fagpakke';
+            a.href = url;
+            a.download = `${safeFileName}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    }
 
     btnDeletePack.addEventListener('click', () => {
         const val = protoSelect.value;
@@ -387,7 +440,7 @@ function startApp() {
     });
 
     btnClear.addEventListener('click', () => {
-        if (confirm('Vil du nulstille hele skemaet?')) {
+        if (confirm('Vil du nulstille alle valgte fag i skemaet?')) {
             selections = {};
             setProfileState(null);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
@@ -482,7 +535,6 @@ function startApp() {
         });
     }
 
-    // Gem valg i localStorage ved ændring
     matrixSeasonSelect.addEventListener('change', () => {
         localStorage.setItem(MATRIX_SEASON_KEY, matrixSeasonSelect.value);
         renderMatrixView();
@@ -604,7 +656,6 @@ function startApp() {
         tbody.appendChild(tr);
     }
 
-    // Gem valg i localStorage ved ændring
     roomsBlockSelect.addEventListener('change', () => {
         localStorage.setItem(ROOMS_BLOCK_KEY, roomsBlockSelect.value);
         renderRoomsView();
@@ -614,6 +665,7 @@ function startApp() {
     btnShare.addEventListener('click', () => {
         let targetEl = null;
         let filename = 'VIH-Eksport.png';
+        const toolbar = document.querySelector('.schedule-toolbar');
 
         if (activeTab === 'tab-picker') {
             targetEl = document.getElementById('schedule-wrapper');
@@ -631,15 +683,19 @@ function startApp() {
             return;
         }
 
+        if (toolbar && activeTab === 'tab-picker') toolbar.style.display = 'none';
+
         window.html2canvas(targetEl, {
             scale: 2,
-            backgroundColor: null
+            backgroundColor: '#ffffff'
         }).then(canvas => {
+            if (toolbar && activeTab === 'tab-picker') toolbar.style.display = 'flex';
             const link = document.createElement('a');
             link.download = filename;
             link.href = canvas.toDataURL('image/png');
             link.click();
         }).catch(err => {
+            if (toolbar && activeTab === 'tab-picker') toolbar.style.display = 'flex';
             console.error('Fejl ved billeddannelse:', err);
             alert('Der opstod en fejl under eksporten.');
         });

@@ -1,0 +1,25 @@
+{
+  "id": "proto_fodbold_fremtid",
+  "name": "Fodbold & Træner (Fremtid)",
+  "notes": "Baseret på fremtidens fodboldmodel: Fodbold, Futsal, Fodbold & Test/Playertek samt Fodboldtræner & Performance i kompetencefag.",
+  "selections": {
+    "idraet1_e1": "i1_e1_fodbold",
+    "idraet2_e1": "i2_e1_fodbold_player",
+    "kompetence_e1": "k_e1_fysio",
+    "inspiration_e1": "insp_e1_massage",
+    "idraet1_e2": "i1_e2_fodbold_pige",
+    "idraet2_e2": "i2_e2_futsal",
+    "kompetence_e2": "k_e2_fodboldtr",
+    "inspiration_e2": "insp_e2_staafrem",
+    "idraet1_f1": "i1_f1_fodbold",
+    "idraet2_f1": "i2_f1_futsal",
+    "kompetence_f1": "k_f1_test",
+    "inspiration_f1": "insp_f1_massage",
+    "idraet1_f2": "i1_f2_fodbold_pige",
+    "idraet2_f2": "i2_f2_fodbold_player",
+    "idraet1_f3": "i1_f3_fodbold",
+    "idraet2_f3": "i2_f3_ketsjer",
+    "kompetence_f2": "k_f2_fodboldtr",
+    "inspiration_f2": "insp_f2_bush"
+  }
+}

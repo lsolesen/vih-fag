@@ -1,0 +1,29 @@
+{
+  "id": "proto_sportsjournalistik_klassisk",
+  "name": "Sportsjournalistik (Klassisk forløb)",
+  "notes": "Den etablerede journalistikmodel: Sportsjournalistik i vinterperioderne Okt-Feb suppleret med løbetræning, styrke, forhindringsbane/toughest og personlig formidling.",
+  "selections": {
+    "idraet1_e1": "i1_e1_fodbold",
+    "idraet2_e1": "i2_e1_cross",
+    "kompetence_e1": "k_e1_psyko",
+    "inspiration_e1": "insp_e1_horisont",
+
+    "idraet1_e2": "i1_e2_loeb",
+    "idraet2_e2": "i2_e2_styrke",
+    "kompetence_e2": "k_e2_journalistik",
+    "inspiration_e2": "insp_e2_staafrem",
+
+    "idraet1_f1": "i1_f1_loeb",
+    "idraet2_f1": "i2_f1_toughest",
+    "kompetence_f1": "k_f1_journalistik",
+    "inspiration_f1": "insp_f1_horisont",
+
+    "idraet1_f2": "i1_f2_loeb",
+    "idraet2_f2": "i2_f2_styrke",
+
+    "idraet1_f3": "i1_f3_bootcamp",
+    "idraet2_f3": "i2_f3_fighter",
+    "kompetence_f2": "k_f2_sportspsyko",
+    "inspiration_f2": "insp_f2_keramik"
+  }
+}
