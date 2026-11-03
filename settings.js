@@ -49,7 +49,7 @@ export const VIH_SETTINGS = {
         {
             id: "idraet1",
             title: "Idræt 1",
-            sub: "Hovedfag blok 1",
+            sub: "",
             slots: [
                 { id: "idraet1_e1", title: "Efterår 1 (Aug - Okt)", season: "Efterår", span: 2 },
                 { id: "idraet1_e2", title: "Efterår 2 (Okt - Dec)", season: "Efterår", span: 2 },
@@ -61,7 +61,7 @@ export const VIH_SETTINGS = {
         {
             id: "idraet2",
             title: "Idræt 2",
-            sub: "Hovedfag blok 2",
+            sub: "",
             slots: [
                 { id: "idraet2_e1", title: "Efterår 1 (Aug - Okt)", season: "Efterår", span: 2 },
                 { id: "idraet2_e2", title: "Efterår 2 (Okt - Dec)", season: "Efterår", span: 2 },
@@ -73,7 +73,7 @@ export const VIH_SETTINGS = {
         {
             id: "kompetence",
             title: "Kompetencefag",
-            sub: "Deles midtvejs i foråret",
+            sub: "",
             slots: [
                 { id: "kompetence_e1", title: "Efterår 1 (Aug - Okt)", season: "Efterår", span: 2 },
                 { id: "kompetence_e2", title: "Efterår 2 (Okt - Dec)", season: "Efterår", span: 2 },
@@ -84,7 +84,7 @@ export const VIH_SETTINGS = {
         {
             id: "inspiration",
             title: "Inspirationsfag",
-            sub: "Deles midtvejs i foråret",
+            sub: "",
             slots: [
                 { id: "inspiration_e1", title: "Efterår 1 (Aug - Okt)", season: "Efterår", span: 2 },
                 { id: "inspiration_e2", title: "Efterår 2 (Okt - Dec)", season: "Efterår", span: 2 },
@@ -218,8 +218,7 @@ export const VIH_SETTINGS = {
             { id: "k_e1_friluft", name: "Friluftsliv 🌳", category: "Outdoor & Adventure", location: "Friluftsgården" },
             { id: "k_e1_klatreinst", name: "Outdoor & Klatreinstruktør 🌳", category: "Outdoor & Adventure", location: "Klatrevæg" },
             { id: "k_e1_musik", name: "Musik 🎶", category: "Almen & Samfund", location: "Musiklokale" },
-            { id: "k_e1_inter", name: "International Class 🏳️‍🌈", category: "Almen & Samfund", location: "Klasselokale" },
-            { id: "k_e1_cancer", name: "Courage to Care (Knæk Cancer) 🌸", category: "Almen & Samfund", location: "Fællesrum" }
+            { id: "k_e1_inter", name: "International Class 🏳️‍🌈", category: "Almen & Samfund", location: "Klasselokale" }
         ],
         "kompetence_e2": [
             { id: "k_e2_fitinst", name: "Fitnessinstruktør 🏋️", category: "Uddannelse & Ledelse", location: "PhysioFit Lab" },
@@ -227,9 +226,7 @@ export const VIH_SETTINGS = {
             { id: "k_e2_bodymind", name: "Body & Mind 😶‍🌫️", category: "Psykologi & Velvære", location: "Dansesal" },
             { id: "k_e2_fodboldtr", name: "Fodboldtræner & Performance ⚽", category: "Bold & Boldspil", location: "Teorilokale 1" },
             { id: "k_e2_psyko", name: "Psykologi 🧠", category: "Psykologi & Velvære", location: "Teorilokale 2" },
-            { id: "k_e2_kropssprog", name: "Stil, Stemme & Kropssprog 🦸", category: "Uddannelse & Ledelse", location: "Dramalokale" },
             { id: "k_e2_baal", name: "Bryg & Bål 🔥", category: "Outdoor & Adventure", location: "Bålpladsen" },
-            { id: "k_e2_green", name: "Green Mind 🌳", category: "Almen & Samfund", location: "Værksted" },
             { id: "k_e2_musik", name: "Musik 🎶", category: "Almen & Samfund", location: "Musiklokale" },
             { id: "k_e2_journalistik", name: "Sportsjournalistik 🗒️", category: "Almen & Samfund", location: "Medierum" },
             { id: "k_e2_leadership", name: "Leadership 🤝", category: "Uddannelse & Ledelse", location: "Teorilokale 3" }
@@ -239,9 +236,7 @@ export const VIH_SETTINGS = {
             { id: "k_f1_ernaering", name: "Ernæring & Forbrænding 🥕", category: "Fitness & Styrke", location: "Teorilokale 1" },
             { id: "k_f1_politi", name: "Politi 👮", category: "Uddannelse & Ledelse", location: "Teorilokale 2" },
             { id: "k_f1_psyko", name: "Psykologi 🧠", category: "Psykologi & Velvære", location: "Teorilokale 3" },
-            { id: "k_f1_nature", name: "Nature Flow & Focus 🌳", category: "Psykologi & Velvære", location: "Skovsatellitten" },
             { id: "k_f1_baal", name: "Bryg & Bål 🔥", category: "Outdoor & Adventure", location: "Bålpladsen" },
-            { id: "k_f1_mtbinst", name: "Outdoor & Mountainbikeinstruktør 🚵", category: "Outdoor & Adventure", location: "MTB Værksted" },
             { id: "k_f1_musik", name: "Musik 🎶", category: "Almen & Samfund", location: "Musiklokale" },
             { id: "k_f1_journalistik", name: "Sportsjournalistik 🗒️", category: "Almen & Samfund", location: "Medierum" },
             { id: "k_f1_event", name: "Event Maker 🎪", category: "Uddannelse & Ledelse", location: "Fællesrum" },
@@ -255,34 +250,29 @@ export const VIH_SETTINGS = {
             { id: "k_f2_power", name: "Personlig Power 🦸", category: "Uddannelse & Ledelse", location: "Teorilokale 3" },
             { id: "k_f2_friluft", name: "Friluftsliv 🌳", category: "Outdoor & Adventure", location: "Friluftsgården" },
             { id: "k_f2_musik", name: "Musik 🎶", category: "Almen & Samfund", location: "Musiklokale" },
-            { id: "k_f2_medier", name: "Medier & Kommunikation 🗒️", category: "Almen & Samfund", location: "Medierum" },
-            { id: "k_f2_forskel", name: "Gør en forskel 🌸", category: "Almen & Samfund", location: "Fællesrum" }
+            { id: "k_f2_medier", name: "Medier & Kommunikation 🗒️", category: "Almen & Samfund", location: "Medierum" }
         ],
 
         // INSPIRATIONSFAG
         "inspiration_e1": [
-            { id: "insp_e1_bush", name: "Bush Craft & Bålmad 🔥", category: "Outdoor & Adventure", location: "Bålhytten" },
-            { id: "insp_e1_massage", name: "Massage & Restitution 💆", category: "Psykologi & Velvære", location: "Behandlerrum" },
-            { id: "insp_e1_sang", name: "Syng! & Kor 🎤", category: "Almen & Samfund", location: "Musiksal" },
-            { id: "insp_e1_krea", name: "Design & Keramik 🎨", category: "Almen & Samfund", location: "Krealokale" }
+            { id: "insp_e1_massage", name: "Sportsmassage 💆", category: "Psykologi & Velvære", location: "Behandlerrum" },
+            { id: "insp_e1_krea", name: "Design 🎨", category: "Almen & Samfund", location: "Krealokale" }
         ],
         "inspiration_e2": [
             { id: "insp_e2_sauna", name: "Vinterbadning & Saunagus 🧖", category: "Psykologi & Velvære", location: "Sauna / Kysten" },
-            { id: "insp_e2_green", name: "Grøn Mad & Bæredygtighed 🌱", category: "Almen & Samfund", location: "Køkkenet" },
-            { id: "insp_e2_staafrem", name: "Stå Frem (Tæm taleskræk) 🗣️", category: "Uddannelse & Ledelse", location: "Dramalokale" },
-            { id: "insp_e2_guitar", name: "Guitar & Sangskrivning 🎸", category: "Almen & Samfund", location: "Musiksal" }
+            { id: "insp_e2_green", name: "Grøn Mad 🌱", category: "Almen & Samfund", location: "Køkkenet" },
+            { id: "insp_e2_staafrem", name: "Stå Frem 🗣️", category: "Uddannelse & Ledelse", location: "Dramalokale" },
+            { id: "insp_e2_guitar", name: "Begynderguitar 🎸", category: "Almen & Samfund", location: "Musiksal" }
         ],
         "inspiration_f1": [
             { id: "insp_f1_sauna", name: "Vinterbadning & Saunagus 🧖", category: "Psykologi & Velvære", location: "Sauna / Kysten" },
-            { id: "insp_f1_massage", name: "Massage & Restitution 💆", category: "Psykologi & Velvære", location: "Behandlerrum" },
-            { id: "insp_f1_podcast", name: "Podcast & Fortælling 🎙️", category: "Almen & Samfund", location: "Medierum" },
+            { id: "insp_f1_massage", name: "Sportsmassage 💆", category: "Psykologi & Velvære", location: "Behandlerrum" },
             { id: "insp_f1_salsa", name: "Dans & Salsa 💃", category: "Fitness & Styrke", location: "Dansesalen" }
         ],
         "inspiration_f2": [
-            { id: "insp_f2_bush", name: "Bush Craft & Friluftsliv 🏕️", category: "Outdoor & Adventure", location: "Bålhytten" },
-            { id: "insp_f2_keramik", name: "Design & Keramik 🎨", category: "Almen & Samfund", location: "Krealokale" },
-            { id: "insp_f2_sang", name: "Syng! & Kor 🎤", category: "Almen & Samfund", location: "Musiksal" },
-            { id: "insp_f2_surf", name: "Stand Up Paddle & Badevand 🏄", category: "Outdoor & Adventure", location: "Fjorden" }
+            { id: "insp_f2_bush", name: "Knivværksted 🏕️", category: "Outdoor & Adventure", location: "Bålhytten" },
+            { id: "insp_f2_keramik", name: "Keramik 🎨", category: "Almen & Samfund", location: "Krealokale" },
+            { id: "insp_f2_sang", name: "Kor 🎤", category: "Almen & Samfund", location: "Musiksal" }
         ]
     },
 
