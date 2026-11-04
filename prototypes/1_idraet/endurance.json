@@ -1,0 +1,60 @@
+{
+  "id": "proto_endurance___test",
+  "name": "Endurance & Test",
+  "selections": {
+    "idraet1_e1": [
+      "i1_e1_cops",
+      "i1_e1_adv"
+    ],
+    "idraet2_e1": "i2_e1_ocr",
+    "idraet1_e2": [
+      "i1_e2_bike",
+      "i1_e2_loeb",
+      "i1_e2_cardio"
+    ],
+    "idraet2_e2": "i2_e2_toughest",
+    "idraet1_f1": [
+      "i1_f1_loeb",
+      "i1_f1_bike"
+    ],
+    "idraet2_f1": [
+      "i2_f1_endurance",
+      "i2_f1_toughest"
+    ],
+    "idraet1_f2": [
+      "i1_f2_loeb",
+      "i1_f2_cops",
+      "i1_f2_cardio"
+    ],
+    "idraet2_f2": [
+      "i2_f2_bike_fusion",
+      "i2_f2_ocr",
+      "i2_f2_mtb"
+    ],
+    "idraet1_f3": [
+      "i1_f3_bootcamp",
+      "i1_f3_functional"
+    ],
+    "idraet2_f3": [
+      "i2_f3_cross",
+      "i2_f3_mtb"
+    ],
+    "kompetence_e1": [
+      "k_e1_ernaering",
+      "k_e1_fysio",
+      "k_e1_psyko"
+    ],
+    "kompetence_e2": "k_e2_test",
+    "kompetence_f1": [
+      "k_f1_test",
+      "k_f1_ernaering"
+    ],
+    "kompetence_f2": [
+      "k_f2_fitinst",
+      "k_f2_sportspsyko"
+    ],
+    "inspiration_e1": "insp_e1_massage",
+    "inspiration_e2": "insp_e2_sauna",
+    "inspiration_f1": "insp_f1_massage"
+  }
+}

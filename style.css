@@ -924,3 +924,253 @@ body {
         background: rgba(0, 0, 0, 0.05);
     }
 }
+
+/* =========================================================
+   4 FAG I SAMME BLOK (2x2 GRID)
+   ========================================================= */
+.cell-multi[data-count="4"] {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 3px;
+    padding: 3px;
+}
+
+.cell-multi[data-count="4"] .cell-sub-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3px 6px;
+    border-radius: 4px;
+    min-width: 0; /* Forhindrer tekst i at sprænge kolonnebredden */
+}
+
+.cell-multi[data-count="4"] .cell-name {
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cell-multi[data-count="4"] .cell-badge {
+    font-size: 0.58rem;
+    margin-bottom: 2px;
+    line-height: 1;
+}
+
+/* =========================================================
+   5 FAG I SAMME BLOK (3 foroven, 2 forneden)
+   ========================================================= */
+.cell-multi[data-count="5"] {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+    padding: 2px;
+}
+
+/* De tre første fag i øverste række fylder 2 kolonner hver (2 x 3 = 6) */
+.cell-multi[data-count="5"] .cell-sub-item:nth-child(-n+3) {
+    grid-column: span 2;
+}
+
+/* De to sidste fag i nederste række fylder 3 kolonner hver (3 x 2 = 6) */
+.cell-multi[data-count="5"] .cell-sub-item:nth-child(n+4) {
+    grid-column: span 3;
+}
+
+.cell-multi[data-count="5"] .cell-sub-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2px 4px;
+    border-radius: 3px;
+    min-width: 0;
+}
+
+.cell-multi[data-count="5"] .cell-name {
+    font-size: 0.65rem;
+    font-weight: 700;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cell-multi[data-count="5"] .cell-badge {
+    font-size: 0.52rem;
+    margin-bottom: 1px;
+    line-height: 1;
+}
+
+/* Skjul kategoribadge på alle opdelte kort (2, 3, 4 og 5 fag) */
+.cell-multi .cell-badge {
+    display: none !important;
+}
+
+/* Giv fagnavnet al den frigivne plads og centrer det lodret */
+.cell-multi .cell-sub-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4px 6px;
+}
+
+.cell-multi .cell-name {
+    font-size: 0.74rem;       /* Lidt større og mere læsbar font */
+    font-weight: 700;
+    line-height: 1.15;
+    white-space: normal;      /* Tillad 2 linjer hvis nødvendigt */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* =========================================================
+   SKEMABRIKKER: RENS, VENSTRESTIL & OPTIMERET STAKNING
+   ========================================================= */
+
+/* 1. Fjern kategoribadget fuldstændigt fra ALLE kort */
+.cell-badge {
+    display: none !important;
+}
+
+/* 2. Enkeltfag (1 fag i blokken): Venstrestillet og roligt */
+.cell-single {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 12px;
+}
+
+.cell-single .cell-name {
+    font-size: 0.88rem;
+    font-weight: 800;
+    text-align: left;
+}
+
+/* 3. Fælles styling for alle opdelte felter */
+.cell-multi {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 2px;
+}
+
+.cell-multi .cell-sub-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 8px;
+    border-radius: 4px;
+    min-width: 0;
+}
+
+.cell-multi .cell-name {
+    font-size: 0.74rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+/* 4. 1-3 fag: Altid fuld bredde (stakket i højden) */
+.cell-multi[data-count="2"] .cell-sub-item,
+.cell-multi[data-count="3"] .cell-sub-item {
+    flex: 1;
+    width: 100%;
+}
+
+/* 5. 4 fag: 2x2 grid (hver brik har 50% bredde) */
+.cell-multi[data-count="4"] {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
+}
+
+.cell-multi[data-count="4"] .cell-sub-item {
+    height: 100%;
+}
+
+/* 6. 5 fag: 2 kolonner med lodret fordeling (3 til venstre, 2 til højre) */
+.cell-multi[data-count="5"] {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(6, 1fr);
+    gap: 2px;
+}
+
+/* De tre første fylder venstre kolonne (hver spænder over 2 rækker ud af 6) */
+.cell-multi[data-count="5"] .cell-sub-item:nth-child(1) { grid-column: 1; grid-row: 1 / span 2; }
+.cell-multi[data-count="5"] .cell-sub-item:nth-child(2) { grid-column: 1; grid-row: 3 / span 2; }
+.cell-multi[data-count="5"] .cell-sub-item:nth-child(3) { grid-column: 1; grid-row: 5 / span 2; }
+
+/* De to sidste fylder højre kolonne (hver spænder over 3 rækker ud af 6) */
+.cell-multi[data-count="5"] .cell-sub-item:nth-child(4) { grid-column: 2; grid-row: 1 / span 3; }
+.cell-multi[data-count="5"] .cell-sub-item:nth-child(5) { grid-column: 2; grid-row: 4 / span 3; }
+
+.cell-multi[data-count="5"] .cell-name {
+    font-size: 0.68rem;
+}
+
+/* 1. Store enkeltfelter (fx Sportsmassage): Centreret både lodret og vandret */
+.cell-single {
+    display: flex !important;
+    align-items: center;       /* Lodret midterstilling */
+    justify-content: center;  /* Vandret midterstilling */
+    text-align: center;
+    padding: 10px;
+}
+
+.cell-single .cell-name {
+    font-size: 0.95rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+/* 2. Små split-felter: Centreret lodret, men stabilt venstrestillet */
+.cell-multi .cell-sub-item {
+    display: flex;
+    align-items: center;       /* Lodret midterstilling i striben */
+    justify-content: flex-start; /* Fast venstre-anker */
+    padding: 0 8px;
+}
+
+.cell-multi .cell-name {
+    text-align: left;
+}
+
+/* 1. Store enkeltfelter (fx Sportsmassage): Centreret både lodret og vandret */
+.cell-single {
+    display: flex !important;
+    align-items: center;       /* Lodret midterstilling */
+    justify-content: center;  /* Vandret midterstilling */
+    text-align: center;
+    padding: 10px;
+}
+
+.cell-single .cell-name {
+    font-size: 0.95rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+/* 2. Små split-felter: Centreret lodret, men stabilt venstrestillet */
+.cell-multi .cell-sub-item {
+    display: flex;
+    align-items: center;       /* Lodret midterstilling i striben */
+    justify-content: flex-start; /* Fast venstre-anker */
+    padding: 0 8px;
+}
+
+.cell-multi .cell-name {
+    text-align: left;
+}

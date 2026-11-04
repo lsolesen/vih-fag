@@ -1,0 +1,81 @@
+{
+  "id": "proto_ny_fagpakke",
+  "name": "Boldspil & Holdsport",
+  "selections": {
+    "idraet1_e1": [
+      "i1_e1_fodbold",
+      "i1_e1_haandbold",
+      "i1_e1_padel",
+      "i1_e1_bold360"
+    ],
+    "idraet2_e1": [
+      "i2_e1_volley",
+      "i2_e1_fodbold_player",
+      "i2_e1_ketsjer",
+      "i2_e1_multisport"
+    ],
+    "idraet1_e2": [
+      "i1_e2_haandbold",
+      "i1_e2_basket",
+      "i1_e2_padel",
+      "i1_e2_fodbold_pige"
+    ],
+    "idraet2_e2": [
+      "i2_e2_futsal",
+      "i2_e2_badminton"
+    ],
+    "idraet1_f1": [
+      "i1_f1_fodbold",
+      "i1_f1_haandbold",
+      "i1_f1_padel",
+      "i1_f1_multisport"
+    ],
+    "idraet2_f1": [
+      "i2_f1_futsal",
+      "i2_f1_badminton"
+    ],
+    "idraet1_f2": [
+      "i1_f2_haandbold",
+      "i1_f2_basket",
+      "i1_f2_fodbold_pige"
+    ],
+    "idraet2_f2": [
+      "i2_f2_volley",
+      "i2_f2_fodbold_player",
+      "i2_f2_badminton"
+    ],
+    "idraet1_f3": [
+      "i1_f3_fodbold",
+      "i1_f3_beach",
+      "i1_f3_padel",
+      "i1_f3_basket",
+      "i1_f3_bold360"
+    ],
+    "idraet2_f3": [
+      "i2_f3_volley",
+      "i2_f3_ketsjer",
+      "i2_f3_multisport"
+    ],
+    "kompetence_e1": [
+      "k_e1_psyko",
+      "k_e1_fysio",
+      "k_e1_ernaering"
+    ],
+    "kompetence_e2": [
+      "k_e2_fodboldtr",
+      "k_e2_journalistik"
+    ],
+    "kompetence_f1": [
+      "k_f1_test",
+      "k_f1_ernaering",
+      "k_f1_journalistik"
+    ],
+    "kompetence_f2": [
+      "k_f2_fodboldtr",
+      "k_f2_sportspsyko",
+      "k_f2_power"
+    ],
+    "inspiration_e1": "insp_e1_massage",
+    "inspiration_f1": "insp_f1_massage"
+  }
+}

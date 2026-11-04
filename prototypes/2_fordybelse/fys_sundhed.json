@@ -1,0 +1,24 @@
+{
+  "id": "proto_fordybelse_fys",
+  "name": "Sundhed, Idræt & Krop",
+  "group": "Højskole & Idræt & …",
+  "selections": {
+    "idraet1_e1": ["i1_e1_cali", "i1_e1_fit360"],
+    "idraet2_e1": "i2_e1_cross",
+    "idraet1_e2": "i1_e2_functional",
+    "idraet2_e2": "i2_e2_styrke",
+    "idraet1_f1": "i1_f1_styrke",
+    "idraet2_f1": "i2_f1_cross",
+    "idraet1_f2": "i1_f2_power",
+    "idraet2_f2": "i2_f2_styrke",
+    "idraet1_f3": "i1_f3_functional",
+    "idraet2_f3": "i2_f3_cross",
+    "kompetence_e1": ["k_e1_fysio", "k_e1_ernaering"],
+    "kompetence_e2": ["k_e2_test", "k_e2_fitinst"],
+    "kompetence_f1": ["k_f1_test", "k_f1_ernaering"],
+    "kompetence_f2": "k_f2_fitinst",
+    "inspiration_e1": "insp_e1_massage",
+    "inspiration_e2": "insp_e2_sauna",
+    "inspiration_f1": "insp_f1_massage"
+  }
+}

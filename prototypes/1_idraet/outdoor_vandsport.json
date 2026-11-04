@@ -1,0 +1,52 @@
+{
+  "id": "proto_outdoor___vandsport",
+  "name": "Outdoor & Vandsport",
+  "selections": {
+    "idraet1_e1": [
+      "i1_e1_surf",
+      "i1_e1_adv"
+    ],
+    "idraet2_e1": [
+      "i2_e1_kajak",
+      "i2_e1_adv360"
+    ],
+    "idraet1_e2": "i1_e2_loeb",
+    "idraet2_e2": [
+      "i2_e2_mtb",
+      "i2_e2_game"
+    ],
+    "idraet2_f1": [
+      "i2_f1_adv360",
+      "i2_f1_toughest"
+    ],
+    "idraet1_f2": [
+      "i1_f2_adv",
+      "i1_f2_loeb"
+    ],
+    "idraet2_f2": [
+      "i2_f2_mtb",
+      "i2_f2_game",
+      "i2_f2_ocr",
+      "i2_f2_bike_fusion"
+    ],
+    "idraet1_f3": [
+      "i1_f3_surf",
+      "i1_f3_beach"
+    ],
+    "idraet2_f3": [
+      "i2_f3_kajak",
+      "i2_f3_mtb"
+    ],
+    "kompetence_e1": [
+      "k_e1_friluft",
+      "k_e1_klatreinst"
+    ],
+    "kompetence_e2": "k_e2_baal",
+    "kompetence_f1": "k_f1_baal",
+    "kompetence_f2": "k_f2_friluft",
+    "inspiration_e2": "insp_e2_sauna",
+    "inspiration_f1": "insp_f1_sauna",
+    "inspiration_f2": "insp_f2_bush",
+    "idraet1_f1": "i1_f1_loeb"
+  }
+}

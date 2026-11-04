@@ -1,0 +1,81 @@
+{
+  "id": "proto_fitness___styrke",
+  "name": "Fitness & Styrke",
+  "selections": {
+    "idraet1_e1": [
+      "i1_e1_cali",
+      "i1_e1_fit360",
+      "i1_e1_cops",
+      "i1_e1_bootcamp"
+    ],
+    "idraet2_e1": [
+      "i2_e1_cross",
+      "i2_e1_ocr",
+      "i2_e1_hold"
+    ],
+    "idraet1_e2": [
+      "i1_e2_styrke",
+      "i1_e2_cardio",
+      "i1_e2_functional",
+      "i1_e2_bike"
+    ],
+    "idraet2_e2": [
+      "i2_e2_styrke",
+      "i2_e2_fighter",
+      "i2_e2_dance"
+    ],
+    "idraet1_f1": [
+      "i1_f1_styrke",
+      "i1_f1_fit360",
+      "i1_f1_bike"
+    ],
+    "idraet2_f1": [
+      "i2_f1_cross",
+      "i2_f1_powerfit",
+      "i2_f1_hold"
+    ],
+    "idraet1_f2": [
+      "i1_f2_power",
+      "i1_f2_cardio",
+      "i1_f2_cops"
+    ],
+    "idraet2_f2": [
+      "i2_f2_styrke",
+      "i2_f2_dance",
+      "i2_f2_bike_fusion"
+    ],
+    "idraet1_f3": [
+      "i1_f3_cali",
+      "i1_f3_functional",
+      "i1_f3_bootcamp"
+    ],
+    "idraet2_f3": [
+      "i2_f3_cross",
+      "i2_f3_fighter",
+      "i2_f3_hold"
+    ],
+    "kompetence_e1": [
+      "k_e1_ernaering",
+      "k_e1_fysio",
+      "k_e1_psyko"
+    ],
+    "kompetence_e2": [
+      "k_e2_fitinst",
+      "k_e2_test",
+      "k_e2_bodymind"
+    ],
+    "kompetence_f1": [
+      "k_f1_ernaering",
+      "k_f1_test",
+      "k_f1_psyko"
+    ],
+    "kompetence_f2": [
+      "k_f2_fitinst",
+      "k_f2_sportspsyko",
+      "k_f2_bodymind"
+    ],
+    "inspiration_e1": "insp_e1_massage",
+    "inspiration_e2": "insp_e2_sauna",
+    "inspiration_f1": "insp_f1_massage"
+  }
+}

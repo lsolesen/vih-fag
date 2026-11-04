@@ -1,0 +1,25 @@
+{
+  "id": "proto_fordybelse_lederskab",
+  "name": "Træner, Forening & Lederskab",
+  "group": "Højskole & Idræt & …",
+  "selections": {
+    "idraet1_e1": "i1_e1_fodbold",
+    "idraet2_e1": "i2_e1_haandbold",
+    "idraet1_e2": "i1_e2_basket",
+    "idraet2_e2": "i2_e2_badminton",
+    "idraet1_f1": "i1_f1_fodbold",
+    "idraet2_f1": "i2_f1_cross",
+    "idraet1_f2": "i1_f2_haandbold",
+    "idraet2_f2": "i2_f2_volley",
+    "idraet1_f3": "i1_f3_bold360",
+    "idraet2_f3": "i2_f3_multisport",
+    "kompetence_e1": "k_e1_klatreinst",
+    "kompetence_e2": "k_e2_leadership",
+    "kompetence_f1": "k_f1_event",
+    "kompetence_f2": "k_f2_power",
+    "inspiration_e1": "insp_e1_massage",
+    "inspiration_e2": "insp_e2_staafrem",
+    "inspiration_f1": "insp_f1_massage",
+    "inspiration_f2": "insp_f2_sang"
+  }
+}

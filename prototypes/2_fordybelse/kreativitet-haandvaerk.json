@@ -1,0 +1,25 @@
+{
+  "id": "proto_fordybelse_krea",
+  "name": "Kreativitet & Håndens Arbejde",
+  "group": "Højskole & Idræt & …",
+  "selections": {
+    "idraet1_e1": "i1_e1_yoga",
+    "idraet2_e1": "i2_e1_kajak",
+    "idraet1_e2": "i1_e2_loeb",
+    "idraet2_e2": "i2_e2_dance",
+    "idraet1_f1": "i1_f1_multisport",
+    "idraet2_f1": "i2_f1_badminton",
+    "idraet1_f2": "i1_f2_balance",
+    "idraet2_f2": "i2_f2_dance",
+    "idraet1_f3": "i1_f3_beach",
+    "idraet2_f3": "i2_f3_kajak",
+    "kompetence_e1": "k_e1_friluft",
+    "kompetence_e2": "k_e2_baal",
+    "kompetence_f1": "k_f1_baal",
+    "kompetence_f2": "k_f2_friluft",
+    "inspiration_e1": "insp_e1_krea",
+    "inspiration_e2": "insp_e2_green",
+    "inspiration_f1": "insp_f1_sauna",
+    "inspiration_f2": "insp_f2_keramik"
+  }
+}

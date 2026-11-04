@@ -1,8 +1,18 @@
 import { VIH_SETTINGS } from './settings.js';
 
 // 1. Vite scanner automatisk alle .json filer i /prototypes mappen
-const prototypeFiles = import.meta.glob('./prototypes/*.json', { eager: true });
-const scannedPrototypes = Object.values(prototypeFiles).map(mod => mod.default || mod);
+const prototypeFiles = import.meta.glob('./prototypes/**/*.json', { eager: true });
+const scannedPrototypes = Object.entries(prototypeFiles).map(([path, mod]) => {
+    const data = mod.default || mod;
+    // Hvis prototypen ikke selv har sat en gruppe, udledes den af mappenavnet
+    if (!data.group) {
+        if (path.includes('/1_idraet/')) data.group = 'Højskole & Idræt';
+        else if (path.includes('/2_fordybelse/')) data.group = 'Højskole & Idræt & …';
+        else if (path.includes('/3_elevtyper/')) data.group = 'Elevprofiler / Målgrupper';
+        else data.group = 'Faste prototyper';
+    }
+    return data;
+});
 
 function startApp() {
     const SETTINGS = VIH_SETTINGS;
@@ -280,18 +290,19 @@ function startApp() {
     }
 
     // --- MODAL: FLERVALG ---
-    function openSubjectModal(row, slot, currentSelectedIds) {
-        currentSlotContext = { row, slot, selectedIds: [...currentSelectedIds] };
-        currentCategoryFilter = 'ALLE';
+function openSubjectModal(row, slot, currentSelectedIds) {
+    currentSlotContext = { row, slot, selectedIds: [...currentSelectedIds] };
+    currentCategoryFilter = 'ALLE';
 
-        modalTitle.textContent = `${row.title} · ${slot.title}`;
-        modalSubtitle.textContent = `Vælg 1-3 fag for at vise mulighederne på dette spor`;
-        btnRemoveSubject.style.display = currentSelectedIds.length > 0 ? 'block' : 'none';
+    modalTitle.textContent = `${row.title} · ${slot.title}`;
+    // RETTET: 1-4 fag
+    modalSubtitle.textContent = `Vælg 1-4 fag for at vise mulighederne på dette spor`;
+    btnRemoveSubject.style.display = currentSelectedIds.length > 0 ? 'block' : 'none';
 
-        renderFilterChips(slot.id);
-        renderSubjectOptions(slot.id);
-        modalEl.showModal();
-    }
+    renderFilterChips(slot.id);
+    renderSubjectOptions(slot.id);
+    modalEl.showModal();
+}
 
     function renderFilterChips(slotId) {
         modalFilterBar.innerHTML = '';
@@ -350,8 +361,9 @@ function startApp() {
                 if (idx !== -1) {
                     activeIds.splice(idx, 1);
                 } else {
-                    if (activeIds.length >= 3) {
-                        alert('Du kan højst vælge 3 fag i samme blok for at bevare et overskueligt skema.');
+                    // RETTET: Spærre ved >= 4 i stedet for 3
+                    if (activeIds.length >= 5) {
+                        alert('Du kan højst vælge 5 fag i samme blok for at bevare et overskueligt skema.');
                         return;
                     }
                     activeIds.push(sub.id);
@@ -393,24 +405,48 @@ function startApp() {
     });
 
     // --- PROTOTYPER & PAKKER ---
-    function updatePackageDropdown(selectedId = '') {
+function updatePackageDropdown(selectedId = '') {
         protoSelect.innerHTML = '<option value="">-- Vælg foruddefineret pakke --</option>';
 
         if (SETTINGS.prototypes && SETTINGS.prototypes.length > 0) {
-            const builtinGroup = document.createElement('optgroup');
-            builtinGroup.label = 'Faste prototyper (fra /prototypes)';
+            // Gruppér prototyperne efter deres 'group'
+            const groups = {};
             SETTINGS.prototypes.forEach((p, idx) => {
-                const opt = document.createElement('option');
-                opt.value = `builtin_${idx}`;
-                opt.textContent = p.name;
-                builtinGroup.appendChild(opt);
+                const grp = p.group || 'Faste prototyper';
+                if (!groups[grp]) groups[grp] = [];
+                groups[grp].push({ value: `builtin_${idx}`, name: p.name });
             });
-            protoSelect.appendChild(builtinGroup);
+
+            // Opret en optgroup for hver kategori i den ønskede rækkefølge
+            const desiredOrder = [
+                'Højskole & Idræt',
+                'Højskole & Idræt & …',
+                'Elevprofiler / Målgrupper',
+                'Faste prototyper'
+            ];
+            
+            const sortedGroupKeys = Object.keys(groups).sort((a, b) => {
+                const iA = desiredOrder.indexOf(a);
+                const iB = desiredOrder.indexOf(b);
+                return (iA === -1 ? 99 : iA) - (iB === -1 ? 99 : iB);
+            });
+
+            sortedGroupKeys.forEach(grpName => {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = `── ${grpName} ──`;
+                groups[grpName].forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.value;
+                    opt.textContent = p.name;
+                    optgroup.appendChild(opt);
+                });
+                protoSelect.appendChild(optgroup);
+            });
         }
 
         if (customPackages.length > 0) {
             const customGroup = document.createElement('optgroup');
-            customGroup.label = 'Mine egne gemte pakker';
+            customGroup.label = '── Mine egne gemte pakker ──';
             customPackages.forEach(p => {
                 const opt = document.createElement('option');
                 opt.value = `custom_${p.id}`;
