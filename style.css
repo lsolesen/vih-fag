@@ -755,3 +755,172 @@ body {
     font-size: 0.75rem;
     font-weight: 900;
 }
+
+/* =========================================================
+   FAGUDVIKLING: TILFØJ / SLET FAG I MATRIX
+   ========================================================= */
+.matrix-subject-item {
+    position: relative;
+    padding-right: 24px; /* Plads til slet/fortryd ikon */
+}
+
+/* Slettet (hardkodet) fag */
+.matrix-subject-item.is-deleted {
+    text-decoration: line-through;
+    opacity: 0.8;
+}
+
+/* Tilføjet (custom) fag */
+.matrix-subject-item.is-custom {
+    border-left: 3px solid #f59e0b; /* Gul streg for at fremhæve */
+    background-color: #fffbeb;
+}
+.matrix-subject-item.is-custom::after {
+    content: "✨";
+    font-size: 0.7rem;
+    margin-left: 4px;
+}
+
+/* Slet/Fortryd knapper (vises kun ved hover) */
+.btn-toggle-subject {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    font-size: 0.8rem;
+    transition: opacity 0.15s;
+}
+.matrix-subject-item:hover .btn-toggle-subject {
+    opacity: 1;
+}
+
+/* Tilføj fag knap i bunden af listen */
+.btn-add-subject {
+    width: 100%;
+    background: transparent;
+    border: 1px dashed #cbd5e1;
+    color: #64748b;
+    padding: 4px;
+    border-radius: 4px;
+    margin-top: 6px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: all 0.15s;
+}
+.btn-add-subject:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+    color: #334155;
+}
+
+/* =========================================================
+   FAGUDVIKLING: TILFØJ / SLET FAG I MATRIX
+   ========================================================= */
+
+/* Grundlayout for et fag i oversigten */
+.matrix-subject-item {
+    position: relative;
+    padding-right: 28px; /* Plads til hover-ikon */
+    border-radius: 4px;
+    transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+/* 1. Slettet (hardkodet) fag: Strikethrough og dæmpet */
+.matrix-subject-item.is-deleted {
+    text-decoration: line-through;
+    opacity: 0.35;
+}
+.matrix-subject-item.is-deleted .item-loc {
+    text-decoration: line-through;
+}
+
+/* 2. Tilføjet (custom) fag: Diskret fremhævelse i stedet for skriggul */
+.matrix-subject-item.is-custom {
+    /* Lægger en meget svag gennemsigtig farve ovenpå for en lille toneforskel */
+    background-color: rgba(255, 255, 255, 0.08); 
+    border-left: 2px solid rgba(255, 255, 255, 0.4);
+    padding-left: 6px;
+    margin-left: -8px; /* Trækker den lidt tilbage så teksten flugter med de andre */
+}
+/* Bevarer den lille stjerne, men fjerner den voldsomme baggrund */
+.matrix-subject-item.is-custom::after {
+    content: "✨";
+    font-size: 0.7rem;
+    margin-left: 4px;
+    opacity: 0.7;
+}
+
+/* 3. Slet/Fortryd knapper (vises kun ved hover) */
+.btn-toggle-subject {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    font-size: 0.85rem;
+    transition: opacity 0.15s ease, transform 0.1s ease;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3)); /* Gør ikonet tydeligt uanset tema */
+}
+.matrix-subject-item:hover .btn-toggle-subject {
+    opacity: 1;
+}
+.btn-toggle-subject:hover {
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* 4. Rund "Tilføj fag" knap i stedet for den store stiplede boks */
+.matrix-col-card {
+    position: relative; /* Til at positionere plusset pænt i bunden */
+    padding-bottom: 24px; /* Ekstra plads i bunden til plusset */
+}
+.btn-add-subject {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    padding: 0;
+    line-height: 1;
+}
+.btn-add-subject:hover {
+    border-color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Tilpasning hvis du har lyst (lyst tema) */
+@media (prefers-color-scheme: light) {
+    .matrix-subject-item.is-custom {
+        background-color: rgba(0, 0, 0, 0.03);
+        border-left-color: rgba(0, 0, 0, 0.2);
+    }
+    .btn-add-subject {
+        border-color: rgba(0, 0, 0, 0.2);
+        color: rgba(0, 0, 0, 0.4);
+    }
+    .btn-add-subject:hover {
+        border-color: rgba(0, 0, 0, 0.6);
+        color: rgba(0, 0, 0, 0.7);
+        background: rgba(0, 0, 0, 0.05);
+    }
+}

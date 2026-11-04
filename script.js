@@ -25,8 +25,12 @@ function startApp() {
     const MATRIX_SEASON_KEY = 'vih_matrix_season';
     const ROOMS_BLOCK_KEY = 'vih_rooms_block';
     const ACTIVE_TAB_KEY = 'vih_active_tab';
+    
+    // NYE NØGLER TIL FAGUDVIKLING
+    const DELETED_SUBJECTS_KEY = 'vih_deleted_subjects';
+    const CUSTOM_SUBJECTS_KEY = 'vih_custom_subjects';
 
-    // State: Valgte fag (understøtter nu både enkelt-ID eller array af IDs [id1, id2])
+    // State: Valgte fag i skemaet
     let selections = {};
     try {
         const stored = localStorage.getItem(STORAGE_KEY);
@@ -37,6 +41,19 @@ function startApp() {
     try {
         const storedPacks = localStorage.getItem(CUSTOM_PACKS_KEY);
         if (storedPacks) customPackages = JSON.parse(storedPacks);
+    } catch (e) { console.warn(e); }
+
+    // Fagudvikling State
+    let deletedSubjects = [];
+    try {
+        const storedDeleted = localStorage.getItem(DELETED_SUBJECTS_KEY);
+        if (storedDeleted) deletedSubjects = JSON.parse(storedDeleted);
+    } catch (e) { console.warn(e); }
+
+    let customSubjects = {};
+    try {
+        const storedCustom = localStorage.getItem(CUSTOM_SUBJECTS_KEY);
+        if (storedCustom) customSubjects = JSON.parse(storedCustom);
     } catch (e) { console.warn(e); }
 
     let currentProfile = null;
@@ -75,6 +92,22 @@ function startApp() {
     const profileIndicator = document.getElementById('profile-indicator');
     const profileIndicatorName = document.getElementById('profile-indicator-name');
 
+
+    // --- FAGUDVIKLING HELPER FUNKTION ---
+    function getEffectiveOfferings(slotKey) {
+        const baseList = SETTINGS.offerings[slotKey] || [];
+        const addedList = customSubjects[slotKey] || [];
+        
+        return {
+            base: baseList,
+            added: addedList,
+            activeAll: [
+                ...baseList.filter(s => !deletedSubjects.includes(s.id)),
+                ...addedList
+            ]
+        };
+    }
+
     // Hjælpefunktion: Slår kategori op via key
     function getCategory(catKey) {
         if (SETTINGS.categories && SETTINGS.categories[catKey]) {
@@ -102,12 +135,12 @@ function startApp() {
     roomsBlockSelect.value = savedRoomsBlock;
 
     function findSubject(slotId, subjectId) {
-        const slotList = SETTINGS.offerings[slotId] || [];
-        const found = slotList.find(s => s.id === subjectId);
+        const activeList = getEffectiveOfferings(slotId).activeAll;
+        const found = activeList.find(s => s.id === subjectId);
         if (found) return found;
 
         for (const key in SETTINGS.offerings) {
-            const match = SETTINGS.offerings[key].find(s => s.id === subjectId);
+            const match = getEffectiveOfferings(key).activeAll.find(s => s.id === subjectId);
             if (match) return match;
         }
         return null;
@@ -217,37 +250,25 @@ function startApp() {
                 if (slot.isFirstSpring) cell.classList.add('season-divider');
 
                 if (subjects.length === 0) {
-                    // Tom celle
                     cell.classList.add('cell-empty');
                     cell.innerHTML = `<div class="empty-plus">+</div><div class="empty-text">Vælg fag</div>`;
                 } else if (subjects.length === 1) {
-                    // 1 fag: Fuld brik uden lokaleangivelse
                     const s = subjects[0];
                     const cat = getCategory(s.category);
                     cell.classList.add('cell-filled', 'cell-single');
                     cell.style.backgroundColor = cat.color;
                     cell.style.color = cat.textColor;
-
-                    cell.innerHTML = `
-                        <div class="cell-badge">${cat.name || s.category}</div>
-                        <div class="cell-name">${s.name}</div>
-                    `;
+                    cell.innerHTML = `<div class="cell-badge">${cat.name || s.category}</div><div class="cell-name">${s.name}</div>`;
                 } else {
-                    // 2 eller 3 fag: Pænt opdelt split-visning uden lokaler
                     cell.classList.add('cell-multi');
                     cell.dataset.count = subjects.length;
-
                     subjects.forEach(s => {
                         const cat = getCategory(s.category);
                         const subItem = document.createElement('div');
                         subItem.className = 'cell-sub-item';
                         subItem.style.backgroundColor = cat.color;
                         subItem.style.color = cat.textColor;
-
-                        subItem.innerHTML = `
-                            <div class="cell-badge">${cat.name || s.category}</div>
-                            <div class="cell-name">${s.name}</div>
-                        `;
+                        subItem.innerHTML = `<div class="cell-badge">${cat.name || s.category}</div><div class="cell-name">${s.name}</div>`;
                         cell.appendChild(subItem);
                     });
                 }
@@ -274,8 +295,8 @@ function startApp() {
 
     function renderFilterChips(slotId) {
         modalFilterBar.innerHTML = '';
-        const slotOfferings = SETTINGS.offerings[slotId] || [];
-        const catKeys = ['ALLE', ...new Set(slotOfferings.map(s => s.category))];
+        const activeList = getEffectiveOfferings(slotId).activeAll;
+        const catKeys = ['ALLE', ...new Set(activeList.map(s => s.category))];
 
         catKeys.forEach(catKey => {
             const chip = document.createElement('button');
@@ -293,7 +314,7 @@ function startApp() {
 
     function renderSubjectOptions(slotId) {
         modalSubjectList.innerHTML = '';
-        let options = SETTINGS.offerings[slotId] || [];
+        let options = getEffectiveOfferings(slotId).activeAll;
 
         if (currentCategoryFilter !== 'ALLE') {
             options = options.filter(s => s.category === currentCategoryFilter);
@@ -324,7 +345,6 @@ function startApp() {
                 ${isSelected ? '<span class="subject-card-check">✓</span>' : ''}
             `;
 
-            // Toggle valg af fag (op til 3 fag)
             card.addEventListener('click', () => {
                 const idx = activeIds.indexOf(sub.id);
                 if (idx !== -1) {
@@ -337,7 +357,6 @@ function startApp() {
                     activeIds.push(sub.id);
                 }
 
-                // Opdater state
                 if (activeIds.length === 0) {
                     delete selections[currentSlotContext.slot.id];
                 } else if (activeIds.length === 1) {
@@ -504,7 +523,7 @@ function startApp() {
         }
     });
 
-    // --- VISNING 2: FAGOVERSIGT ---
+    // --- VISNING 2: FAGOVERSIGT (Matrix m. Slet/Tilføj funktionalitet) ---
     function renderMatrixView() {
         const seasonMode = matrixSeasonSelect.value;
         matrixContent.innerHTML = '';
@@ -571,19 +590,111 @@ function startApp() {
                 const card = document.createElement('div');
                 card.className = 'matrix-col-card';
 
-                const list = SETTINGS.offerings[col.slotKey] || [];
-                card.innerHTML = `
-                    <div class="matrix-col-header">
-                        ${col.title} ${col.note ? `<span style="font-size:0.75rem; text-transform:none; opacity:0.8;">${col.note}</span>` : ''}
-                    </div>
-                    <ul class="matrix-subject-list">
-                        ${list.length > 0 ? list.map(s => `
-                            <li class="matrix-subject-item">
-                                ${s.name} <span class="item-loc">(${s.location})</span>
-                            </li>
-                        `).join('') : '<li class="matrix-subject-item" style="opacity:0.5;">-</li>'}
-                    </ul>
-                `;
+                const header = document.createElement('div');
+                header.className = 'matrix-col-header';
+                header.innerHTML = `${col.title} ${col.note ? `<span style="font-size:0.75rem; text-transform:none; opacity:0.8;">${col.note}</span>` : ''}`;
+                card.appendChild(header);
+
+                const listEl = document.createElement('ul');
+                listEl.className = 'matrix-subject-list';
+
+                const offerings = getEffectiveOfferings(col.slotKey);
+
+                // 1. Render hardkodede fag (inkl. slettede)
+                offerings.base.forEach(s => {
+                    const isDeleted = deletedSubjects.includes(s.id);
+                    const li = document.createElement('li');
+                    li.className = `matrix-subject-item ${isDeleted ? 'is-deleted' : ''}`;
+                    li.innerHTML = `
+                        ${s.name} <span class="item-loc">(${s.location})</span>
+                        <button class="btn-toggle-subject" title="${isDeleted ? 'Genskab fag' : 'Fjern fag fra udbud'}">
+                            ${isDeleted ? '↩️' : '❌'}
+                        </button>
+                    `;
+                    
+                    li.querySelector('.btn-toggle-subject').addEventListener('click', () => {
+                        if (isDeleted) {
+                            deletedSubjects = deletedSubjects.filter(id => id !== s.id);
+                        } else {
+                            deletedSubjects.push(s.id);
+                        }
+                        localStorage.setItem(DELETED_SUBJECTS_KEY, JSON.stringify(deletedSubjects));
+                        
+                        // Fjern også fra selections, hvis man lige har slettet et fag man havde valgt
+                        if (!isDeleted) {
+                            for (const key in selections) {
+                                const val = selections[key];
+                                if (Array.isArray(val)) {
+                                    selections[key] = val.filter(x => x !== s.id);
+                                } else if (val === s.id) {
+                                    delete selections[key];
+                                }
+                            }
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+                        }
+                        
+                        renderMatrixView();
+                        if (activeTab === 'tab-picker') renderPickerGrid();
+                    });
+                    listEl.appendChild(li);
+                });
+
+                // 2. Render Egne tilføjede fag
+                offerings.added.forEach(s => {
+                    const li = document.createElement('li');
+                    li.className = 'matrix-subject-item is-custom';
+                    li.innerHTML = `
+                        ${s.name} <span class="item-loc">(${s.location})</span>
+                        <button class="btn-toggle-subject" title="Slet dette eget fag permanent">🗑️</button>
+                    `;
+                    
+                    li.querySelector('.btn-toggle-subject').addEventListener('click', () => {
+                        if(confirm(`Vil du slette det hjemmelavede fag "${s.name}" permanent?`)) {
+                            customSubjects[col.slotKey] = customSubjects[col.slotKey].filter(x => x.id !== s.id);
+                            localStorage.setItem(CUSTOM_SUBJECTS_KEY, JSON.stringify(customSubjects));
+                            
+                            // Fjern også fra selections
+                            for (const key in selections) {
+                                const val = selections[key];
+                                if (Array.isArray(val)) {
+                                    selections[key] = val.filter(x => x !== s.id);
+                                } else if (val === s.id) {
+                                    delete selections[key];
+                                }
+                            }
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+
+                            renderMatrixView();
+                            if (activeTab === 'tab-picker') renderPickerGrid();
+                        }
+                    });
+                    listEl.appendChild(li);
+                });
+
+                // 3. Knap til at oprette nyt fag
+                const btnAdd = document.createElement('button');
+                btnAdd.className = 'btn-add-subject';
+                btnAdd.textContent = '+';
+                btnAdd.addEventListener('click', () => {
+                    const fagNavn = prompt(`Opret nyt fag i ${col.title}:\nAngiv fagets navn:`);
+                    if (!fagNavn || !fagNavn.trim()) return;
+                    const lokale = prompt(`Angiv evt. lokale (kan efterlades tomt):`, "");
+                    
+                    if (!customSubjects[col.slotKey]) customSubjects[col.slotKey] = [];
+                    
+                    customSubjects[col.slotKey].push({
+                        id: `custom_fag_${Date.now()}`,
+                        name: fagNavn.trim(),
+                        location: lokale || "",
+                        category: "ALLE"
+                    });
+                    
+                    localStorage.setItem(CUSTOM_SUBJECTS_KEY, JSON.stringify(customSubjects));
+                    renderMatrixView();
+                });
+
+                card.appendChild(listEl);
+                card.appendChild(btnAdd);
                 rowEl.appendChild(card);
             });
 
@@ -631,7 +742,7 @@ function startApp() {
             const usedLocations = new Set();
             block.periods.forEach(p => {
                 const slotKey = `${block.blockId}_${p.key}`;
-                const offerings = SETTINGS.offerings[slotKey] || [];
+                const offerings = getEffectiveOfferings(slotKey).activeAll; // Kigger kun på aktive/tilføjede fag
                 offerings.forEach(s => {
                     if (s.location) usedLocations.add(s.location.trim());
                 });
@@ -691,7 +802,7 @@ function startApp() {
 
         block.periods.forEach(p => {
             const slotKey = `${block.blockId}_${p.key}`;
-            const slotOfferings = SETTINGS.offerings[slotKey] || [];
+            const slotOfferings = getEffectiveOfferings(slotKey).activeAll;
             const foundSubject = slotOfferings.find(s => s.location && s.location.toLowerCase() === roomName.toLowerCase());
 
             const td = document.createElement('td');
