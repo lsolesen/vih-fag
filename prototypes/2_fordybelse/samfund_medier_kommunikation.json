@@ -1,7 +1,6 @@
 {
-  "id": "proto_fordybelse_medier",
+  "id": "proto_ny_fagpakke",
   "name": "Samfund, Medier & Kommunikation",
-  "group": "Højskole & Idræt & …",
   "selections": {
     "idraet1_e1": "i1_e1_bold360",
     "idraet2_e1": "i2_e1_volley",
@@ -13,13 +12,12 @@
     "idraet2_f2": "i2_f2_volley",
     "idraet1_f3": "i1_f3_bold360",
     "idraet2_f3": "i2_f3_multisport",
-    "kompetence_e1": "k_e1_inter",
     "kompetence_e2": "k_e2_journalistik",
     "kompetence_f1": "k_f1_journalistik",
     "kompetence_f2": "k_f2_medier",
-    "inspiration_e1": "insp_e1_krea",
+    "inspiration_e1": "insp_e1_horisont",
     "inspiration_e2": "insp_e2_staafrem",
-    "inspiration_f1": "insp_f1_salsa",
-    "inspiration_f2": "insp_f2_sang"
+    "inspiration_f1": "insp_e1_horisont",
+    "kompetence_e1": "k_e1_medier"
   }
 }

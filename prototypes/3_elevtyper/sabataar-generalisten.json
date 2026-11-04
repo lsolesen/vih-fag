@@ -1,25 +1,73 @@
 {
-  "id": "proto_elev_sabbataar",
-  "name": "Den Søgende Sabbatårs-generalist",
-  "group": "Elevprofiler / Målgrupper",
+  "id": "proto_den_s_gende_sabbat_rs_generalist",
+  "name": "Sabbatårs-generalisten",
   "selections": {
-    "idraet1_e1": ["i1_e1_bold360", "i1_e1_padel"],
-    "idraet2_e1": ["i2_e1_kajak", "i2_e1_multisport"],
-    "idraet1_e2": "i1_e2_cardio",
+    "idraet1_e1": [
+      "i1_e1_bold360",
+      "i1_e1_padel",
+      "i1_e1_fit360",
+      "i1_e1_surf"
+    ],
+    "idraet2_e1": [
+      "i2_e1_kajak",
+      "i2_e1_multisport"
+    ],
     "idraet2_e2": "i2_e2_badminton",
-    "idraet1_f1": "i1_f1_multisport",
-    "idraet2_f1": "i2_f1_hold",
-    "idraet1_f2": ["i1_f2_basket", "i1_f2_balance"],
-    "idraet2_f2": ["i2_f2_dance", "i2_f2_volley"],
-    "idraet1_f3": ["i1_f3_beach", "i1_f3_padel"],
-    "idraet2_f3": "i2_f3_ketsjer",
-    "kompetence_e1": ["k_e1_musik", "k_e1_friluft"],
-    "kompetence_e2": ["k_e2_bodymind", "k_e2_baal"],
+    "idraet1_f1": [
+      "i1_f1_multisport",
+      "i1_f1_padel",
+      "i1_f1_fit360"
+    ],
+    "idraet2_f1": [
+      "i2_f1_hold",
+      "i2_f1_adv360"
+    ],
+    "idraet1_f2": [
+      "i1_f2_basket",
+      "i1_f2_balance"
+    ],
+    "idraet2_f2": [
+      "i2_f2_dance",
+      "i2_f2_volley",
+      "i2_f2_bike_fusion"
+    ],
+    "idraet1_f3": [
+      "i1_f3_beach",
+      "i1_f3_padel",
+      "i1_f3_surf",
+      "i1_f3_bold360"
+    ],
+    "idraet2_f3": [
+      "i2_f3_ketsjer",
+      "i2_f3_volley",
+      "i2_f3_kajak"
+    ],
+    "kompetence_e1": [
+      "k_e1_musik",
+      "k_e1_friluft"
+    ],
+    "kompetence_e2": [
+      "k_e2_bodymind",
+      "k_e2_baal"
+    ],
     "kompetence_f1": "k_f1_event",
-    "kompetence_f2": ["k_f2_medier", "k_f2_musik"],
+    "kompetence_f2": [
+      "k_f2_medier",
+      "k_f2_musik"
+    ],
     "inspiration_e1": "insp_e1_krea",
     "inspiration_e2": "insp_e2_green",
     "inspiration_f1": "insp_f1_salsa",
-    "inspiration_f2": ["insp_f2_keramik", "insp_f2_sang"]
+    "inspiration_f2": [
+      "insp_f2_keramik",
+      "insp_f2_sang"
+    ],
+    "idraet1_e2": [
+      "i1_e2_haandbold",
+      "i1_e2_basket",
+      "i1_e2_fodbold_pige",
+      "i1_e2_padel",
+      "i1_e2_loeb"
+    ]
   }
 }

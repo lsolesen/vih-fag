@@ -1,24 +1,59 @@
 {
-  "id": "proto_fordybelse_politi",
+  "id": "proto_ny_fagpakke",
   "name": "Politi & Beredskab",
-  "group": "Højskole & Idræt & …",
   "selections": {
     "idraet1_e1": "i1_e1_cops",
-    "idraet2_e1": "i2_e1_ocr",
-    "idraet1_e2": "i1_e2_styrke",
-    "idraet2_e2": "i2_e2_toughest",
-    "idraet1_f1": "i1_f1_styrke",
-    "idraet2_f1": ["i2_f1_cross", "i2_f1_powerfit"],
+    "idraet2_e1": [
+      "i2_e1_ocr",
+      "i2_e1_cross"
+    ],
+    "idraet1_e2": [
+      "i1_e2_styrke",
+      "i1_e2_loeb"
+    ],
+    "idraet2_e2": [
+      "i2_e2_toughest",
+      "i2_e2_styrke",
+      "i2_e2_fighter"
+    ],
+    "idraet1_f1": [
+      "i1_f1_styrke",
+      "i1_f1_loeb"
+    ],
+    "idraet2_f1": [
+      "i2_f1_cross",
+      "i2_f1_powerfit"
+    ],
     "idraet1_f2": "i1_f2_cops",
-    "idraet2_f2": "i2_f2_ocr",
-    "idraet1_f3": "i1_f3_bootcamp",
-    "idraet2_f3": "i2_f3_cross",
+    "idraet2_f2": [
+      "i2_f2_ocr",
+      "i2_f2_styrke"
+    ],
+    "idraet1_f3": [
+      "i1_f3_bootcamp",
+      "i1_f3_cali"
+    ],
+    "idraet2_f3": [
+      "i2_f3_cross",
+      "i2_f3_fighter"
+    ],
     "kompetence_e1": "k_e1_politi",
-    "kompetence_e2": "k_e2_leadership",
+    "kompetence_e2": [
+      "k_e2_leadership",
+      "k_e2_psyko",
+      "k_e2_journalistik"
+    ],
     "kompetence_f1": "k_f1_politi",
-    "kompetence_f2": "k_f2_power",
-    "inspiration_e1": "insp_e1_massage",
-    "inspiration_e2": "insp_e2_staafrem",
-    "inspiration_f1": "insp_f1_massage"
+    "kompetence_f2": [
+      "k_f2_power",
+      "k_f2_sportspsyko"
+    ],
+    "inspiration_e1": "insp_e1_horisont",
+    "inspiration_e2": [
+      "insp_e2_staafrem",
+      "insp_e2_politi"
+    ],
+    "inspiration_f1": "insp_e1_horisont",
+    "inspiration_f2": "insp_f2_politi"
   }
 }

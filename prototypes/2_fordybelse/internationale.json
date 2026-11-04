@@ -1,9 +1,13 @@
 {
-  "id": "proto_fordybelse_international",
+  "id": "proto_det_internationale",
   "name": "Det Internationale",
-  "group": "Højskole & Idræt & …",
   "selections": {
-    "idraet1_e1": "i1_e1_bold360",
+    "idraet1_e1": [
+      "i1_e1_bold360",
+      "i1_e1_fodbold",
+      "i1_e1_padel",
+      "i1_e1_fit360"
+    ],
     "idraet2_e1": "i2_e1_volley",
     "idraet1_e2": "i1_e2_basket",
     "idraet2_e2": "i2_e2_badminton",
@@ -14,12 +18,20 @@
     "idraet1_f3": "i1_f3_beach",
     "idraet2_f3": "i2_f3_multisport",
     "kompetence_e1": "k_e1_inter",
-    "kompetence_e2": "k_e2_journalistik",
+    "kompetence_e2": [
+      "k_e2_baal",
+      "k_e2_bodymind",
+      "k_e2_test"
+    ],
     "kompetence_f1": "k_f1_inter",
-    "kompetence_f2": "k_f2_medier",
     "inspiration_e1": "insp_e1_krea",
     "inspiration_e2": "insp_e2_staafrem",
     "inspiration_f1": "insp_f1_salsa",
-    "inspiration_f2": "insp_f2_sang"
+    "inspiration_f2": "insp_f2_sang",
+    "kompetence_f2": [
+      "k_f2_friluft",
+      "k_f2_musik",
+      "k_f2_bodymind"
+    ]
   }
 }

@@ -215,7 +215,7 @@ export const VIH_SETTINGS = {
             { id: "k_e1_ernaering", name: "Ernæring & Forbrænding 🥕", category: "fitness", location: "Teorilokale 2" },
             { id: "k_e1_psyko", name: "Sportspsykologi & Teamplayer 🤯", category: "psykologi", location: "Teorilokale 3" },
             { id: "k_e1_friluft", name: "Friluftsliv 🌳", category: "outdoor", location: "Friluftsgården" },
-            { id: "k_e1_klatreinst", name: "Outdoor & Klatreinstruktør 🌳", category: "outdoor", location: "Klatrevæg" },
+            { id: "k_e1_medier", name: "Medier & Kommunikation 🌳", category: "almen", location: "Medielokale" },
             { id: "k_e1_musik", name: "Musik 🎶", category: "almen", location: "Musiklokale" },
             { id: "k_e1_inter", name: "International Class 🏳️‍🌈", category: "almen", location: "Klasselokale" }
         ],
@@ -255,24 +255,29 @@ export const VIH_SETTINGS = {
         // INSPIRATIONSFAG
         "inspiration_e1": [
             { id: "insp_e1_massage", name: "Sportsmassage 💆", category: "psykologi", location: "Behandlerrum" },
-            { id: "insp_e1_krea", name: "Design 🎨", category: "almen", location: "Krealokale" }
+            { id: "insp_e1_krea", name: "Design 🎨", category: "almen", location: "Krealokale" },
+            { id: "insp_e1_horisont", name: "Horisont 🎨", category: "almen", location: "Klasselokale" }
         ],
         "inspiration_e2": [
             { id: "insp_e2_sauna", name: "Vinterbadning & Saunagus 🧖", category: "psykologi", location: "Sauna / Kysten" },
             { id: "insp_e2_green", name: "Grøn Mad 🌱", category: "almen", location: "Køkkenet" },
             { id: "insp_e2_staafrem", name: "Stå Frem 🗣️", category: "ledelse", location: "Dramalokale" },
-            { id: "insp_e2_guitar", name: "Begynderguitar 🎸", category: "almen", location: "Musiksal" }
+            { id: "insp_e2_guitar", name: "Begynderguitar 🎸", category: "almen", location: "Musiksal" },
+            { id: "insp_e2_politi", name: "Politi 🎸", category: "almen", location: "Klasselokale" }
+
         ],
         "inspiration_f1": [
             { id: "insp_f1_sauna", name: "Vinterbadning & Saunagus 🧖", category: "psykologi", location: "Sauna / Kysten" },
             { id: "insp_f1_massage", name: "Sportsmassage 💆", category: "psykologi", location: "Behandlerrum" },
-            { id: "insp_f1_salsa", name: "Dans & Salsa 💃", category: "fitness", location: "Dansesalen" }
+            { id: "insp_f1_salsa", name: "Dans & Salsa 💃", category: "fitness", location: "Dansesalen" },
+            { id: "insp_e1_horisont", name: "Horisont 🎨", category: "almen", location: "Klasselokale" }
         ],
         "inspiration_f2": [
             { id: "insp_f2_bush", name: "Knivværksted 🏕️", category: "outdoor", location: "Bålhytten" },
             { id: "insp_f2_keramik", name: "Keramik 🎨", category: "almen", location: "Krealokale" },
-            { id: "insp_f2_sang", name: "Kor 🎤", category: "almen", location: "Musiksal" }
-        ]
+            { id: "insp_f2_sang", name: "Kor 🎤", category: "almen", location: "Musiksal" },
+            { id: "insp_f2_politi", name: "Politi 🎸", category: "almen", location: "Klasselokale" }
+      ]
     },
 
     // 5. Prototyper som fallback

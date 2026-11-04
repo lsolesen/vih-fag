@@ -1,25 +1,49 @@
 {
-  "id": "proto_elev_dans_flow",
+  "id": "proto_danseren",
   "name": "Danseren",
-  "group": "Elevprofiler / Målgrupper",
   "selections": {
-    "idraet1_e1": "i1_e1_yoga",
+    "idraet1_e1": [
+      "i1_e1_yoga",
+      "i1_e1_fit360"
+    ],
     "idraet2_e1": "i2_e1_hold",
-    "idraet1_e2": "i1_e2_cardio",
+    "idraet1_e2": [
+      "i1_e2_cardio",
+      "i1_e2_functional",
+      "i1_e2_bike"
+    ],
     "idraet2_e2": "i2_e2_dance",
-    "idraet1_f1": "i1_f1_yoga",
+    "idraet1_f1": [
+      "i1_f1_yoga",
+      "i1_f1_fit360",
+      "i1_f1_bike"
+    ],
     "idraet2_f1": "i2_f1_hold",
-    "idraet1_f2": "i1_f2_balance",
+    "idraet1_f2": [
+      "i1_f2_balance",
+      "i1_f2_cardio"
+    ],
     "idraet2_f2": "i2_f2_dance",
-    "idraet1_f3": "i1_f3_cali",
     "idraet2_f3": "i2_f3_hold",
-    "kompetence_e1": "k_e1_psyko",
-    "kompetence_e2": "k_e2_bodymind",
-    "kompetence_f1": "k_f1_psyko",
-    "kompetence_f2": "k_f2_bodymind",
-    "inspiration_e1": "insp_e1_krea",
-    "inspiration_e2": "insp_e2_sauna",
+    "kompetence_e1": [
+      "k_e1_psyko",
+      "k_e1_musik"
+    ],
+    "kompetence_e2": [
+      "k_e2_bodymind",
+      "k_e2_psyko",
+      "k_e2_musik"
+    ],
+    "kompetence_f1": [
+      "k_f1_psyko",
+      "k_f1_musik"
+    ],
+    "kompetence_f2": [
+      "k_f2_bodymind",
+      "k_f2_fitinst",
+      "k_f2_musik"
+    ],
     "inspiration_f1": "insp_f1_salsa",
-    "inspiration_f2": "insp_f2_sang"
+    "idraet1_f3": "i1_f3_functional"
   }
 }
