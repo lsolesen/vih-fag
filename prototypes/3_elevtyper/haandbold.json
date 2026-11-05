@@ -1,0 +1,35 @@
+{
+  "id": "proto_h_ndboldspilleren",
+  "name": "Håndboldspilleren",
+  "selections": {
+    "idraet1_e1": "i1_e1_haandbold",
+    "idraet1_f1": "i1_f1_haandbold",
+    "idraet1_f2": "i1_f2_haandbold",
+    "idraet2_f2": "i2_f2_styrke",
+    "idraet2_f3": "i2_f3_cross",
+    "kompetence_e1": [
+      "k_e1_psyko",
+      "k_e1_fysio",
+      "k_e1_ernaering"
+    ],
+    "kompetence_e2": [
+      "k_e2_journalistik",
+      "k_e2_test"
+    ],
+    "kompetence_f1": [
+      "k_f1_test",
+      "k_f1_ernaering",
+      "k_f1_journalistik"
+    ],
+    "kompetence_f2": [
+      "k_f2_sportspsyko",
+      "k_f2_power"
+    ],
+    "inspiration_e1": "insp_e1_massage",
+    "inspiration_f1": "insp_f1_massage",
+    "idraet2_e1": "i2_e1_cross",
+    "idraet2_e2": "i2_e2_styrke",
+    "idraet2_f1": "i2_f1_cross",
+    "idraet1_e2": "i1_e2_haandbold"
+  }
+}

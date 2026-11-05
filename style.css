@@ -1174,3 +1174,8 @@ body {
 .cell-multi .cell-name {
     text-align: left;
 }
+
+/* Plads mellem flere fag i samme lokale-celle */
+.rooms-table td .room-subj-pill + .room-subj-pill {
+    margin-top: 4px;
+}

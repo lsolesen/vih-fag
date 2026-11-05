@@ -839,16 +839,23 @@ function updatePackageDropdown(selectedId = '') {
         block.periods.forEach(p => {
             const slotKey = `${block.blockId}_${p.key}`;
             const slotOfferings = getEffectiveOfferings(slotKey).activeAll;
-            const foundSubject = slotOfferings.find(s => s.location && s.location.toLowerCase() === roomName.toLowerCase());
+            
+            // RETTET: Brug filter i stedet for find, og trim for eventuelle mellemrum
+            const matchingSubjects = slotOfferings.filter(s => 
+                s.location && s.location.trim().toLowerCase() === roomName.trim().toLowerCase()
+            );
 
             const td = document.createElement('td');
-            if (foundSubject) {
-                const cat = getCategory(foundSubject.category);
-                td.innerHTML = `
-                    <div class="room-subj-pill" style="background-color: ${cat.color}; color: ${cat.textColor};">
-                        ${foundSubject.name}
-                    </div>
-                `;
+            if (matchingSubjects.length > 0) {
+                // Udskriver alle fag i lokalet pænt under hinanden
+                td.innerHTML = matchingSubjects.map(subj => {
+                    const cat = getCategory(subj.category);
+                    return `
+                        <div class="room-subj-pill" style="background-color: ${cat.color}; color: ${cat.textColor};">
+                            ${subj.name}
+                        </div>
+                    `;
+                }).join('');
             } else {
                 td.className = 'room-empty-cell';
                 td.textContent = '—';

@@ -29,12 +29,12 @@ export const VIH_SETTINGS = {
         {
             groupName: "Outdoor, Vand & Natur",
             borderColor: "#16a34a",
-            rooms: ["MTB", "Klatrevæg", "Friluftsbassin", "Boards", "Strand", "Udendørs", "Kajakker", "Madroen", "Fjorden"]
+            rooms: ["MTB", "Klatrevæg", "Friluftsbassin", "Strand", "Udendørs", "Kajakker", "Madroen"]
         },
         {
             groupName: "Teori & Undervisningslokaler",
             borderColor: "#0284c7",
-            rooms: ["Teorilokale 1", "Teorilokale 2", "Teorilokale 3", "Teorilokale 4", "Teorilokale 5", "Havestuen"]
+            rooms: ["Teori 1", "Teori 2", "Teori 3", "Teori 4", "Teori 5", "Havestuen"]
         },
         {
             groupName: "Kreativitet, Kultur & Velvære",
@@ -172,8 +172,8 @@ export const VIH_SETTINGS = {
             { id: "i2_e2_styrke", name: "Styrketræning 💪", category: "fitness", location: "Styrke" },
             { id: "i2_e2_fighter", name: "Fighter 🥷🏻", category: "fitness", location: "Dansesal" },
             { id: "i2_e2_dance", name: "Dance 🕺🏼", category: "fitness", location: "Holdtræning" },
-            { id: "i2_e2_mtb", name: "Mountainbike & Trail Surfing 🚵", category: "outdoor", location: "MTB" },
-            { id: "i2_e2_game", name: "Game changer 🎲", category: "outdoor", location: "Friluftsbassin" },
+            { id: "i2_e2_mtb", name: "Mountainbike 🚵", category: "outdoor", location: "MTB" },
+            { id: "i2_e2_game", name: "Game changer 🎲", category: "outdoor", location: "Udendørs" },
             { id: "i2_e2_toughest", name: "Toughest 🧼", category: "fitness", location: "Udendørs" }
         ],
         "idraet2_f1": [
@@ -191,10 +191,10 @@ export const VIH_SETTINGS = {
             { id: "i2_f2_badminton", name: "Badminton & Racket Sports 🏸", category: "bold", location: "Multihal" },
             { id: "i2_f2_fodbold_player", name: "Fodbold & Playertek ⚽", category: "bold", location: "Græsbane" },
             { id: "i2_f2_styrke", name: "Styrketræning 💪", category: "fitness", location: "Styrke" },
-            { id: "i2_f2_game", name: "Game changer 🎲", category: "outdoor", location: "Dansesal" },
+            { id: "i2_f2_game", name: "Game changer 🎲", category: "outdoor", location: "Udendørs" },
             { id: "i2_f2_dance", name: "Dance 🕺🏼", category: "fitness", location: "Holdtræning" },
             { id: "i2_f2_ocr", name: "OCR & Fun Run 🏃‍♂️", category: "fitness", location: "Træningsstativ" },
-            { id: "i2_f2_mtb", name: "Mountainbike & Trail Surfing 🚵", category: "outdoor", location: "MTB" },
+            { id: "i2_f2_mtb", name: "Mountainbike 🚵", category: "outdoor", location: "MTB" },
             { id: "i2_f2_bike_fusion", name: "Bike Team Fusion 🚴", category: "fitness", location: "Udendørs" }
         ],
         "idraet2_f3": [
@@ -203,80 +203,80 @@ export const VIH_SETTINGS = {
             { id: "i2_f3_cross", name: "Crossfitness 🏋️", category: "fitness", location: "Styrke" },
             { id: "i2_f3_fighter", name: "Fighter 🥷🏻", category: "fitness", location: "Dansesal" },
             { id: "i2_f3_hold", name: "Fitness Holdtræning 🕺🏼", category: "fitness", location: "Holdtræning" },
-            { id: "i2_f3_mtb", name: "Mountainbike & Trail Surfing 🚵", category: "outdoor", location: "MTB" },
+            { id: "i2_f3_mtb", name: "Mountainbike 🚵", category: "outdoor", location: "MTB" },
             { id: "i2_f3_multisport", name: "Multisport ♟️", category: "bold", location: "Udendørs" },
             { id: "i2_f3_kajak", name: "Havkajak 🚣‍♀️", category: "outdoor", location: "Kajakker" }
         ],
 
         // KOMPETENCEFAG
         "kompetence_e1": [
-            { id: "k_e1_politi", name: "Politi 👮", category: "ledelse", location: "Teorilokale 1" },
+            { id: "k_e1_politi", name: "Politi 👮", category: "ledelse", location: "Teori 3" },
             { id: "k_e1_fysio", name: "FysioFit & Test 🧑‍🔬", category: "fitness", location: "Testcenter" },
-            { id: "k_e1_ernaering", name: "Ernæring & Forbrænding 🥕", category: "fitness", location: "Teorilokale 2" },
-            { id: "k_e1_psyko", name: "Sportspsykologi & Teamplayer 🤯", category: "psykologi", location: "Teorilokale 3" },
+            { id: "k_e1_ernaering", name: "Ernæring & Forbrænding 🥕", category: "fitness", location: "Teori 1" },
+            { id: "k_e1_psyko", name: "Sportspsykologi & Teamplayer 🤯", category: "psykologi", location: "Teori 2" },
             { id: "k_e1_friluft", name: "Friluftsliv 🌳", category: "outdoor", location: "Madroen" },
-            { id: "k_e1_medier", name: "Medier & Kommunikation 🌳", category: "almen", location: "Teorilokale 4" },
+            { id: "k_e1_medier", name: "Medier & Kommunikation 🌳", category: "almen", location: "Teori 4" },
             { id: "k_e1_musik", name: "Musik 🎶", category: "almen", location: "Musiklokale" },
-            { id: "k_e1_inter", name: "International Class 🏳️‍🌈", category: "almen", location: "Teoriokale 5" }
+            { id: "k_e1_inter", name: "International Class 🏳️‍🌈", category: "almen", location: "Teori 5" }
         ],
         "kompetence_e2": [
             { id: "k_e2_fitinst", name: "Fitnessinstruktør 🏋️", category: "ledelse", location: "Styrkerum" },
             { id: "k_e2_test", name: "Test & Træning 🧑‍🔬", category: "fitness", location: "Testcenter" },
-            { id: "k_e2_bodymind", name: "Body & Mind 😶‍🌫️", category: "psykologi", location: "Dansesal" },
-            { id: "k_e2_fodboldtr", name: "Fodboldtræner & Performance ⚽", category: "bold", location: "Teorilokale 1" },
-            { id: "k_e2_psyko", name: "Psykologi 🧠", category: "psykologi", location: "Teorilokale 2" },
+            { id: "k_e2_bodymind", name: "Body & Mind 😶‍🌫️", category: "psykologi", location: "Holdtræning" },
+            { id: "k_e2_fodboldtr", name: "Fodboldtræner & Performance ⚽", category: "bold", location: "Teori 1" },
+            { id: "k_e2_psyko", name: "Psykologi 🧠", category: "psykologi", location: "Teori 2" },
             { id: "k_e2_baal", name: "Bryg & Bål 🔥", category: "outdoor", location: "Madroen" },
             { id: "k_e2_musik", name: "Musik 🎶", category: "almen", location: "Musiklokale" },
-            { id: "k_e2_journalistik", name: "Sportsjournalistik 🗒️", category: "almen", location: "Teorilokale 4" },
-            { id: "k_e2_leadership", name: "Leadership 🤝", category: "ledelse", location: "Teorilokale 3" }
+            { id: "k_e2_journalistik", name: "Sportsjournalistik 🗒️", category: "almen", location: "Teori 4" },
+            { id: "k_e2_leadership", name: "Leadership 🤝", category: "ledelse", location: "Teori 3" }
         ],
         "kompetence_f1": [
             { id: "k_f1_test", name: "Test & Træning 🧑‍🔬", category: "fitness", location: "Testcenter" },
-            { id: "k_f1_ernaering", name: "Ernæring & Forbrænding 🥕", category: "fitness", location: "Teorilokale 1" },
-            { id: "k_f1_politi", name: "Politi 👮", category: "ledelse", location: "Teorilokale 2" },
-            { id: "k_f1_psyko", name: "Psykologi 🧠", category: "psykologi", location: "Teorilokale 3" },
+            { id: "k_f1_ernaering", name: "Ernæring & Forbrænding 🥕", category: "fitness", location: "Teori 1" },
+            { id: "k_f1_politi", name: "Politi 👮", category: "ledelse", location: "Teori 3" },
+            { id: "k_f1_psyko", name: "Psykologi 🧠", category: "psykologi", location: "Teori 2" },
             { id: "k_f1_baal", name: "Bryg & Bål 🔥", category: "outdoor", location: "Madroen" },
             { id: "k_f1_musik", name: "Musik 🎶", category: "almen", location: "Musiklokale" },
-            { id: "k_f1_journalistik", name: "Sportsjournalistik 🗒️", category: "almen", location: "Teorilokale 4" },
+            { id: "k_f1_journalistik", name: "Sportsjournalistik 🗒️", category: "almen", location: "Teori 4" },
             { id: "k_f1_event", name: "Event Maker 🎪", category: "ledelse", location: "Havestuen" },
-            { id: "k_f1_inter", name: "International Class 🏳️‍🌈", category: "almen", location: "Teorilokale 5" }
+            { id: "k_f1_inter", name: "International Class 🏳️‍🌈", category: "almen", location: "Teori 5" }
         ],
         "kompetence_f2": [
-            { id: "k_f2_fitinst", name: "Fitnessinstruktør 🏋️", category: "ledelse", location: "Testcenter" },
-            { id: "k_f2_fodboldtr", name: "Fodboldtræner & Performance ⚽", category: "bold", location: "Teorilokale 1" },
-            { id: "k_f2_bodymind", name: "Body & Mind 😶‍🌫️", category: "psykologi", location: "Holdtræningssal" },
-            { id: "k_f2_sportspsyko", name: "Sportspsykologi & Teamplayer 🤯", category: "psykologi", location: "Teorilokale 2" },
-            { id: "k_f2_power", name: "Personlig Power 🦸", category: "ledelse", location: "Teorilokale 3" },
+            { id: "k_f2_fitinst", name: "Fitnessinstruktør 🏋️", category: "ledelse", location: "Styrkerum" },
+            { id: "k_f2_fodboldtr", name: "Fodboldtræner & Performance ⚽", category: "bold", location: "Teori 1" },
+            { id: "k_f2_bodymind", name: "Body & Mind 😶‍🌫️", category: "psykologi", location: "Holdtræning" },
+            { id: "k_f2_sportspsyko", name: "Sportspsykologi & Teamplayer 🤯", category: "psykologi", location: "Teori 2" },
+            { id: "k_f2_power", name: "Personlig Power 🦸", category: "ledelse", location: "Teori 3" },
             { id: "k_f2_friluft", name: "Friluftsliv 🌳", category: "outdoor", location: "Madroen" },
             { id: "k_f2_musik", name: "Musik 🎶", category: "almen", location: "Musiklokale" },
-            { id: "k_f2_medier", name: "Medier & Kommunikation 🗒️", category: "almen", location: "Teorilokale 4" }
+            { id: "k_f2_medier", name: "Medier & Kommunikation 🗒️", category: "almen", location: "Teori 4" }
         ],
 
         // INSPIRATIONSFAG
         "inspiration_e1": [
-            { id: "insp_e1_massage", name: "Sportsmassage 💆", category: "psykologi", location: "Teorilokale 1" },
+            { id: "insp_e1_massage", name: "Sportsmassage 💆", category: "psykologi", location: "Teori 1" },
             { id: "insp_e1_krea", name: "Design 🎨", category: "almen", location: "Havestuen" },
-            { id: "insp_e1_horisont", name: "Horisont 🎨", category: "almen", location: "Teorilokale 2" }
+            { id: "insp_e1_horisont", name: "Horisont 🎨", category: "almen", location: "Teori 2" }
         ],
         "inspiration_e2": [
             { id: "insp_e2_sauna", name: "Vinterbadning & Saunagus 🧖", category: "psykologi", location: "Sauna" },
             { id: "insp_e2_green", name: "Grøn Mad 🌱", category: "almen", location: "Køkkenet" },
-            { id: "insp_e2_staafrem", name: "Stå Frem 🗣️", category: "ledelse", location: "Teorilokale 2" },
+            { id: "insp_e2_staafrem", name: "Stå Frem 🗣️", category: "ledelse", location: "Teori 2" },
             { id: "insp_e2_guitar", name: "Begynderguitar 🎸", category: "almen", location: "Musiklokale" },
-            { id: "insp_e2_politi", name: "Politi 🎸", category: "almen", location: "Teorilokale 1" }
+            { id: "insp_e2_politi", name: "Politi 🎸", category: "almen", location: "Teori 1" }
 
         ],
         "inspiration_f1": [
             { id: "insp_f1_sauna", name: "Vinterbadning & Saunagus 🧖", category: "psykologi", location: "Sauna" },
-            { id: "insp_f1_massage", name: "Sportsmassage 💆", category: "psykologi", location: "Teorilokale 1" },
+            { id: "insp_f1_massage", name: "Sportsmassage 💆", category: "psykologi", location: "Teori 1" },
             { id: "insp_f1_salsa", name: "Dans & Salsa 💃", category: "fitness", location: "Dansesalen" },
-            { id: "insp_e1_horisont", name: "Horisont 🎨", category: "almen", location: "Teorilokale 2" }
+            { id: "insp_e1_horisont", name: "Horisont 🎨", category: "almen", location: "Teori 2" }
         ],
         "inspiration_f2": [
             { id: "insp_f2_bush", name: "Knivværksted 🏕️", category: "outdoor", location: "Madroen" },
             { id: "insp_f2_keramik", name: "Keramik 🎨", category: "almen", location: "Havestuen" },
             { id: "insp_f2_sang", name: "Kor 🎤", category: "almen", location: "Musiklokale" },
-            { id: "insp_f2_politi", name: "Politi 🎸", category: "almen", location: "Teorilokale 2" }
+            { id: "insp_f2_politi", name: "Politi 🎸", category: "almen", location: "Teori 1" }
       ]
     },
 
