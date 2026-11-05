@@ -8,7 +8,8 @@ const scannedPrototypes = Object.entries(prototypeFiles).map(([path, mod]) => {
     if (!data.group) {
         if (path.includes('/1_idraet/')) data.group = 'Højskole & Idræt';
         else if (path.includes('/2_fordybelse/')) data.group = 'Højskole & Idræt & …';
-        else if (path.includes('/3_elevtyper/')) data.group = 'Elevprofiler / Målgrupper';
+        else if (path.includes('/3_eksisterende/')) data.group = 'Eksisterende spor';
+        else if (path.includes('/4_elevtyper/')) data.group = 'Elevprofiler / Målgrupper';
         else data.group = 'Faste prototyper';
     }
     return data;
