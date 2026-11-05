@@ -1,19 +1,23 @@
 import { VIH_SETTINGS } from './settings.js';
 
-// 1. Vite scanner automatisk alle .json filer i /prototypes mappen
+// 1. Vite scanner alle .json filer og sorterer dem naturligt efter mappetal og filnavne (1_, 2_, 3_...)
 const prototypeFiles = import.meta.glob('./prototypes/**/*.json', { eager: true });
-const scannedPrototypes = Object.entries(prototypeFiles).map(([path, mod]) => {
-    const data = mod.default || mod;
-    // Hvis prototypen ikke selv har sat en gruppe, udledes den af mappenavnet
-    if (!data.group) {
-        if (path.includes('/1_idraet/')) data.group = 'Højskole & Idræt';
-        else if (path.includes('/2_fordybelse/')) data.group = 'Højskole & Idræt & …';
-        else if (path.includes('/3_eksisterende/')) data.group = 'Eksisterende spor';
-        else if (path.includes('/4_elevtyper/')) data.group = 'Elevprofiler / Målgrupper';
-        else data.group = 'Faste prototyper';
-    }
-    return data;
-});
+const scannedPrototypes = Object.entries(prototypeFiles)
+    .sort(([pathA], [pathB]) => pathA.localeCompare(pathB, undefined, { numeric: true }))
+    .map(([path, mod]) => {
+        const data = mod.default || mod;
+        data._filePath = path; // Gemmer filstien til sporing
+
+        // Udled gruppenavn fra mappens navn, hvis det ikke allerede er sat i JSON-filen
+        if (!data.group) {
+            if (path.includes('/1_idraet/')) data.group = 'Højskole & Idræt';
+            else if (path.includes('/2_fordybelse/')) data.group = 'Spor: Højskole & Idræt & …';
+            else if (path.includes('/3_eksisterende/')) data.group = 'Eksisterende spor';
+            else if (path.includes('/4_elevtyper/')) data.group = 'Elevprofiler / Målgrupper';
+            else data.group = 'Faste prototyper';
+        }
+        return data;
+    });
 
 function startApp() {
     const SETTINGS = VIH_SETTINGS;
@@ -332,11 +336,7 @@ function openSubjectModal(row, slot, currentSelectedIds) {
             options = options.filter(s => s.category === currentCategoryFilter);
         }
 
-        if (options.length === 0) {
-            modalSubjectList.innerHTML = '<p style="color:#64748b; font-size:0.9rem;">Ingen fag fundet i denne kategori.</p>';
-            return;
-        }
-
+        // 1. Vis eksisterende fag
         const activeIds = currentSlotContext.selectedIds;
 
         options.forEach(sub => {
@@ -353,7 +353,7 @@ function openSubjectModal(row, slot, currentSelectedIds) {
             card.innerHTML = `
                 <div class="cell-badge">${cat.name || sub.category}</div>
                 <div class="cell-name">${sub.name}</div>
-                <div class="cell-location">📍 ${sub.location}</div>
+                <div class="cell-location">📍 ${sub.location || 'Ikke angivet'}</div>
                 ${isSelected ? '<span class="subject-card-check">✓</span>' : ''}
             `;
 
@@ -362,7 +362,6 @@ function openSubjectModal(row, slot, currentSelectedIds) {
                 if (idx !== -1) {
                     activeIds.splice(idx, 1);
                 } else {
-                    // RETTET: Spærre ved >= 4 i stedet for 3
                     if (activeIds.length >= 5) {
                         alert('Du kan højst vælge 5 fag i samme blok for at bevare et overskueligt skema.');
                         return;
@@ -388,6 +387,60 @@ function openSubjectModal(row, slot, currentSelectedIds) {
 
             modalSubjectList.appendChild(card);
         });
+
+        // 2. NYT: Tilføj "Opret nyt fag"-kort i bunden af modal-listen
+        const addCard = document.createElement('div');
+        addCard.className = 'subject-card subject-card-create';
+        addCard.innerHTML = `
+            <div class="card-create-icon">+</div>
+            <div class="card-create-text">
+                <div class="cell-name">Opret nyt fag</div>
+                <div class="cell-location">Tilføj til denne fagblok</div>
+            </div>
+        `;
+
+        addCard.addEventListener('click', () => {
+            const fagNavn = prompt(`Opret nyt fag i ${currentSlotContext.row.title} (${currentSlotContext.slot.title}):\nAngiv fagets navn:`);
+            if (!fagNavn || !fagNavn.trim()) return;
+
+            const lokale = prompt(`Angiv evt. lokale / facilitet (kan efterlades tomt):`, "");
+
+            // Vælg en standardkategori baseret på aktivt filter eller bloktype
+            let catKey = currentCategoryFilter !== 'ALLE' ? currentCategoryFilter : 'bold';
+            if (slotId.startsWith('kompetence')) catKey = 'ledelse';
+            if (slotId.startsWith('inspiration')) catKey = 'almen';
+
+            const newSubject = {
+                id: `custom_fag_${Date.now()}`,
+                name: fagNavn.trim(),
+                location: lokale ? lokale.trim() : "",
+                category: catKey
+            };
+
+            if (!customSubjects[slotId]) customSubjects[slotId] = [];
+            customSubjects[slotId].push(newSubject);
+            localStorage.setItem(CUSTOM_SUBJECTS_KEY, JSON.stringify(customSubjects));
+
+            // Vælg automatisk faget i skemaet, hvis der er plads (< 5)
+            if (activeIds.length < 5 && !activeIds.includes(newSubject.id)) {
+                activeIds.push(newSubject.id);
+                if (activeIds.length === 1) {
+                    selections[slotId] = activeIds[0];
+                } else {
+                    selections[slotId] = [...activeIds];
+                }
+                if (currentProfile) setProfileState(currentProfile, true);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+                renderPickerGrid();
+            }
+
+            // Opdater modalens filtre og liste med det samme
+            renderFilterChips(slotId);
+            renderSubjectOptions(slotId);
+            btnRemoveSubject.style.display = activeIds.length > 0 ? 'block' : 'none';
+        });
+
+        modalSubjectList.appendChild(addCard);
     }
 
     btnCloseModal.addEventListener('click', () => modalEl.close());
@@ -405,36 +458,39 @@ function openSubjectModal(row, slot, currentSelectedIds) {
         }
     });
 
-    // --- PROTOTYPER & PAKKER ---
-function updatePackageDropdown(selectedId = '') {
+    function updatePackageDropdown(selectedId = '') {
         protoSelect.innerHTML = '<option value="">-- Vælg foruddefineret pakke --</option>';
 
         if (SETTINGS.prototypes && SETTINGS.prototypes.length > 0) {
-            // Gruppér prototyperne efter deres 'group'
             const groups = {};
+            const groupOrder = [];
+
+            // Gruppér prototyperne i den præcise rækkefølge, som mapperne blev scannet i (1_, 2_, 3_, 4_...)
             SETTINGS.prototypes.forEach((p, idx) => {
                 const grp = p.group || 'Faste prototyper';
-                if (!groups[grp]) groups[grp] = [];
-                groups[grp].push({ value: `builtin_${idx}`, name: p.name });
+                if (!groups[grp]) {
+                    groups[grp] = [];
+                    groupOrder.push(grp);
+                }
+                groups[grp].push({ 
+                    value: `builtin_${idx}`, 
+                    name: p.name,
+                    order: p.order !== undefined ? p.order : undefined
+                });
             });
 
-            // Opret en optgroup for hver kategori i den ønskede rækkefølge
-            const desiredOrder = [
-                'Højskole & Idræt',
-                'Højskole & Idræt & …',
-                'Elevprofiler / Målgrupper',
-                'Faste prototyper'
-            ];
-            
-            const sortedGroupKeys = Object.keys(groups).sort((a, b) => {
-                const iA = desiredOrder.indexOf(a);
-                const iB = desiredOrder.indexOf(b);
-                return (iA === -1 ? 99 : iA) - (iB === -1 ? 99 : iB);
-            });
-
-            sortedGroupKeys.forEach(grpName => {
+            groupOrder.forEach(grpName => {
                 const optgroup = document.createElement('optgroup');
                 optgroup.label = `── ${grpName} ──`;
+
+                // Hvis en JSON-fil har sat et specifikt "order": 1 felt, respekteres det internt i gruppen
+                groups[grpName].sort((a, b) => {
+                    if (a.order !== undefined && b.order !== undefined) return a.order - b.order;
+                    if (a.order !== undefined) return -1;
+                    if (b.order !== undefined) return 1;
+                    return 0; // Bevarer ellers den naturlige filsti-sortering (1_fil, 2_fil eller A-Å)
+                });
+
                 groups[grpName].forEach(p => {
                     const opt = document.createElement('option');
                     opt.value = p.value;

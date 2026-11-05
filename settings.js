@@ -1,12 +1,15 @@
 export const VIH_SETTINGS = {
     // 1. Kategorier med stabil key og redigerbart visningsnavn (name)
     categories: {
-        "bold": { name: "Bold & Boldspil", color: "#1d4ed8", textColor: "#ffffff" },
+        "bold": { name: "Bold & Holdspil", color: "#1d4ed8", textColor: "#ffffff" },
         "fitness": { name: "Fitness & Styrke", color: "#ea580c", textColor: "#ffffff" },
+        "endurance": { name: "Endurance", color: "#f11409", textColor: "#ffffff" },
         "outdoor": { name: "Outdoor & Adventure", color: "#15803d", textColor: "#ffffff" },
         "psykologi": { name: "Psykologi & Velvære", color: "#7e22ce", textColor: "#ffffff" },
         "ledelse": { name: "Uddannelse & Ledelse", color: "#ca8a04", textColor: "#000000" },
-        "almen": { name: "Almen & Samfund", color: "#0f766e", textColor: "#ffffff" }
+        "almen": { name: "Almen & Samfund", color: "#0f766e", textColor: "#ffffff" },
+        "kreativ": { name: "Kreative Fag", color: "#546c6a", textColor: "#ffffff" },
+        "musik": { name: "Musik", color: "#bb2adb", textColor: "#ffffff" },
     },
 
     // 2. Lokaler med farvekodning til lokaleoversigten
@@ -118,7 +121,7 @@ export const VIH_SETTINGS = {
             { id: "i1_e2_cardio", name: "Cardio Attack ❤️", category: "fitness", location: "Dansesal" },
             { id: "i1_e2_functional", name: "Functional Training 😅", category: "fitness", location: "Holdtræning" },
             { id: "i1_e2_bike", name: "Indoor Bike Xperience 🚴", category: "fitness", location: "Spinning" },
-            { id: "i1_e2_loeb", name: "Løb & Løbetræning 👟", category: "fitness", location: "Løbebane" }
+            { id: "i1_e2_loeb", name: "Løb & Løbetræning 👟", category: "endurance", location: "Løbebane" }
         ],
         "idraet1_f1": [
             { id: "i1_f1_haandbold", name: "Håndbold 🤾", category: "bold", location: "Hal" },
@@ -129,7 +132,7 @@ export const VIH_SETTINGS = {
             { id: "i1_f1_fit360", name: "Fitness 360° 😅", category: "fitness", location: "Dansesal" },
             { id: "i1_f1_yoga", name: "Yoga - Hatha, Aerial & Akro 🧘", category: "psykologi", location: "Holdtræning" },
             { id: "i1_f1_bike", name: "Indoor Bike Xperience 🚴", category: "fitness", location: "Spinning" },
-            { id: "i1_f1_loeb", name: "Løb & Løbetræning 👟", category: "fitness", location: "Løbebane" }
+            { id: "i1_f1_loeb", name: "Løb & Løbetræning 👟", category: "endurance", location: "Løbebane" }
         ],
         "idraet1_f2": [
             { id: "i1_f2_haandbold", name: "Håndbold 🤾", category: "bold", location: "Hal" },
@@ -140,7 +143,7 @@ export const VIH_SETTINGS = {
             { id: "i1_f2_balance", name: "Balanced Body & Movement", category: "psykologi", location: "Holdtræning" },
             { id: "i1_f2_cops", name: "COPS - Polititræning 👮", category: "fitness", location: "Løbebane" },
             { id: "i1_f2_adv", name: "Adventurerace 🗺️", category: "outdoor", location: "MTB" },
-            { id: "i1_f2_loeb", name: "Løb & Løbetræning 👟", category: "fitness", location: "Udendørs" }
+            { id: "i1_f2_loeb", name: "Løb & Løbetræning 👟", category: "endurance", location: "Udendørs" }
         ],
         "idraet1_f3": [
             { id: "i1_f3_bold360", name: "Bold 360 ⚽🏀", category: "bold", location: "Hal" },
@@ -216,7 +219,7 @@ export const VIH_SETTINGS = {
             { id: "k_e1_psyko", name: "Sportspsykologi & Teamplayer 🤯", category: "psykologi", location: "Teori 2" },
             { id: "k_e1_friluft", name: "Friluftsliv 🌳", category: "outdoor", location: "Madroen" },
             { id: "k_e1_medier", name: "Medier & Kommunikation 🌳", category: "almen", location: "Teori 4" },
-            { id: "k_e1_musik", name: "Musik 🎶", category: "almen", location: "Musiklokale" },
+            { id: "k_e1_musik", name: "Musik 🎶", category: "musik", location: "Musiklokale" },
             { id: "k_e1_inter", name: "International Class 🏳️‍🌈", category: "almen", location: "Teori 5" }
         ],
         "kompetence_e2": [
@@ -226,7 +229,7 @@ export const VIH_SETTINGS = {
             { id: "k_e2_fodboldtr", name: "Fodboldtræner & Performance ⚽", category: "bold", location: "Teori 1" },
             { id: "k_e2_psyko", name: "Psykologi 🧠", category: "psykologi", location: "Teori 2" },
             { id: "k_e2_baal", name: "Bryg & Bål 🔥", category: "outdoor", location: "Madroen" },
-            { id: "k_e2_musik", name: "Musik 🎶", category: "almen", location: "Musiklokale" },
+            { id: "k_e2_musik", name: "Musik 🎶", category: "musik", location: "Musiklokale" },
             { id: "k_e2_journalistik", name: "Sportsjournalistik 🗒️", category: "almen", location: "Teori 4" },
             { id: "k_e2_leadership", name: "Leadership 🤝", category: "ledelse", location: "Teori 3" }
         ],
@@ -236,7 +239,7 @@ export const VIH_SETTINGS = {
             { id: "k_f1_politi", name: "Politi 👮", category: "ledelse", location: "Teori 3" },
             { id: "k_f1_psyko", name: "Psykologi 🧠", category: "psykologi", location: "Teori 2" },
             { id: "k_f1_baal", name: "Bryg & Bål 🔥", category: "outdoor", location: "Madroen" },
-            { id: "k_f1_musik", name: "Musik 🎶", category: "almen", location: "Musiklokale" },
+            { id: "k_f1_musik", name: "Musik 🎶", category: "musik", location: "Musiklokale" },
             { id: "k_f1_journalistik", name: "Sportsjournalistik 🗒️", category: "almen", location: "Teori 4" },
             { id: "k_f1_event", name: "Event Maker 🎪", category: "ledelse", location: "Havestuen" },
             { id: "k_f1_inter", name: "International Class 🏳️‍🌈", category: "almen", location: "Teori 5" }
@@ -248,21 +251,21 @@ export const VIH_SETTINGS = {
             { id: "k_f2_sportspsyko", name: "Sportspsykologi & Teamplayer 🤯", category: "psykologi", location: "Teori 2" },
             { id: "k_f2_power", name: "Personlig Power 🦸", category: "ledelse", location: "Teori 3" },
             { id: "k_f2_friluft", name: "Friluftsliv 🌳", category: "outdoor", location: "Madroen" },
-            { id: "k_f2_musik", name: "Musik 🎶", category: "almen", location: "Musiklokale" },
+            { id: "k_f2_musik", name: "Musik 🎶", category: "musik", location: "Musiklokale" },
             { id: "k_f2_medier", name: "Medier & Kommunikation 🗒️", category: "almen", location: "Teori 4" }
         ],
 
         // INSPIRATIONSFAG
         "inspiration_e1": [
             { id: "insp_e1_massage", name: "Sportsmassage 💆", category: "psykologi", location: "Teori 1" },
-            { id: "insp_e1_krea", name: "Design 🎨", category: "almen", location: "Havestuen" },
+            { id: "insp_e1_krea", name: "Design 🎨", category: "kreativ", location: "Havestuen" },
             { id: "insp_e1_horisont", name: "Horisont 🎨", category: "almen", location: "Teori 2" }
         ],
         "inspiration_e2": [
             { id: "insp_e2_sauna", name: "Vinterbadning & Saunagus 🧖", category: "psykologi", location: "Sauna" },
             { id: "insp_e2_green", name: "Grøn Mad 🌱", category: "almen", location: "Køkkenet" },
             { id: "insp_e2_staafrem", name: "Stå Frem 🗣️", category: "ledelse", location: "Teori 2" },
-            { id: "insp_e2_guitar", name: "Begynderguitar 🎸", category: "almen", location: "Musiklokale" },
+            { id: "insp_e2_guitar", name: "Begynderguitar 🎸", category: "musik", location: "Musiklokale" },
             { id: "insp_e2_politi", name: "Politi 🎸", category: "almen", location: "Teori 1" }
 
         ],
@@ -274,9 +277,9 @@ export const VIH_SETTINGS = {
         ],
         "inspiration_f2": [
             { id: "insp_f2_bush", name: "Knivværksted 🏕️", category: "outdoor", location: "Madroen" },
-            { id: "insp_f2_keramik", name: "Keramik 🎨", category: "almen", location: "Havestuen" },
-            { id: "insp_f2_sang", name: "Kor 🎤", category: "almen", location: "Musiklokale" },
-            { id: "insp_f2_politi", name: "Politi 🎸", category: "almen", location: "Teori 1" }
+            { id: "insp_f2_keramik", name: "Keramik 🎨", category: "kreativ", location: "Havestuen" },
+            { id: "insp_f2_sang", name: "Kor 🎤", category: "musik", location: "Musiklokale" },
+            { id: "insp_f2_politi", name: "Politi 🎸", category: "ledelse", location: "Teori 1" }
       ]
     },
 

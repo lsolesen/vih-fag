@@ -2,19 +2,6 @@
   "id": "proto_kreativitet___h_ndens_arbejde",
   "name": "Kreativitet & Håndens Arbejde",
   "selections": {
-    "idraet1_e1": "i1_e1_yoga",
-    "idraet2_e1": [
-      "i2_e1_kajak",
-      "i2_e1_hold"
-    ],
-    "idraet1_e2": "i1_e2_loeb",
-    "idraet2_e2": "i2_e2_dance",
-    "idraet1_f1": "i1_f1_multisport",
-    "idraet2_f1": "i2_f1_badminton",
-    "idraet1_f2": "i1_f2_balance",
-    "idraet2_f2": "i2_f2_dance",
-    "idraet1_f3": "i1_f3_beach",
-    "idraet2_f3": "i2_f3_kajak",
     "kompetence_e1": [
       "k_e1_friluft",
       "k_e1_musik"

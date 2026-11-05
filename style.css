@@ -1179,3 +1179,49 @@ body {
 .rooms-table td .room-subj-pill + .room-subj-pill {
     margin-top: 4px;
 }
+
+/* =========================================================
+   OPRET NYT FAG I MODAL
+   ========================================================= */
+.subject-card.subject-card-create {
+    border: 2px dashed #cbd5e1;
+    background-color: #f8fafc;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    padding: 12px 16px;
+}
+
+.subject-card.subject-card-create:hover {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+    color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.card-create-icon {
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.card-create-text .cell-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.card-create-text .cell-location {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
